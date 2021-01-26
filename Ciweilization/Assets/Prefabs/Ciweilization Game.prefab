@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8812105220843897947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8812105220843897948}
+  - component: {fileID: 8812105220843897949}
+  - component: {fileID: 8812105220843897946}
+  - component: {fileID: 8812105221804172348}
+  m_Layer: 0
+  m_Name: Ciweilization Game
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8812105220843897948
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812105220843897947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.095050156, y: -0.122646846, z: -1.238086}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8812105220843897949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812105220843897947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b18b3d14bf79b84aa59675f47d9f05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCenter: {fileID: 0}
+  cardfaces1:
+  - {fileID: -1320424977615169107, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 4086840963728156412, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 2750795389097293052, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 4101755466766449738, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  cardfaces2:
+  - {fileID: 4034111375347477833, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 8333918912670004024, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: -132877467780745887, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: -8641687624321060193, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  cardfaces3:
+  - {fileID: 1392962367027583912, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: -2194138568254304794, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 3010423078400362483, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 7319439474163671232, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  cardfaces4:
+  - {fileID: -1566989725039561307, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 716278070629735016, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: 6710663956633538786, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  - {fileID: -8153183902287412690, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  cardPrefab: {fileID: 6722234269616455992, guid: 29839c76fb36a394c803f7370787af8e,
+    type: 3}
+  level1Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  level2Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  level3Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  level4Pos:
+  - {fileID: 0}
+  deck1: []
+  deck2: []
+  deck3: []
+  deck4: []
+  turn: 1
+  isSpring: 0
+  isSummer: 0
+  isFall: 0
+  isWinter: 0
+--- !u!114 &8812105220843897946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812105220843897947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3547c41f54e92c0498f56217e1c93524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCenter: {fileID: 2098049768517750949, guid: e2b89d149a3b4ad4087694fe95922dc4,
+    type: 3}
+--- !u!114 &8812105221804172348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812105220843897947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b94d9eb23f9014e9a54c089f777434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
