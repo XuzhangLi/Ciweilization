@@ -26,15 +26,18 @@ public class Ciweilization : MonoBehaviour
     public List<string>[] player1Heroes;
     public List<string>[] player2Heroes;
     public List<string>[] player3Heroes;
+    public List<string>[] chances;
 
     public Sprite[] cardFaces1;
     public Sprite[] cardFaces2;
     public Sprite[] cardFaces3;
     public Sprite[] cardFaces4;
     public Sprite[] cardFacesHeroes;
+    public Sprite[] cardFacesChances;
 
     public GameObject cardPrefab;
     public GameObject heroCardPrefab;
+    public GameObject chanceCardPrefab;
 
     public GameObject[] level1Pos;
     public GameObject[] level2Pos;
@@ -43,6 +46,7 @@ public class Ciweilization : MonoBehaviour
     public GameObject[] player1Pos;
     public GameObject[] player2Pos;
     public GameObject[] player3Pos;
+    public GameObject[] chancePos;
     public GameObject[] heroPos;
 
     [HideInInspector] public List<string> deck1;
@@ -51,6 +55,8 @@ public class Ciweilization : MonoBehaviour
     [HideInInspector] public List<string> deck4;
     public List<string> deckHeroes;
     public List<string> deckHeroesCopy;
+    public List<string> deckChances;
+    public List<string> deckChancesCopy;
 
     private List<string> level1_0 = new List<string>();
     private List<string> level1_1 = new List<string>();
@@ -72,6 +78,10 @@ public class Ciweilization : MonoBehaviour
     private List<string> player3_0 = new List<string>();
     private List<string> player3_1 = new List<string>();
     private List<string> player3_2 = new List<string>();
+
+    private List<string> chance0 = new List<string>();
+    private List<string> chance1 = new List<string>();
+    private List<string> chance2 = new List<string>();
 
     public int turn;
     public bool isSpring;
@@ -139,6 +149,7 @@ public class Ciweilization : MonoBehaviour
         player1Heroes = new List<string>[] { player1_0, player1_1, player1_2 };
         player2Heroes = new List<string>[] { player2_0, player2_1, player2_2 };
         player3Heroes = new List<string>[] { player3_0, player3_1, player3_2 };
+        chances = new List<string>[] { chance0, chance1, chance2 };
 
 
         Debug.Log("Hero Selction Time.");
@@ -167,6 +178,33 @@ public class Ciweilization : MonoBehaviour
         }
         return newDeck;
     }
+
+    public static List<string> GenerateChanceDeck(int totalChances, int x)
+    {
+        List<string> newDeck = new List<string>();
+        for (int i = 0; i < x; i++)
+        {
+            for (int k = 0; k < totalChances; k++)
+            {
+                newDeck.Add("c" + k);
+            }
+        }
+        return newDeck;
+    }
+
+    public static List<string> GenerateHeroDeck(int totalHeroes, int x)
+    {
+        List<string> newDeck = new List<string>();
+        for (int i = 0; i < x; i++)
+        {
+            for (int k = 0; k < totalHeroes; k++)
+            {
+                newDeck.Add("h" + k);
+            }
+        }
+        return newDeck;
+    }
+
     //gives out 4 shuffled decks
     public void PrepareCards()
     {
@@ -174,16 +212,19 @@ public class Ciweilization : MonoBehaviour
         deck2 = GenerateDeck("2", 9);
         deck3 = GenerateDeck("3", 6);
         deck4 = GenerateDeck("4", 3);
-        deckHeroes = GetComponent<Heroes>().heroNames;
-        deckHeroesCopy = GetComponent<Heroes>().heroNamesCopy;
+        deckHeroes = GenerateHeroDeck(28, 1);
+        deckChances = GenerateChanceDeck(9, 1);
 
         Shuffle(deck1);
         Shuffle(deck2);
         Shuffle(deck3);
         Shuffle(deck4);
         Shuffle(deckHeroes);
+        Shuffle(deckChances);
 
         CiweilizationSort();
+        CiweilizationSortHeroes();
+        CiweilizationSortChances();
     }
 
     public void CiweilizationSetUpPlayer(int playerNum)
@@ -316,45 +357,50 @@ public class Ciweilization : MonoBehaviour
         {
             if (playerNum == 1)
             {
-                foreach (string card in player1Heroes[i])
-                {
-                    yield return new WaitForSeconds(0.1f);
-                    GameObject newCard1 = Instantiate(heroCardPrefab, player1Pos[i].transform.position,
-                                                        Quaternion.identity, player1Pos[i].transform);
-                    newCard1.name = card;
-                    newCard1.GetComponent<Selectable>().faceUp = true;
-                }
+                string card = player1Heroes[i].Last<string>();
+                yield return new WaitForSeconds(0.1f);
+                GameObject newCard = Instantiate(heroCardPrefab, player1Pos[i].transform.position,
+                                                            Quaternion.identity, player1Pos[i].transform);
+                newCard.name = card;
+                newCard.GetComponent<Selectable>().faceUp = true;             
             }
             else if (playerNum == 2)
             {
-                foreach (string card in player2Heroes[i])
-                {
-                    yield return new WaitForSeconds(0.1f);
-                    GameObject newCard2 = Instantiate(heroCardPrefab, player2Pos[i].transform.position,
-                                                        Quaternion.identity, player2Pos[i].transform);
-                    newCard2.name = card;
-                    newCard2.GetComponent<Selectable>().faceUp = true;
-                }
+                string card = player2Heroes[i].Last<string>();
+                yield return new WaitForSeconds(0.1f);
+                GameObject newCard = Instantiate(heroCardPrefab, player2Pos[i].transform.position,
+                                                            Quaternion.identity, player2Pos[i].transform);
+                newCard.name = card;
+                newCard.GetComponent<Selectable>().faceUp = true;
             }
             else if (playerNum == 3)
             {
-                foreach (string card in player3Heroes[i])
-                {
-                    yield return new WaitForSeconds(0.1f);
-                    GameObject newCard3 = Instantiate(heroCardPrefab, player3Pos[i].transform.position,
-                                                        Quaternion.identity, player3Pos[i].transform);
-                    newCard3.name = card;
-                    newCard3.GetComponent<Selectable>().faceUp = true;
-                }
-            }
-            else
-            {
-                Debug.Log("Error! Invalid player number!");
+                string card = player3Heroes[i].Last<string>();
+                yield return new WaitForSeconds(0.1f);
+                GameObject newCard = Instantiate(heroCardPrefab, player3Pos[i].transform.position,
+                                                            Quaternion.identity, player3Pos[i].transform);
+                newCard.name = card;
+                newCard.GetComponent<Selectable>().faceUp = true;
             }
         }
     }
 
-    void CiweilizationSort()
+    public IEnumerator CiweilizationDealChances()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            string card = chances[i].Last<string>();
+            yield return new WaitForSeconds(0.1f);
+            GameObject newCard1 = Instantiate(chanceCardPrefab, chancePos[i].transform.position,
+                                                Quaternion.identity, chancePos[i].transform);
+            newCard1.name = card;
+            newCard1.GetComponent<Selectable>().faceUp = true;
+        }
+
+        CiweilizationSortChances();
+    }
+
+    public void CiweilizationSort()
     {
         for (int i = 0; i < 4; i++)
         {
@@ -376,6 +422,13 @@ public class Ciweilization : MonoBehaviour
             level4s[i].Add(deck4.Last<string>());
             deck4.RemoveAt(deck4.Count - 1);
         }
+    }
+
+    public void CiweilizationSortHeroes()
+    {
+        deckHeroes = GenerateHeroDeck(28, 1);
+        Shuffle(deckHeroes);
+
         for (int i = 0; i < 3; i++)
         {
             player1Heroes[i].Add(deckHeroes.Last<string>());
@@ -388,7 +441,17 @@ public class Ciweilization : MonoBehaviour
             deckHeroes.RemoveAt(deckHeroes.Count - 1);
         }
     }
+    public void CiweilizationSortChances()
+    {
+        deckChances = GenerateChanceDeck(9, 1);
+        Shuffle(deckChances);
 
+        for (int i = 0; i < 3; i++)
+        {
+            chances[i].Add(deckChances.Last<string>());
+            deckChances.RemoveAt(deckChances.Count - 1);
+        }
+    }
     public void CiweilizationFill1(Vector3 position)
     {
         string card = deck1.Last<string>();

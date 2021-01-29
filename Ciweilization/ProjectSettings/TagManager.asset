@@ -15,6 +15,9 @@ TagManager:
   - HeroCard
   - Hero
   - PlaceHolder
+  - ChanceCard
+  - ChanceTrigger
+  - HeroTrigger
   layers:
   - Default
   - TransparentFX

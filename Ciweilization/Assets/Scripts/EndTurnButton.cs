@@ -49,6 +49,7 @@ public class EndTurnButton : MonoBehaviour
                 ciweilization.activePlayerNumber = 1;
                 activePlayerText.text = "player 1's turn!";
                 ciweilization.CiweilizationNextTurn();
+                ciweilization.CiweilizationSortHeroes();
             }
             else
             {

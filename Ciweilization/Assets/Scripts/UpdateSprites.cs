@@ -16,18 +16,19 @@ public class UpdateSprites : MonoBehaviour
     {
         ciweilization = FindObjectOfType<Ciweilization>();
 
-        List<string> deck1 = Ciweilization.GenerateDeck("1", 12);
-        List<string> deck2 = Ciweilization.GenerateDeck("2", 9);
-        List<string> deck3 = Ciweilization.GenerateDeck("3", 6);
-        List<string> deck4 = Ciweilization.GenerateDeck("4", 3);
-        List<string> deckHeroes = ciweilization.deckHeroesCopy;
+        List<string> deck1 = Ciweilization.GenerateDeck("1", 1);
+        List<string> deck2 = Ciweilization.GenerateDeck("2", 1);
+        List<string> deck3 = Ciweilization.GenerateDeck("3", 1);
+        List<string> deck4 = Ciweilization.GenerateDeck("4", 1);
+        List<string> deckHeroes = Ciweilization.GenerateHeroDeck(28, 1);
+        List<string> deckChances = Ciweilization.GenerateChanceDeck(9, 1);
 
         int i = 0;
         foreach (string card in deck1)
         {
             if (this.name == card)
             {
-                cardFace = ciweilization.cardFaces1[i % 4];
+                cardFace = ciweilization.cardFaces1[i];
                 break;
             }
             i++;
@@ -38,7 +39,7 @@ public class UpdateSprites : MonoBehaviour
         {
             if (this.name == card)
             {
-                cardFace = ciweilization.cardFaces2[i % 4];
+                cardFace = ciweilization.cardFaces2[i];
                 break;
             }
             i++;
@@ -49,7 +50,7 @@ public class UpdateSprites : MonoBehaviour
         {
             if (this.name == card)
             {
-                cardFace = ciweilization.cardFaces3[i % 4];
+                cardFace = ciweilization.cardFaces3[i];
                 break;
             }
             i++;
@@ -60,7 +61,7 @@ public class UpdateSprites : MonoBehaviour
         {
             if (this.name == card)
             {
-                cardFace = ciweilization.cardFaces4[i % 4];
+                cardFace = ciweilization.cardFaces4[i];
                 break;
             }
             i++;
@@ -72,6 +73,17 @@ public class UpdateSprites : MonoBehaviour
             if (this.name == card)
             {
                 cardFace = ciweilization.cardFacesHeroes[i];
+                break;
+            }
+            i++;
+        }
+
+        i = 0;
+        foreach (string card in deckChances)
+        {
+            if (this.name == card)
+            {
+                cardFace = ciweilization.cardFacesChances[i];
                 break;
             }
             i++;

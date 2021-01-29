@@ -67,10 +67,36 @@ public class UserInput : MonoBehaviour
                     audioManager.Play(name);
                 }
 
+                else if (hit.collider.CompareTag("HeroTrigger"))
+                {
+                    Debug.Log("You just clicked on a hero trigger.");
+                    //write these into a function later
+                    StartCoroutine(ciweilization.CiweilizationDealHeroes(player.playerNumber));
+                    ciweilization.CiweilizationSortHeroes();
+                    audioManager.Play("Coin");
+                }
+
                 else if (hit.collider.CompareTag("HeroCard"))
                 {
                     Debug.Log("You just clicked on a hero card.");
                     SelectHero(hit.collider.gameObject);
+                    audioManager.Play("Coin");
+                }
+
+                else if (hit.collider.CompareTag("ChanceTrigger"))
+                {
+                    Debug.Log("You just clicked on a chance trigger.");
+                    //write these into a function later
+                    StartCoroutine(ciweilization.CiweilizationDealChances());
+                    audioManager.Play("Coin");
+                    player.moves = 0;
+                }
+
+                else if (hit.collider.CompareTag("ChanceCard"))
+                {
+                    Debug.Log("You just clicked on a chance card.");
+                    //write these into a function later
+                    DestroyAll("ChanceCard");
                     audioManager.Play("Coin");
                 }
             }
@@ -195,8 +221,13 @@ public class UserInput : MonoBehaviour
 
     void SelectHero(GameObject obj)
     {
+        if (player.heroObj)
+        {
+            Destroy(player.heroObj);
+        }
         GameObject hero = Instantiate(obj, player.heroPos.transform.position, 
                                         Quaternion.identity, player.heroPos.transform);
+        player.heroObj = hero;
         hero.tag = "Hero";
         DestroyAll("HeroCard");
     }

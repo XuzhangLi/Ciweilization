@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
 
     private AudioManager audioManager;
 
+    public GameObject heroObj;
+
     public int moves;
 
     public float xOffset = 0.5f;
