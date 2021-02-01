@@ -7,11 +7,14 @@ public class Energy : MonoBehaviour
 {
     private Player player;
 
-    private int energy;
+    private double energy;
+
+    // full energy count, which is 6
     public int numOfEnergies = 6;
 
     public Image[] energies;
     public Sprite fullEnergy;
+    public Sprite halfEnergy;
     public Sprite emptyEnergy;
 
     private void Start()
@@ -23,6 +26,7 @@ public class Energy : MonoBehaviour
     {
         energy = player.moves;
 
+        //energy can't exceed max count 
         if (energy > numOfEnergies)
         {
             energy = numOfEnergies;
@@ -30,16 +34,21 @@ public class Energy : MonoBehaviour
 
         for (int i = 0; i < energies.Length; i++)
         {
-            if (i < energy)
+            //decide whether to display full, half, or empty energy sprite for each spot
+            if (i < energy - 0.5f)
             {
                 energies[i].sprite = fullEnergy;
+            }
+            else if (i == energy - 0.5f)
+            {
+                energies[i].sprite = halfEnergy;
             }
             else
             {
                 energies[i].sprite = emptyEnergy;
             }
 
-
+            //only display energy spots as many as the full energy count
             if (i < numOfEnergies)
             {
                 energies[i].enabled = true;
@@ -50,8 +59,4 @@ public class Energy : MonoBehaviour
             }
         }
     }
-
-
-    // Start is called before the first frame update
-
 }

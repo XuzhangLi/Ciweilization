@@ -8,7 +8,7 @@ public class EndTurnButton : MonoBehaviour
     Ciweilization ciweilization;
     AudioManager audioManager;
 
-    private TextMeshProUGUI activePlayerText;
+    //private TextMeshProUGUI activePlayerText;
 
     // Start is called before the first frame update
     private void Start()
@@ -17,8 +17,8 @@ public class EndTurnButton : MonoBehaviour
 
         audioManager = FindObjectOfType<AudioManager>();
 
-        activePlayerText = GameObject.Find("Canvas/Active Player Text").GetComponent<TextMeshProUGUI>();
-        activePlayerText.text = "player 1's turn!";
+        //activePlayerText = GameObject.Find("Canvas/Active Player Text").GetComponent<TextMeshProUGUI>();
+        //activePlayerText.text = "player 1's turn!";
     }
 
     public void OnButtonPress()
@@ -35,19 +35,19 @@ public class EndTurnButton : MonoBehaviour
             if (ciweilization.activePlayerNumber == 1)
             {
                 ciweilization.activePlayerNumber = 2;
-                activePlayerText.text = "player 2's turn!";
+                //activePlayerText.text = "player 2's turn!";
                 StartCoroutine(ciweilization.CiweilizationDealHeroes(2));
             }
             else if (ciweilization.activePlayerNumber == 2)
             {
                 ciweilization.activePlayerNumber = 3;
-                activePlayerText.text = "player 3's turn!";
+                //activePlayerText.text = "player 3's turn!";
                 StartCoroutine(ciweilization.CiweilizationDealHeroes(3));
             }
             else if (ciweilization.activePlayerNumber == 3)
             {
                 ciweilization.activePlayerNumber = 1;
-                activePlayerText.text = "player 1's turn!";
+                //activePlayerText.text = "player 1's turn!";
                 ciweilization.CiweilizationNextTurn();
                 ciweilization.CiweilizationSortHeroes();
             }
@@ -61,17 +61,17 @@ public class EndTurnButton : MonoBehaviour
             if (ciweilization.activePlayerNumber == 1)
             {
                 ciweilization.activePlayerNumber = 2;
-                activePlayerText.text = "player 2's turn!";
+                //activePlayerText.text = "player 2's turn!";
             }
             else if (ciweilization.activePlayerNumber == 2)
             {
                 ciweilization.activePlayerNumber = 3;
-                activePlayerText.text = "player 3's turn!";
+                //activePlayerText.text = "player 3's turn!";
             }
             else if (ciweilization.activePlayerNumber == 3)
             {
                 ciweilization.activePlayerNumber = 1;
-                activePlayerText.text = "player 1's turn!";
+                //activePlayerText.text = "player 1's turn!";
                 ciweilization.CiweilizationNextTurn();
             }
             else

@@ -20,8 +20,8 @@ public class UpdateSprites : MonoBehaviour
         List<string> deck2 = Ciweilization.GenerateDeck("2", 1);
         List<string> deck3 = Ciweilization.GenerateDeck("3", 1);
         List<string> deck4 = Ciweilization.GenerateDeck("4", 1);
-        List<string> deckHeroes = Ciweilization.GenerateHeroDeck(28, 1);
-        List<string> deckChances = Ciweilization.GenerateChanceDeck(9, 1);
+        List<string> deckHeroes = ciweilization.GenerateHeroDeck();
+        List<string> deckChances = ciweilization.GenerateChanceDeck();
 
         int i = 0;
         foreach (string card in deck1)

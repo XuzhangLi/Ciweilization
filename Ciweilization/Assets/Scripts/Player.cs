@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class Player : MonoBehaviour
 
     public GameObject heroObj;
 
-    public int moves;
+
+
+    public double moves;
 
     public float xOffset = 0.5f;
     public float yOffset = -0.03f;

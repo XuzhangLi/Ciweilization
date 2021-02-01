@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8812105220843897947
+--- !u!1 &4766193690064875380
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8812105220843897948}
-  - component: {fileID: 8812105220843897949}
-  - component: {fileID: 8812105220843897946}
-  - component: {fileID: 8812105221804172348}
+  - component: {fileID: 4766193690064875376}
+  - component: {fileID: 4766193690064875377}
+  - component: {fileID: 4766193691037088833}
+  - component: {fileID: 4766193690064875381}
+  - component: {fileID: 4766193690064875382}
+  - component: {fileID: 4766193690064875383}
   m_Layer: 0
   m_Name: Ciweilization Game
   m_TagString: GameController
@@ -19,13 +21,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8812105220843897948
+--- !u!4 &4766193690064875376
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8812105220843897947}
+  m_GameObject: {fileID: 4766193690064875380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.095050156, y: -0.122646846, z: -1.238086}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,40 +35,87 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8812105220843897949
+--- !u!114 &4766193690064875377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8812105220843897947}
+  m_GameObject: {fileID: 4766193690064875380}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b18b3d14bf79b84aa59675f47d9f05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCenter: {fileID: 0}
-  cardfaces1:
+  playerPrefab: {fileID: 6589824745938875940, guid: 880e0017ae00065499967156ed8bf176,
+    type: 3}
+  player1: {fileID: 6589824746565861685, guid: 880e0017ae00065499967156ed8bf176, type: 3}
+  player2: {fileID: 0}
+  player3: {fileID: 0}
+  cardFaces1:
   - {fileID: -1320424977615169107, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 4086840963728156412, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 2750795389097293052, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 4101755466766449738, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
-  cardfaces2:
+  cardFaces2:
   - {fileID: 4034111375347477833, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 8333918912670004024, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: -132877467780745887, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: -8641687624321060193, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
-  cardfaces3:
+  cardFaces3:
   - {fileID: 1392962367027583912, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: -2194138568254304794, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 3010423078400362483, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 7319439474163671232, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
-  cardfaces4:
+  cardFaces4:
   - {fileID: -1566989725039561307, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 716278070629735016, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: 6710663956633538786, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: -8153183902287412690, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
+  cardFacesHeroes:
+  - {fileID: 21300000, guid: eb84fe9b191729544af0973bfef06879, type: 3}
+  - {fileID: 21300000, guid: deff52b2abe8dc14a86bab79ee6ad5c3, type: 3}
+  - {fileID: 21300000, guid: a9e14b7bf0aecb940971a86b14281fbf, type: 3}
+  - {fileID: 21300000, guid: 4084f95a936b1874c9ca3638f2c995f6, type: 3}
+  - {fileID: 21300000, guid: 027526fec8059a240a9d10b79e402cca, type: 3}
+  - {fileID: 21300000, guid: 14f930e73ce2f4347bceacb360d6a211, type: 3}
+  - {fileID: 21300000, guid: 0bb01e24c520f5c44a2be95738d8f344, type: 3}
+  - {fileID: 21300000, guid: e24cd1f1f66417341b2f7330c88320a2, type: 3}
+  - {fileID: 21300000, guid: 1f1db7a4ada37ec4483ebaf2877fc771, type: 3}
+  - {fileID: 21300000, guid: c8f057bb218d18c4abd6385d635cbff9, type: 3}
+  - {fileID: 21300000, guid: b16471abb1b297b489d20ef2c54ee67c, type: 3}
+  - {fileID: 21300000, guid: 7cafde81719cd124ab0bb34d297ae9a5, type: 3}
+  - {fileID: 21300000, guid: b280af1b1245a2149839d09662ef3fff, type: 3}
+  - {fileID: 21300000, guid: fc7201a5d4d07b24ca263348d81f7907, type: 3}
+  - {fileID: 21300000, guid: 4211f5e809008224184f1d3dd81b2e39, type: 3}
+  - {fileID: 21300000, guid: a09f0d049b6e02b44a7856f595a925b6, type: 3}
+  - {fileID: 21300000, guid: 69ff1101ab08f4b48a7a4862c6581a69, type: 3}
+  - {fileID: 21300000, guid: 9e0b70613f819e842bb37b67cc1ada9d, type: 3}
+  - {fileID: 21300000, guid: ab358b6ec61843d4d9cd0e5f0f4eb748, type: 3}
+  - {fileID: 21300000, guid: 7d3ce7e0948c9f542b131940c1653dc5, type: 3}
+  - {fileID: 21300000, guid: e0df4aeb7a7bfd4448cbdba51c470baa, type: 3}
+  - {fileID: 21300000, guid: f6096be268fe4e144b2c81a8ead21289, type: 3}
+  - {fileID: 21300000, guid: 13323c96328c3a848959e8055e91ae63, type: 3}
+  - {fileID: 21300000, guid: ef2d124a5e0701c4c933ce1a763bb295, type: 3}
+  - {fileID: 21300000, guid: 2ef2994bafe7f4a4798945ced1ab3c11, type: 3}
+  - {fileID: 21300000, guid: 491a930a8eb531a489c7c2575f36986f, type: 3}
+  - {fileID: 21300000, guid: 5feb071c1cd070643a0302d11e504eea, type: 3}
+  - {fileID: 21300000, guid: 68b805126e3f54940bff15da780dfc1a, type: 3}
+  cardFacesChances:
+  - {fileID: 21300000, guid: df44ccfd841589544b79334a0f787528, type: 3}
+  - {fileID: 21300000, guid: 1ef7ba825e6e70345a60105527fffef6, type: 3}
+  - {fileID: 21300000, guid: 01d5f4808fc68ac48a3c1d3bf3f74c93, type: 3}
+  - {fileID: 21300000, guid: 7c336057007de2542bc776e59c1d7ae1, type: 3}
+  - {fileID: 21300000, guid: a02ed9fbb2eb9144982df8206f3bfaa6, type: 3}
+  - {fileID: 21300000, guid: 8db02371dcb0c134a995e1c1bb2a3d4b, type: 3}
+  - {fileID: 21300000, guid: 3065da0891acbd14e8a47b80ffd13067, type: 3}
+  - {fileID: 21300000, guid: 99a25b67e9408204e942b1229340ee14, type: 3}
+  - {fileID: 21300000, guid: 43a7936b953b24443b421759435fec60, type: 3}
   cardPrefab: {fileID: 6722234269616455992, guid: 29839c76fb36a394c803f7370787af8e,
+    type: 3}
+  heroCardPrefab: {fileID: 4145655154805566412, guid: 3ae89d7b1b8f0634d9c02816ba19ba8c,
+    type: 3}
+  chanceCardPrefab: {fileID: 8910205827347624200, guid: d045404ace660a741a835405a095e21c,
     type: 3}
   level1Pos:
   - {fileID: 0}
@@ -82,38 +131,257 @@ MonoBehaviour:
   - {fileID: 0}
   level4Pos:
   - {fileID: 0}
+  player1Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player2Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player3Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chancePos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  heroPos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   deck1: []
   deck2: []
   deck3: []
   deck4: []
+  deckHeroes: []
+  deckHeroesCopy: []
+  deckChances: []
+  deckChancesCopy: []
   turn: 1
   isSpring: 0
   isSummer: 0
   isFall: 0
   isWinter: 0
---- !u!114 &8812105220843897946
+  activePlayerNumber: 0
+  wonderG2: 0
+  wonderR2: 0
+  wonderY2: 0
+  wonderB2: 0
+  wonderG3: 0
+  wonderR3: 0
+  wonderY3: 0
+  wonderB3: 0
+  wonderG4: 0
+  wonderR4: 0
+  wonderY4: 0
+  wonderB4: 0
+--- !u!114 &4766193691037088833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8812105220843897947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3547c41f54e92c0498f56217e1c93524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCenter: {fileID: 2098049768517750949, guid: e2b89d149a3b4ad4087694fe95922dc4,
-    type: 3}
---- !u!114 &8812105221804172348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8812105220843897947}
+  m_GameObject: {fileID: 4766193690064875380}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18b94d9eb23f9014e9a54c089f777434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4766193690064875381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766193690064875380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec0241b6ed91d6842a51aab5698ea02b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Level1Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player1Level2Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player1Level3Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player1Level4Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player1Energies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player2Level1Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player2Level2Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player2Level3Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player2Level4Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player2Energies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player3Level1Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player3Level2Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player3Level3Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player3Level4Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player3Energies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &4766193690064875382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766193690064875380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffaedc77060edb640827779c752dfd15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroNames:
+  - Barbarian
+  - Curator
+  - ConMan
+  - Boss
+  - Chimera
+  - Daydreamer
+  - Dragon
+  - Exploror
+  - Lich
+  - Madman
+  - Magician
+  - Manipulator
+  - Merchant
+  - Researcher
+  - Bandit
+  - TimeTraveler
+  - Tinker
+  - Trickster
+  - Baron
+  - Opportunist
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  heroNamesCopy:
+  - Barbarian
+  - Curator
+  - ConMan
+  - Boss
+  - Chimera
+  - Daydreamer
+  - Dragon
+  - Exploror
+  - Lich
+  - Madman
+  - Magician
+  - Manipulator
+  - Merchant
+  - Researcher
+  - Bandit
+  - TimeTraveler
+  - Tinker
+  - Trickster
+  - Baron
+  - Opportunist
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+--- !u!114 &4766193690064875383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766193690064875380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df796ec0aee70b4993be4b7d0fe51d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chanceNames:
+  - c0
+  - c1
+  - c2
+  - c3
+  - c4
+  - c5
+  - c6
+  - c7
+  - c8
+  chanceNamesCopy:
+  - c0
+  - c1
+  - c2
+  - c3
+  - c4
+  - c5
+  - c6
+  - c7
+  - c8

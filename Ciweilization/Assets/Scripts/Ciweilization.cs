@@ -109,6 +109,8 @@ public class Ciweilization : MonoBehaviour
     [HideInInspector] public bool wonderY4 = false;
     [HideInInspector] public bool wonderB4 = false;
 
+    public Image[] actives;
+    public Sprite isActive;
 
     // Start is called before the first frame update
     void Start()
@@ -125,7 +127,7 @@ public class Ciweilization : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         turnText = GameObject.Find("Canvas/Turn Text").GetComponent<TextMeshProUGUI>();
-        turnText.text = "Hero Selction";
+        turnText.text = "Hero Selection";
 
         ruleText = GameObject.Find("Canvas/Rule Text").GetComponent<TextMeshProUGUI>();
         ruleText.text = "";
@@ -157,12 +159,37 @@ public class Ciweilization : MonoBehaviour
         StartCoroutine(CiweilizationDealHeroes(1));
 
         audioManager.Play("Season Start");
+        audioManager.Play("Theme");
+
+        actives[0].sprite = isActive;
+        actives[1].sprite = isActive;
+        actives[2].sprite = isActive;
+        actives[0].enabled = false;
+        actives[1].enabled = false;
+        actives[2].enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (activePlayerNumber == 1)
+        {
+            actives[0].enabled = true;
+            actives[1].enabled = false;
+            actives[2].enabled = false;
+        }
+        else if (activePlayerNumber == 2)
+        {
+            actives[0].enabled = false;
+            actives[1].enabled = true;
+            actives[2].enabled = false;
+        }
+        else if (activePlayerNumber == 3)
+        {
+            actives[0].enabled = false;
+            actives[1].enabled = false;
+            actives[2].enabled = true;
+        }
     }
 
     // takes in a level and how many copies are there for each card, gives out a deck
@@ -179,28 +206,22 @@ public class Ciweilization : MonoBehaviour
         return newDeck;
     }
 
-    public static List<string> GenerateChanceDeck(int totalChances, int x)
+    public List<string> GenerateChanceDeck()
     {
         List<string> newDeck = new List<string>();
-        for (int i = 0; i < x; i++)
+        for (int k = 0; k < cardFacesChances.Length; k++)
         {
-            for (int k = 0; k < totalChances; k++)
-            {
-                newDeck.Add("c" + k);
-            }
+            newDeck.Add("c" + k);
         }
         return newDeck;
     }
 
-    public static List<string> GenerateHeroDeck(int totalHeroes, int x)
+    public List<string> GenerateHeroDeck()
     {
         List<string> newDeck = new List<string>();
-        for (int i = 0; i < x; i++)
+        for (int k = 0; k < cardFacesHeroes.Length; k++)
         {
-            for (int k = 0; k < totalHeroes; k++)
-            {
-                newDeck.Add("h" + k);
-            }
+            newDeck.Add("h" + k);
         }
         return newDeck;
     }
@@ -212,8 +233,8 @@ public class Ciweilization : MonoBehaviour
         deck2 = GenerateDeck("2", 9);
         deck3 = GenerateDeck("3", 6);
         deck4 = GenerateDeck("4", 3);
-        deckHeroes = GenerateHeroDeck(28, 1);
-        deckChances = GenerateChanceDeck(9, 1);
+        deckHeroes = GenerateHeroDeck();
+        deckChances = GenerateChanceDeck();
 
         Shuffle(deck1);
         Shuffle(deck2);
@@ -426,7 +447,7 @@ public class Ciweilization : MonoBehaviour
 
     public void CiweilizationSortHeroes()
     {
-        deckHeroes = GenerateHeroDeck(28, 1);
+        deckHeroes = GenerateHeroDeck();
         Shuffle(deckHeroes);
 
         for (int i = 0; i < 3; i++)
@@ -443,7 +464,7 @@ public class Ciweilization : MonoBehaviour
     }
     public void CiweilizationSortChances()
     {
-        deckChances = GenerateChanceDeck(9, 1);
+        deckChances = GenerateChanceDeck();
         Shuffle(deckChances);
 
         for (int i = 0; i < 3; i++)
@@ -489,9 +510,9 @@ public class Ciweilization : MonoBehaviour
         newCard.GetComponent<Selectable>().faceUp = true;
     }
 
-    public int CiweilizationCountPlayerMoves(Player player)
+    public double CiweilizationCountPlayerMoves(Player player)
     {
-        int count = 1;
+        double count = 1f;
         int wonderLevel2 = player.PlayerGetWonder_G2() + player.PlayerGetWonder_R2()
                         + player.PlayerGetWonder_Y2() + player.PlayerGetWonder_B2();
         int wonderLevel3 = player.PlayerGetWonder_G3() + player.PlayerGetWonder_R3()
@@ -501,34 +522,35 @@ public class Ciweilization : MonoBehaviour
 
         if (isSpring == true)
         {
-            if (player.PlayerGetG1() >= 2)
+            if (player.PlayerGetG1() >= 0)
             {
-                count += player.PlayerGetG1()/2;
+                count += player.PlayerGetG1() * 0.5f;
             }
             count += wonderLevel2;
         }
         else if (isSummer == true)
         {
-            if (player.PlayerGetR2() + wonderLevel2 - player.PlayerGetWonder_R2() >= 2)
+            if (player.PlayerGetR2() + wonderLevel2 - player.PlayerGetWonder_R2() >= 0)
             {
-                count += (player.PlayerGetR2() + wonderLevel2 - player.PlayerGetWonder_R2())/2;
+                count += (player.PlayerGetR2() + wonderLevel2 - player.PlayerGetWonder_R2()) * 0.5f;
             }
             count += wonderLevel3;
         }
         else if (isFall == true)
         {
-            if (player.PlayerGetY3() + wonderLevel3 - player.PlayerGetWonder_Y3() >= 2)
+            if (player.PlayerGetY3() + wonderLevel3 - player.PlayerGetWonder_Y3() >= 0)
             {
-                count += (player.PlayerGetY3() + wonderLevel3 - player.PlayerGetWonder_Y3())/2;
+                count += (player.PlayerGetY3() + wonderLevel3 - player.PlayerGetWonder_Y3()) * 0.5f;
             }
             count += wonderLevel4;
         }
         else if (isWinter == true)
         {
-            if (player.PlayerGetB3() + wonderLevel3 - player.PlayerGetWonder_B3() >= 2)
+            if (wonderLevel4 + player.PlayerGetB4() >= 1)
             {
-                count += (player.PlayerGetB3() + wonderLevel3 - player.PlayerGetWonder_B3() - 2) / 2;
+                count += (player.PlayerGetB3() + wonderLevel3 - player.PlayerGetWonder_B3()) * 0.5f;
                 count += wonderLevel4 + player.PlayerGetB4() - player.PlayerGetWonder_B4();
+                count -= 1;
             }
         }
         
@@ -541,6 +563,8 @@ public class Ciweilization : MonoBehaviour
 
         if (turn == 1)
         {
+            //audioManager.StopPlaying("Theme");
+            //audioManager.Play("Spring Theme");
             audioManager.Play("Season Start");
 
             isSpring = true;
@@ -553,6 +577,8 @@ public class Ciweilization : MonoBehaviour
         }
         if (turn == 4 && isSpring == true)
         {
+            //audioManager.StopPlaying("Spring Theme");
+            //audioManager.Play("Summer Theme");
             audioManager.Play("Season Start");
 
             isSpring = false;
@@ -566,6 +592,8 @@ public class Ciweilization : MonoBehaviour
         }
         else if (turn == 7 && isSummer == true)
         {
+            //audioManager.StopPlaying("Summer Theme");
+            //audioManager.Play("Fall Theme");
             audioManager.Play("Season Start");
 
             isSummer = false;
@@ -579,6 +607,8 @@ public class Ciweilization : MonoBehaviour
         }
         else if (turn == 10 && isFall == true)
         {
+            //audioManager.StopPlaying("Fall Theme");
+            //audioManager.Play("Winter Theme");
             audioManager.Play("Season Start");
 
             isFall = false;

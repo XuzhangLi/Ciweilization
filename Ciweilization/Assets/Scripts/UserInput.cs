@@ -44,7 +44,7 @@ public class UserInput : MonoBehaviour
 
                 if (hit.collider.CompareTag("Card"))
                 {
-                    if (player.moves > 0)
+                    if (player.moves >= 1)
                     {
                         BuyCard(hit.collider.gameObject);
                     }
@@ -98,6 +98,13 @@ public class UserInput : MonoBehaviour
                     //write these into a function later
                     DestroyAll("ChanceCard");
                     audioManager.Play("Coin");
+                }
+
+                else if (hit.collider.CompareTag("Hero"))
+                {
+                    Debug.Log("You just clicked on a hero. You get half extra move.");
+                    player.moves += 0.5f;
+                    audioManager.Play("Discard");
                 }
             }
         }
