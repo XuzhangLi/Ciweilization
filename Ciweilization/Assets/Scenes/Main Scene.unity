@@ -1186,7 +1186,7 @@ GameObject:
   - component: {fileID: 235841567}
   - component: {fileID: 235841566}
   m_Layer: 5
-  m_Name: Energy (Move) (5)
+  m_Name: Energy (Move) (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1204,7 +1204,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1493115835}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2810,7 +2810,7 @@ GameObject:
   - component: {fileID: 558681368}
   - component: {fileID: 558681367}
   m_Layer: 5
-  m_Name: Energy (Move) (3)
+  m_Name: Energy (Move) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2828,7 +2828,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1493115835}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4295,10 +4295,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 149638767}
-  - {fileID: 1644733907}
   - {fileID: 1475115133}
-  - {fileID: 1713005533}
   - {fileID: 868879635}
+  - {fileID: 1644733907}
+  - {fileID: 1713005533}
   - {fileID: 1443407337}
   m_Father: {fileID: 762269049}
   m_RootOrder: 1
@@ -4419,7 +4419,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 831442008}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4920,7 +4920,7 @@ GameObject:
   - component: {fileID: 989724867}
   - component: {fileID: 989724866}
   m_Layer: 5
-  m_Name: Energy (Move) (4)
+  m_Name: Energy (Move) (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4938,7 +4938,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1493115835}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5936,7 +5936,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1255744915}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6272,7 +6272,7 @@ GameObject:
   - component: {fileID: 1162579815}
   - component: {fileID: 1162579814}
   m_Layer: 5
-  m_Name: Energy (Move) (2)
+  m_Name: Energy (Move) (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6290,7 +6290,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1493115835}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6483,7 +6483,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1255744915}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7045,10 +7045,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1066614119}
-  - {fileID: 1458341016}
   - {fileID: 1750390785}
-  - {fileID: 1136952357}
   - {fileID: 1207571538}
+  - {fileID: 1458341016}
+  - {fileID: 1136952357}
   - {fileID: 579491447}
   m_Father: {fileID: 762269049}
   m_RootOrder: 2
@@ -8323,7 +8323,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1255744915}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8404,7 +8404,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 831442008}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8477,10 +8477,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 373659048}
-  - {fileID: 1162579813}
   - {fileID: 558681366}
-  - {fileID: 989724865}
   - {fileID: 235841565}
+  - {fileID: 1162579813}
+  - {fileID: 989724865}
   - {fileID: 797854359}
   m_Father: {fileID: 762269049}
   m_RootOrder: 0
@@ -9631,7 +9631,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 831442008}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10298,7 +10298,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 831442008}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10497,7 +10497,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1255744915}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13021,6 +13021,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
+      propertyPath: player1Energies.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
+        type: 3}
+      propertyPath: player2Energies.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
+        type: 3}
+      propertyPath: player3Energies.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
+        type: 3}
       propertyPath: player1Level1Pos.Array.data[0]
       value: 
       objectReference: {fileID: 472212010}
@@ -13108,22 +13123,22 @@ PrefabInstance:
         type: 3}
       propertyPath: player1Energies.Array.data[1]
       value: 
-      objectReference: {fileID: 1162579814}
+      objectReference: {fileID: 558681367}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player1Energies.Array.data[2]
       value: 
-      objectReference: {fileID: 558681367}
+      objectReference: {fileID: 235841566}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player1Energies.Array.data[3]
       value: 
-      objectReference: {fileID: 989724866}
+      objectReference: {fileID: 1162579814}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player1Energies.Array.data[4]
       value: 
-      objectReference: {fileID: 235841566}
+      objectReference: {fileID: 989724866}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player1Energies.Array.data[5]
@@ -13223,22 +13238,22 @@ PrefabInstance:
         type: 3}
       propertyPath: player2Energies.Array.data[1]
       value: 
-      objectReference: {fileID: 1644733908}
+      objectReference: {fileID: 1475115134}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player2Energies.Array.data[2]
       value: 
-      objectReference: {fileID: 1475115134}
+      objectReference: {fileID: 868879636}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player2Energies.Array.data[3]
       value: 
-      objectReference: {fileID: 1713005534}
+      objectReference: {fileID: 1644733908}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player2Energies.Array.data[4]
       value: 
-      objectReference: {fileID: 868879636}
+      objectReference: {fileID: 1713005534}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player2Energies.Array.data[5]
@@ -13333,22 +13348,22 @@ PrefabInstance:
         type: 3}
       propertyPath: player3Energies.Array.data[1]
       value: 
-      objectReference: {fileID: 1458341017}
+      objectReference: {fileID: 1750390786}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player3Energies.Array.data[2]
       value: 
-      objectReference: {fileID: 1750390786}
+      objectReference: {fileID: 1207571539}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player3Energies.Array.data[3]
       value: 
-      objectReference: {fileID: 1136952358}
+      objectReference: {fileID: 1458341017}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player3Energies.Array.data[4]
       value: 
-      objectReference: {fileID: 1207571539}
+      objectReference: {fileID: 1136952358}
     - target: {fileID: 4766193690064875381, guid: 71d27e47752639e429200933af3c8533,
         type: 3}
       propertyPath: player3Energies.Array.data[5]

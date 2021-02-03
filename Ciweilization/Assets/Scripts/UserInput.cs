@@ -122,6 +122,11 @@ public class UserInput : MonoBehaviour
                 {
                     DeleteBuilding(hit.collider.gameObject);
                 }
+                else if (hit.collider.CompareTag("Hero"))
+                {
+                    player.moves -= 0.5f;
+                    audioManager.Play("Discard");
+                }
             }
         }
     }

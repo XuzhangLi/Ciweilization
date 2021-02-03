@@ -127,7 +127,7 @@ public class Ciweilization : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         turnText = GameObject.Find("Canvas/Turn Text").GetComponent<TextMeshProUGUI>();
-        turnText.text = "Hero Selection";
+        turnText.text = "Hero Selection Time";
 
         ruleText = GameObject.Find("Canvas/Rule Text").GetComponent<TextMeshProUGUI>();
         ruleText.text = "";
@@ -546,11 +546,14 @@ public class Ciweilization : MonoBehaviour
         }
         else if (isWinter == true)
         {
-            if (wonderLevel4 + player.PlayerGetB4() >= 1)
+            if (player.PlayerGetB3() >= 1)
             {
-                count += (player.PlayerGetB3() + wonderLevel3 - player.PlayerGetWonder_B3()) * 0.5f;
+                count += wonderLevel3 * 0.5f;
                 count += wonderLevel4 + player.PlayerGetB4() - player.PlayerGetWonder_B4();
-                count -= 1;
+                if (player.PlayerGetB3() >= 4)
+                {
+                    count += 1;
+                }
             }
         }
         
@@ -569,10 +572,9 @@ public class Ciweilization : MonoBehaviour
 
             isSpring = true;
             Debug.Log("You've selected heroes. Spring comes!");
-            ruleText.text = "Spring Time! \n\n"
-                    + "Get an extra move for every two green-1 buildings and " 
-                    + "every level-2 wonders you have.\n"
-                    + "(wonders counts as all colors.)";
+            ruleText.text = "Spring Time!\n\n"
+                    + "(1) Gain 0.5 move for every green-1 or wonder-1.\n"
+                    + "(2) Gain 1 move for every wonder-2.";
             StartCoroutine(CiweilizationDeal1());
         }
         if (turn == 4 && isSpring == true)
@@ -584,8 +586,8 @@ public class Ciweilization : MonoBehaviour
             isSpring = false;
             isSummer = true;
             ruleText.text = "Summer Time! \n\n"
-                                + "Gain an extra move for every two Red-2 buildings and every level-3 wonders you have.\n"
-                                + "(wonders counts as all colors.)";
+                    + "(1) Gain 0.5 move for every red-2 or wonder-2.\n"
+                    + "(2) Gain 1 move for every wonder-3.";
             //ruleText.color = Color.red;
             Debug.Log("Spring has past and summer has come.");
             StartCoroutine(CiweilizationDeal2());
@@ -599,8 +601,8 @@ public class Ciweilization : MonoBehaviour
             isSummer = false;
             isFall = true;
             ruleText.text = "Fall Time! \n\n"
-                                + "Gain an extra move for every two Yellow-3 buildings and every level-4 wonders you have.\n"
-                                + "(wonders counts as all colors.)";
+                    + "(1) Gain 0.5 move for every yellow-3 or wonder-3.\n"
+                    + "(2) Gain 1 move for every wonder-4.";
             //ruleText.color = Color.yellow;
             Debug.Log("Summer has past and Fall has come.");
             StartCoroutine(CiweilizationDeal3());
@@ -614,10 +616,10 @@ public class Ciweilization : MonoBehaviour
             isFall = false;
             isWinter = true;
             ruleText.text = "Winter Time! \n\n"
-                    + "Gain an extra move for having two Blue-3 buildings and a Blue-4 building and,\n"
-                    + "and gain an extra move for each two of additional Blue-3 buildings and for each"
-                    + "one of additional two Blue-4 building you have.\n"
-                    + "(wonders counts as all colors.)";
+                    + "You must have any one blue-3 to: \n"
+                    + "(1) Gain 0.5 move for every wonder-3. \n"
+                    + "(2) Gain 1 move for every blue-4 or wonder-4. \n"
+                    + "(3) Gain 0.5 move for any four blue-3.";
             //ruleText.color = Color.cyan;
             Debug.Log("Fall has past and winter has come.");
             StartCoroutine(CiweilizationDeal4());
