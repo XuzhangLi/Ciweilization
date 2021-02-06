@@ -519,42 +519,42 @@ public class Ciweilization : MonoBehaviour
                         + player.PlayerGetWonder_Y3() + player.PlayerGetWonder_B3();
         int wonderLevel4 = player.PlayerGetWonder_G4() + player.PlayerGetWonder_R4()
                         + player.PlayerGetWonder_Y4() + player.PlayerGetWonder_B4();
-
+        int level1 = player.PlayerGetG1() + player.PlayerGetR1() +
+                        player.PlayerGetY1() + player.PlayerGetB1();
+        int level2 = player.PlayerGetG2() + player.PlayerGetR2() +
+                        player.PlayerGetY2() + player.PlayerGetB2();
+        int level3 = player.PlayerGetG3() + player.PlayerGetR3() +
+                        player.PlayerGetY3() + player.PlayerGetB3();
+        int level4 = player.PlayerGetG4() + player.PlayerGetR4() +
+                        player.PlayerGetY4() + player.PlayerGetB4();
         if (isSpring == true)
         {
-            if (player.PlayerGetG1() >= 0)
-            {
-                count += player.PlayerGetG1() * 0.5f;
-            }
-            count += wonderLevel2;
+            count += level1 * 0.25f;
+            count += level2 * 0.5f;
+            count += player.PlayerGetG1() * 0.25f;
+            count += player.PlayerGetG2() * 0.5f;
         }
         else if (isSummer == true)
         {
-            if (player.PlayerGetR2() + wonderLevel2 - player.PlayerGetWonder_R2() >= 0)
-            {
-                count += (player.PlayerGetR2() + wonderLevel2 - player.PlayerGetWonder_R2()) * 0.5f;
-            }
-            count += wonderLevel3;
+            count += level2 * 0.25f;
+            count += level3 * 0.5f;
+            count += player.PlayerGetR2() * 0.25f;
+            count += player.PlayerGetR3() * 0.5f;
         }
         else if (isFall == true)
         {
-            if (player.PlayerGetY3() + wonderLevel3 - player.PlayerGetWonder_Y3() >= 0)
-            {
-                count += (player.PlayerGetY3() + wonderLevel3 - player.PlayerGetWonder_Y3()) * 0.5f;
-            }
-            count += wonderLevel4;
+            count += level3 * 0.25f;
+            count += level4 * 0.5f;
+            count += player.PlayerGetY3() * 0.25f;
+            count += player.PlayerGetY4() * 0.5f;
         }
         else if (isWinter == true)
         {
-            if (player.PlayerGetB3() >= 1)
-            {
-                count += wonderLevel3 * 0.5f;
-                count += wonderLevel4 + player.PlayerGetB4() - player.PlayerGetWonder_B4();
-                if (player.PlayerGetB3() >= 4)
-                {
-                    count += 1;
-                }
-            }
+            count += player.PlayerGetB4() * 0.25f;
+            count += level4 * 0.25f;
+            count += player.PlayerGetB3() * 0.25f;
+            count += (wonderLevel3 * 0.25f + wonderLevel2 * 0.25f);
+            count -= player.PlayerGetWonder_B3() * 0.25f;
         }
         
         return count;
@@ -572,9 +572,10 @@ public class Ciweilization : MonoBehaviour
 
             isSpring = true;
             Debug.Log("You've selected heroes. Spring comes!");
-            ruleText.text = "Spring Time!\n\n"
-                    + "(1) Gain 0.5 move for every green-1 or wonder-1.\n"
-                    + "(2) Gain 1 move for every wonder-2.";
+            ruleText.text = "Era of Agriculture!\n\n"
+                    + "(1) Gain 0.25 move for every level-1.\n"
+                    + "(2) Gain 0.5 move for every level-2.\n"
+                    + "(3) Doubles for Green.";
             StartCoroutine(CiweilizationDeal1());
         }
         if (turn == 4 && isSpring == true)
@@ -585,9 +586,10 @@ public class Ciweilization : MonoBehaviour
 
             isSpring = false;
             isSummer = true;
-            ruleText.text = "Summer Time! \n\n"
-                    + "(1) Gain 0.5 move for every red-2 or wonder-2.\n"
-                    + "(2) Gain 1 move for every wonder-3.";
+            ruleText.text = "Era of Industry! \n\n"
+                    + "(1) Gain 0.25 move for every level-2.\n"
+                    + "(2) Gain 0.5 move for every level-3.\n"
+                    + "(3) Doubles for Red.";
             //ruleText.color = Color.red;
             Debug.Log("Spring has past and summer has come.");
             StartCoroutine(CiweilizationDeal2());
@@ -600,9 +602,10 @@ public class Ciweilization : MonoBehaviour
 
             isSummer = false;
             isFall = true;
-            ruleText.text = "Fall Time! \n\n"
-                    + "(1) Gain 0.5 move for every yellow-3 or wonder-3.\n"
-                    + "(2) Gain 1 move for every wonder-4.";
+            ruleText.text = "Era of Commerce! \n\n"
+                    + "(1) Gain 0.25 move for every level-3.\n"
+                    + "(2) Gain 0.5 move for every level-4.\n"
+                    + "(3) Doubles for Yellow.";
             //ruleText.color = Color.yellow;
             Debug.Log("Summer has past and Fall has come.");
             StartCoroutine(CiweilizationDeal3());
@@ -615,11 +618,9 @@ public class Ciweilization : MonoBehaviour
 
             isFall = false;
             isWinter = true;
-            ruleText.text = "Winter Time! \n\n"
-                    + "You must have any one blue-3 to: \n"
-                    + "(1) Gain 0.5 move for every wonder-3. \n"
-                    + "(2) Gain 1 move for every blue-4 or wonder-4. \n"
-                    + "(3) Gain 0.5 move for any four blue-3.";
+            ruleText.text = "Era of Science! \n\n"
+                    + "(1) Gain 0.5 move for every blue-4.\n"
+                    + "(2) Gain 0.25 move for every blue-3, level-4, or wonder.";
             //ruleText.color = Color.cyan;
             Debug.Log("Fall has past and winter has come.");
             StartCoroutine(CiweilizationDeal4());

@@ -89,7 +89,6 @@ public class UserInput : MonoBehaviour
                     //write these into a function later
                     StartCoroutine(ciweilization.CiweilizationDealChances());
                     audioManager.Play("Coin");
-                    player.moves = 0;
                 }
 
                 else if (hit.collider.CompareTag("ChanceCard"))

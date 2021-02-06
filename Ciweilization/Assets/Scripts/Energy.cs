@@ -24,7 +24,7 @@ public class Energy : MonoBehaviour
     }
     void Update()
     {
-        energy = player.moves;
+        energy = Mathf.Floor((float) player.moves * 2) / 2;
 
         //energy can't exceed max count 
         if (energy > numOfEnergies)
