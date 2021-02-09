@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5953090838036702926}
   - component: {fileID: -1862087322255181122}
   - component: {fileID: 5975645021928268416}
+  - component: {fileID: -7272370840468062786}
   m_Layer: 0
   m_Name: Wblue4
   m_TagString: Wonder
@@ -48,6 +49,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -131,3 +133,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.015625, y: 1.4140625}
   m_EdgeRadius: 0
+--- !u!114 &-7272370840468062786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173969341678235726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39623d2dcb900324f8618935aa6ee8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCursor: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265, type: 3}
+  destroyBuildingCursor: {fileID: 2800000, guid: 44a99ee545fd8ba46a452b12c1f9378b,
+    type: 3}
+  xCursorOffset: 10
+  yCursorOffset: 6
