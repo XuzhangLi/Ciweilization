@@ -17,6 +17,9 @@ public class MenuController : MonoBehaviour
     [SerializeField] private TMP_InputField joinGameInput;
 
     [SerializeField] private GameObject startButton;
+    [SerializeField] public bool joinTestScene;
+
+    [SerializeField] public TextMeshProUGUI connectionText;
 
     private AudioManager audioManager;
     private void Awake()
@@ -34,6 +37,7 @@ public class MenuController : MonoBehaviour
     private void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
+        connectionText.text = "Connected to server! \nYou may join/create rooms now.";
         Debug.Log("Connected");
     }
 
@@ -80,7 +84,14 @@ public class MenuController : MonoBehaviour
 
     private void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Test Scene");
+        if (joinTestScene == true)
+        {
+            PhotonNetwork.LoadLevel("Test Scene");
+        }
+        else
+        {
+            PhotonNetwork.LoadLevel("Main Scene");
+        }
     }
 }
 

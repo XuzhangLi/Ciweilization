@@ -15,9 +15,9 @@ public class Ciweilization : MonoBehaviour
 
     public GameObject playerPrefab;
 
-    [HideInInspector] public Player player1;
-    [HideInInspector] public Player player2;
-    [HideInInspector] public Player player3;
+    public Player player1;
+    public Player player2;
+    public Player player3;
 
     public List<string>[] level1s;
     public List<string>[] level2s;
@@ -91,6 +91,7 @@ public class Ciweilization : MonoBehaviour
 
     private TextMeshProUGUI turnText;
     private TextMeshProUGUI ruleText;
+    private TextMeshProUGUI playerConnectionText;
 
     private Locations locations;
 
@@ -112,7 +113,12 @@ public class Ciweilization : MonoBehaviour
     public Image[] actives;
     public Sprite isActive;
 
-    // Start is called before the first frame update
+    public int playerNum = 0;
+
+    public GameObject sceneCamera;
+
+
+    /* Start is called before the first frame update. */
     void Start()
     {
         Debug.Log("Switched to main scene.");
@@ -120,18 +126,21 @@ public class Ciweilization : MonoBehaviour
 
         locations = GetComponent<Locations>();
 
-        CiweilizationSetUpPlayer(1);
-        CiweilizationSetUpPlayer(2);
-        CiweilizationSetUpPlayer(3);
-
-        audioManager = FindObjectOfType<AudioManager>();
-
         turnText = GameObject.Find("Canvas/Turn Text").GetComponent<TextMeshProUGUI>();
         turnText.text = "Hero Selection Time";
 
+        //numOfPlayers += 1;
+        //CiweilizationSetUpPlayer(1);
+        //CiweilizationSetUpPlayer(2);
+        //CiweilizationSetUpPlayer(3);
+
         ruleText = GameObject.Find("Canvas/Rule Text").GetComponent<TextMeshProUGUI>();
         ruleText.text = "";
-        //ruleText.color = new Color(0.2f, 1f, 0.2f, 1f);
+
+        playerConnectionText = GameObject.Find("Canvas/Player Connection Text").GetComponent<TextMeshProUGUI>();
+        playerConnectionText.text = "Players Connected: " + playerNum;
+
+        audioManager = FindObjectOfType<AudioManager>();
 
         turn = 0;
         activePlayerNumber = 1;
@@ -154,9 +163,9 @@ public class Ciweilization : MonoBehaviour
         chances = new List<string>[] { chance0, chance1, chance2 };
 
 
-        Debug.Log("Hero Selction Time.");
+        Debug.Log("Hero Selection Time.");
         PrepareCards();
-        StartCoroutine(CiweilizationDealHeroes(1));
+        //StartCoroutine(CiweilizationDealHeroes(1));
 
         audioManager.Play("Season Start");
         audioManager.Play("Theme");
@@ -167,10 +176,19 @@ public class Ciweilization : MonoBehaviour
         actives[0].enabled = false;
         actives[1].enabled = false;
         actives[2].enabled = false;
+
     }
 
-    // Update is called once per frame
+    /* Update is called once per frame */
     void Update()
+    {
+        playerConnectionText.text = "Players Connected: " + playerNum;
+
+        ShowActivePlayerBar();
+    }
+
+    /* Show active player bar according to current active player. */
+    public void ShowActivePlayerBar()
     {
         if (activePlayerNumber == 1)
         {
@@ -192,8 +210,10 @@ public class Ciweilization : MonoBehaviour
         }
     }
 
-    // takes in a level and how many copies are there for each card, gives out a deck
-    public static List<string> GenerateDeck(string v, int x)
+
+    /* Takes in a level and how many copies are there for each card; 
+    Gives out a deck of buildings. */
+    public static List<string> GenerateDeck(string v, int x) 
     {
         List<string> newDeck = new List<string>();
         for (int i = 0; i < x; i++)
@@ -206,6 +226,7 @@ public class Ciweilization : MonoBehaviour
         return newDeck;
     }
 
+    /* Generates the chance deck as a list of strings. */
     public List<string> GenerateChanceDeck()
     {
         List<string> newDeck = new List<string>();
@@ -216,6 +237,7 @@ public class Ciweilization : MonoBehaviour
         return newDeck;
     }
 
+    /* Generates the hero deck as a list of strings. */
     public List<string> GenerateHeroDeck()
     {
         List<string> newDeck = new List<string>();
@@ -226,7 +248,7 @@ public class Ciweilization : MonoBehaviour
         return newDeck;
     }
 
-    //gives out 4 shuffled decks
+    /* Generates and shuffles the building decks, the hero deck, and the chance deck. */
     public void PrepareCards()
     {
         deck1 = GenerateDeck("1", 12);
@@ -248,12 +270,21 @@ public class Ciweilization : MonoBehaviour
         CiweilizationSortChances();
     }
 
-    public void CiweilizationSetUpPlayer(int playerNum)
+    /* Takes in a player number;
+     * Set up the corresponding player, including its building, hero, and energy locations
+     * and its player number. */
+    public void CiweilizationSetUpPlayer()
     {
+        if (playerNum <= 3)
+        {
+            playerNum += 1;
+        }
+
         if (playerNum == 1)
         {
-            GameObject player1Obj = Instantiate(playerPrefab, Vector3.zero, 
-                                                                Quaternion.identity);
+            GameObject player1Obj = PhotonNetwork.Instantiate(playerPrefab.name,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
             player1Obj.name = "Test Player 1";
             player1 = player1Obj.GetComponent<Player>();
             player1.level1Pos = locations.player1Level1Pos;
@@ -267,8 +298,9 @@ public class Ciweilization : MonoBehaviour
         }
         else if (playerNum == 2)
         {
-            GameObject player2Obj = Instantiate(playerPrefab, Vector3.zero,
-                                                                Quaternion.identity);
+            GameObject player2Obj = PhotonNetwork.Instantiate(playerPrefab.name,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
             player2Obj.name = "Test Player 2";
             player2 = player2Obj.GetComponent<Player>();
             player2.level1Pos = locations.player2Level1Pos;
@@ -282,8 +314,9 @@ public class Ciweilization : MonoBehaviour
         }
         else if (playerNum == 3)
         {
-            GameObject player3Obj = Instantiate(playerPrefab, Vector3.zero,
-                                                                Quaternion.identity);
+            GameObject player3Obj = PhotonNetwork.Instantiate(playerPrefab.name,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
             player3Obj.name = "Test Player 3";
             player3 = player3Obj.GetComponent<Player>();
             player3.level1Pos = locations.player3Level1Pos;
@@ -301,7 +334,7 @@ public class Ciweilization : MonoBehaviour
         }
     }
 
-    //takes in a deck, shuffles the deck in a rather naive way
+    /* Takes in a deck, shuffles the deck in a rather naive way. */
     void Shuffle<T>(List<T> list)
     {
         System.Random random = new System.Random();
@@ -316,6 +349,7 @@ public class Ciweilization : MonoBehaviour
         }
     }
 
+    /* Deals 4 level-1 buildings from the box */
     IEnumerator CiweilizationDeal1()
     {
         for (int i = 0; i < 4; i++)
@@ -323,13 +357,16 @@ public class Ciweilization : MonoBehaviour
             foreach (string card in level1s[i])
             {
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = Instantiate(cardPrefab, level1Pos[i].transform.position, Quaternion.identity, level1Pos[i].transform);
+                GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, 
+                                                    level1Pos[i].transform.position, 
+                                                    Quaternion.identity, 0);
                 newCard.name = card;
                 newCard.GetComponent<Selectable>().faceUp = true;
             }
         }
     }
 
+    /* Deals 3 level-2 buildings from the box */
     IEnumerator CiweilizationDeal2()
     {
         for (int i = 0; i < 3; i++)
@@ -337,13 +374,16 @@ public class Ciweilization : MonoBehaviour
             foreach (string card in level2s[i])
             {
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = Instantiate(cardPrefab, level2Pos[i].transform.position, Quaternion.identity, level2Pos[i].transform);
+                GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
+                                    level2Pos[i].transform.position,
+                                    Quaternion.identity, 0);
                 newCard.name = card;
                 newCard.GetComponent<Selectable>().faceUp = true;
             }
         }
     }
 
+    /* Deals 2 level-3 buildings from the box */
     IEnumerator CiweilizationDeal3()
     {
         for (int i = 0; i < 2; i++)
@@ -351,13 +391,16 @@ public class Ciweilization : MonoBehaviour
             foreach (string card in level3s[i])
             {
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = Instantiate(cardPrefab, level3Pos[i].transform.position, Quaternion.identity, level3Pos[i].transform);
+                GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
+                                     level3Pos[i].transform.position,
+                                     Quaternion.identity, 0);
                 newCard.name = card;
                 newCard.GetComponent<Selectable>().faceUp = true;
             }
         }
     }
 
+    /* Deals 1 level-4 buildings from the box */
     IEnumerator CiweilizationDeal4()
     {
         for (int i = 0; i < 1; i++)
@@ -365,13 +408,16 @@ public class Ciweilization : MonoBehaviour
             foreach (string card in level4s[i])
             {
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = Instantiate(cardPrefab, level4Pos[i].transform.position, Quaternion.identity, level4Pos[i].transform);
+                GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
+                                    level4Pos[i].transform.position,
+                                    Quaternion.identity, 0);
                 newCard.name = card;
                 newCard.GetComponent<Selectable>().faceUp = true;
             }
         }
     }
 
+    /* Takes in a player number, and deals 3 heroes for that player from the box.*/
     public IEnumerator CiweilizationDealHeroes(int playerNum)
     {
         for (int i = 0; i < 3; i++)
@@ -380,8 +426,8 @@ public class Ciweilization : MonoBehaviour
             {
                 string card = player1Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = Instantiate(heroCardPrefab, player1Pos[i].transform.position,
-                                                            Quaternion.identity, player1Pos[i].transform);
+                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
+                                                            Quaternion.identity, 0);
                 newCard.name = card;
                 newCard.GetComponent<Selectable>().faceUp = true;             
             }
@@ -389,8 +435,8 @@ public class Ciweilization : MonoBehaviour
             {
                 string card = player2Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = Instantiate(heroCardPrefab, player2Pos[i].transform.position,
-                                                            Quaternion.identity, player2Pos[i].transform);
+                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
+                                                            Quaternion.identity, 0);
                 newCard.name = card;
                 newCard.GetComponent<Selectable>().faceUp = true;
             }
@@ -398,22 +444,24 @@ public class Ciweilization : MonoBehaviour
             {
                 string card = player3Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = Instantiate(heroCardPrefab, player3Pos[i].transform.position,
-                                                            Quaternion.identity, player3Pos[i].transform);
+                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
+                                                            Quaternion.identity, 0);
                 newCard.name = card;
                 newCard.GetComponent<Selectable>().faceUp = true;
             }
         }
     }
 
+    /* Deal out three chances from the box, and prepares the box for next time.*/
     public IEnumerator CiweilizationDealChances()
     {
         for (int i = 0; i < 3; i++)
         {
             string card = chances[i].Last<string>();
             yield return new WaitForSeconds(0.1f);
-            GameObject newCard1 = Instantiate(chanceCardPrefab, chancePos[i].transform.position,
-                                                Quaternion.identity, chancePos[i].transform);
+            GameObject newCard1 = PhotonNetwork.Instantiate(chanceCardPrefab.name, 
+                                                            chancePos[i].transform.position,
+                                                            Quaternion.identity, 0);
             newCard1.name = card;
             newCard1.GetComponent<Selectable>().faceUp = true;
         }
@@ -421,6 +469,7 @@ public class Ciweilization : MonoBehaviour
         CiweilizationSortChances();
     }
 
+    /* Put cards in building decks into their corresponding boxs, so they are ready to be dealt out.*/
     public void CiweilizationSort()
     {
         for (int i = 0; i < 4; i++)
@@ -445,6 +494,8 @@ public class Ciweilization : MonoBehaviour
         }
     }
 
+    /* Generates hero cards (strings) and put them into their corresponding boxs, 
+     * so they are ready to be dealt out.*/
     public void CiweilizationSortHeroes()
     {
         deckHeroes = GenerateHeroDeck();
@@ -462,6 +513,9 @@ public class Ciweilization : MonoBehaviour
             deckHeroes.RemoveAt(deckHeroes.Count - 1);
         }
     }
+
+    /* Generates chance cards (strings) and put them into their corresponding boxs, 
+     * so they are ready to be dealt out.*/
     public void CiweilizationSortChances()
     {
         deckChances = GenerateChanceDeck();
@@ -473,43 +527,60 @@ public class Ciweilization : MonoBehaviour
             deckChances.RemoveAt(deckChances.Count - 1);
         }
     }
+
+    /* Takes in the vector3 position of the missing level-1 card on the board,
+     * and fill in the top card from the level-1 building deck.*/
     public void CiweilizationFill1(Vector3 position)
     {
         string card = deck1.Last<string>();
         deck1.RemoveAt(deck1.Count - 1);
 
-        GameObject newCard = Instantiate(cardPrefab, position, Quaternion.identity, level4Pos[0].transform);
+        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                       Quaternion.identity, 0);
         newCard.name = card;
         newCard.GetComponent<Selectable>().faceUp = true;
     }
+
+    /* Takes in the vector3 position of the missing level-2 card on the board,
+     * and fill in the top card from the level-2 building deck.*/
     public void CiweilizationFill2(Vector3 position)
     {
         string card = deck2.Last<string>();
         deck2.RemoveAt(deck2.Count - 1);
 
-        GameObject newCard = Instantiate(cardPrefab, position, Quaternion.identity, level4Pos[0].transform);
+        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                       Quaternion.identity, 0);
         newCard.name = card;
         newCard.GetComponent<Selectable>().faceUp = true;
     }
+
+    /* Takes in the vector3 position of the missing level-3 card on the board,
+     * and fill in the top card from the level-3 building deck.*/
     public void CiweilizationFill3(Vector3 position)
     {
         string card = deck3.Last<string>();
         deck3.RemoveAt(deck3.Count - 1);
 
-        GameObject newCard = Instantiate(cardPrefab, position, Quaternion.identity, level4Pos[0].transform);
+        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                       Quaternion.identity, 0);
         newCard.name = card;
         newCard.GetComponent<Selectable>().faceUp = true;
     }
+
+    /* Takes in the vector3 position of the missing level-4 card on the board,
+     * and fill in the top card from the level-4 building deck.*/
     public void CiweilizationFill4(Vector3 position)
     {
         string card = deck4.Last<string>();
         deck4.RemoveAt(deck4.Count - 1);
 
-        GameObject newCard = Instantiate(cardPrefab, position, Quaternion.identity, level4Pos[0].transform);
+        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                       Quaternion.identity, 0);
         newCard.name = card;
         newCard.GetComponent<Selectable>().faceUp = true;
     }
 
+    /* Takes in a player, and return the numder of moves that player should get in the current season.*/
     public double CiweilizationCountPlayerMoves(Player player)
     {
         double count = 1f;
@@ -560,6 +631,7 @@ public class Ciweilization : MonoBehaviour
         return count;
     }
 
+    /* Start next turn, give players moves, and changes season if needed.*/
     public void CiweilizationNextTurn()
     {
         turn += 1;

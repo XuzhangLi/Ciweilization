@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Reflection;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : Photon.MonoBehaviour
 {
+    public PhotonView photonView;
+    public Text PlayerNameText;
+
     public int playerNumber = 0;
 
     private int G1, G2, G3, G4, R1, R2, R3, R4, Y1, Y2, Y3, Y4, B1, B2, B3, B4;
@@ -17,15 +19,13 @@ public class Player : MonoBehaviour
 
     public GameObject heroObj;
 
-
+    public GameObject testEmptyObj;
 
     public double moves;
 
     public float xOffset = 0.5f;
     public float yOffset = -0.03f;
     public float zOffset = -0.03f;
-
-    public GameObject playerCenter;
 
     [HideInInspector] public Ciweilization ciweilization;
 
@@ -49,7 +49,6 @@ public class Player : MonoBehaviour
 
         Wonder_G1 = Wonder_G2 = Wonder_G3 = Wonder_G4 = Wonder_R1 = Wonder_R2 = Wonder_R3 = Wonder_R4
     = Wonder_Y1 = Wonder_Y2 = Wonder_Y3 = Wonder_Y4 = Wonder_B1 = Wonder_B2 = Wonder_B3 = Wonder_B4 = false;
-        //Debug.Log(Y4 + " " + Wonder_G1 + " " + Wonder_B4);
 
         audioManager = FindObjectOfType<AudioManager>();
 
@@ -673,28 +672,28 @@ public class Player : MonoBehaviour
                 Instantiate(level1Prefabs[0], new Vector3(level1Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "R1")
             {
                 Instantiate(level1Prefabs[1], new Vector3(level1Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "Y1")
             {
                 Instantiate(level1Prefabs[2], new Vector3(level1Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "B1")
             {
                 Instantiate(level1Prefabs[3], new Vector3(level1Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
 
             /////////////////////////////////// Level 2 Building Displays
@@ -703,28 +702,28 @@ public class Player : MonoBehaviour
                 Instantiate(level2Prefabs[0], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "R2")
             {
                 Instantiate(level2Prefabs[1], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "Y2")
             {
                 Instantiate(level2Prefabs[2], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "B2")
             {
                 Instantiate(level2Prefabs[3], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
 
             /////////////////////////////////// Level 3 Building Displays
@@ -733,28 +732,28 @@ public class Player : MonoBehaviour
                 Instantiate(level3Prefabs[0], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "R3")
             {
                 Instantiate(level3Prefabs[1], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "Y3")
             {
                 Instantiate(level3Prefabs[2], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "B3")
             {
                 Instantiate(level3Prefabs[3], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
 
             /////////////////////////////////// Level 4 Building Displays
@@ -763,28 +762,28 @@ public class Player : MonoBehaviour
                 Instantiate(level4Prefabs[0], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "R4")
             {
                 Instantiate(level4Prefabs[1], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "Y4")
             {
                 Instantiate(level4Prefabs[2], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "B4")
             {
                 Instantiate(level4Prefabs[3], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
         }
 
@@ -798,28 +797,28 @@ public class Player : MonoBehaviour
                 Instantiate(level2Prefabs[4], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "R2")
             {
                 Instantiate(level2Prefabs[5], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "Y2")
             {
                 Instantiate(level2Prefabs[6], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "B2")
             {
                 Instantiate(level2Prefabs[7], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
 
             /////////////////////////////////// Level 3 Wonder Displays
@@ -828,28 +827,28 @@ public class Player : MonoBehaviour
                 Instantiate(level3Prefabs[4], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "R3")
             {
                 Instantiate(level3Prefabs[5], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "Y3")
             {
                 Instantiate(level3Prefabs[6], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "B3")
             {
                 Instantiate(level3Prefabs[7], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
 
             /////////////////////////////////// Level 4 Wonder Displays
@@ -858,28 +857,28 @@ public class Player : MonoBehaviour
                 Instantiate(level4Prefabs[4], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "R4")
             {
                 Instantiate(level4Prefabs[5], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "Y4")
             {
                 Instantiate(level4Prefabs[6], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
             else if (name == "B4")
             {
                 Instantiate(level4Prefabs[7], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, playerCenter.transform);
+                                      quat, this.gameObject.transform);
             }
         }
     }

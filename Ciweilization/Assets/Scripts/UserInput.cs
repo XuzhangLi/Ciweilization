@@ -11,8 +11,6 @@ public class UserInput : MonoBehaviour
 
     private AudioManager audioManager;
 
-    public EndTurnButton endTurnButton;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -234,20 +232,20 @@ public class UserInput : MonoBehaviour
     {
         if (player.heroObj)
         {
-            Destroy(player.heroObj);
+            PhotonNetwork.Destroy(player.heroObj);
         }
-        GameObject hero = Instantiate(obj, player.heroPos.transform.position, 
-                                        Quaternion.identity, player.heroPos.transform);
+        GameObject hero = PhotonNetwork.Instantiate("Hero", player.heroPos.transform.position, 
+                                        Quaternion.identity, 0);
         player.heroObj = hero;
-        hero.tag = "Hero";
+        hero.name = obj.name;
         DestroyAll("HeroCard");
     }
     void DestroyAll(string tag)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(tag);
-        for (int i = 0; i < enemies.Length; i++)
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+        for (int i = 0; i < targets.Length; i++)
         {
-            Destroy(enemies[i]);
+            PhotonNetwork.Destroy(targets[i]);
         }
     }
 }
