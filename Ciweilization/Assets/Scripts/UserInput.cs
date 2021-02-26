@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //using System.Linq;
 
-public class UserInput : MonoBehaviour
+public class UserInput : Photon.MonoBehaviour
 {
     private Ciweilization ciweilization;
 
@@ -26,7 +26,27 @@ public class UserInput : MonoBehaviour
     {
         if (ciweilization.activePlayerNumber == player.playerNumber)
         {
-            GetMouseClick();
+            if (ciweilization.activePlayerNumber == 1)
+            {
+                if (ciweilization.player1.photonView.isMine)
+                {
+                    GetMouseClick();
+                }
+            }
+            else if (ciweilization.activePlayerNumber == 2)
+            {
+                if (ciweilization.player2.photonView.isMine)
+                {
+                    GetMouseClick();
+                }
+            }
+            else if (ciweilization.activePlayerNumber == 3)
+            {
+                if (ciweilization.player3.photonView.isMine)
+                {
+                    GetMouseClick();
+                }
+            }
         }
     }
 
@@ -115,9 +135,17 @@ public class UserInput : MonoBehaviour
                 {
                     DiscardCard(hit.collider.gameObject);
                 }
-                else if (hit.collider.CompareTag("Building"))
+                else if (hit.collider.CompareTag("BuildingPlayer1"))
                 {
-                    DeleteBuilding(hit.collider.gameObject);
+                    DestroyBuilding(hit.collider.gameObject, ciweilization.player1);
+                }
+                else if (hit.collider.CompareTag("BuildingPlayer2"))
+                {
+                    DestroyBuilding(hit.collider.gameObject, ciweilization.player2);
+                }
+                else if (hit.collider.CompareTag("BuildingPlayer3"))
+                {
+                    DestroyBuilding(hit.collider.gameObject, ciweilization.player3);
                 }
                 else if (hit.collider.CompareTag("Hero"))
                 {
@@ -128,13 +156,13 @@ public class UserInput : MonoBehaviour
         }
     }
 
-    void DeleteBuilding(GameObject obj)
+    void DestroyBuilding(GameObject obj, Player attackedPlayer)
     {
         Debug.Log("you just right clicked on a building.");
 
         string name = obj.GetComponent<BuildingDisplay>().testName;
         Destroy(obj);
-        player.PlayerDelete(name);
+        attackedPlayer.PlayerDelete(name);
 
         audioManager.Play("Discard");
     }
@@ -237,7 +265,11 @@ public class UserInput : MonoBehaviour
         GameObject hero = PhotonNetwork.Instantiate("Hero", player.heroPos.transform.position, 
                                         Quaternion.identity, 0);
         player.heroObj = hero;
-        hero.name = obj.name;
+
+        int id = player.heroObj.GetPhotonView().viewID;
+
+        photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, obj.name);
+
         DestroyAll("HeroCard");
     }
     void DestroyAll(string tag)
@@ -247,5 +279,11 @@ public class UserInput : MonoBehaviour
         {
             PhotonNetwork.Destroy(targets[i]);
         }
+    }
+
+    [PunRPC]
+    public void SetCardName(int id, string cardName)
+    {
+        PhotonView.Find(id).gameObject.name = cardName;
     }
 }

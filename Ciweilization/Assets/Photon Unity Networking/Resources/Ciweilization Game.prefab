@@ -48,6 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1149746780906104956, guid: 6b01055a517eb434db867ac47637f744,
     type: 3}
+  playerPrefab1: {fileID: 1149746780906104956, guid: 2d558b05e93792d4c88618166763d5f6,
+    type: 3}
+  playerPrefab2: {fileID: 1149746780906104956, guid: 12e2dee2404e6434e97dda24de740d22,
+    type: 3}
+  playerPrefab3: {fileID: 1149746780906104956, guid: e32e241c426f13f4c99e285cac9c8d90,
+    type: 3}
   player1: {fileID: 6589824746565861685, guid: 880e0017ae00065499967156ed8bf176, type: 3}
   player2: {fileID: 0}
   player3: {fileID: 0}

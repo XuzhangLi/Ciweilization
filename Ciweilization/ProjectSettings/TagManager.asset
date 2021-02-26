@@ -18,6 +18,12 @@ TagManager:
   - ChanceCard
   - ChanceTrigger
   - HeroTrigger
+  - BuildingPlayer1
+  - BuildingPlayer2
+  - BuildingPlayer3
+  - Player1
+  - Player2
+  - Player3
   layers:
   - Default
   - TransparentFX

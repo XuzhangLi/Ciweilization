@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Player : Photon.MonoBehaviour
 {
-    public PhotonView photonView;
     public Text PlayerNameText;
 
     public int playerNumber = 0;
@@ -40,6 +39,8 @@ public class Player : Photon.MonoBehaviour
     public GameObject[] level4Pos;
     public GameObject heroPos;
 
+    public bool startEnergy = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +54,7 @@ public class Player : Photon.MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         ciweilization = FindObjectOfType<Ciweilization>();
+
     }
 
     // Update is called once per frame
@@ -659,131 +661,148 @@ public class Player : Photon.MonoBehaviour
         Debug.Log("You have reached the victory condition. The game ends by the end of the turn.");
     }
 
+    /* Instantiate a building for the player. */
     void PlayerDisplay(string name, int num, bool isWonder)
     {
         Quaternion quat = Quaternion.identity;
+        GameObject building;
 
         if (isWonder == false)
         {
-
             /////////////////////////////////// Level 1 Building Displays
             if (name == "G1")
             {
-                Instantiate(level1Prefabs[0], new Vector3(level1Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level1Prefabs[0], new Vector3(level1Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[0].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "R1")
             {
-                Instantiate(level1Prefabs[1], new Vector3(level1Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level1Prefabs[1], new Vector3(level1Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[1].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "Y1")
             {
-                Instantiate(level1Prefabs[2], new Vector3(level1Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level1Prefabs[2], new Vector3(level1Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[2].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "B1")
             {
-                Instantiate(level1Prefabs[3], new Vector3(level1Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level1Prefabs[3], new Vector3(level1Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[3].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
 
             /////////////////////////////////// Level 2 Building Displays
             else if (name == "G2")
             {
-                Instantiate(level2Prefabs[0], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[0], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[0].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "R2")
             {
-                Instantiate(level2Prefabs[1], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[1], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[1].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "Y2")
             {
-                Instantiate(level2Prefabs[2], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[2], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[2].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "B2")
             {
-                Instantiate(level2Prefabs[3], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[3], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[3].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
 
             /////////////////////////////////// Level 3 Building Displays
             else if (name == "G3")
             {
-                Instantiate(level3Prefabs[0], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[0], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[0].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "R3")
             {
-                Instantiate(level3Prefabs[1], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[1], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[1].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "Y3")
             {
-                Instantiate(level3Prefabs[2], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[2], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[2].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "B3")
             {
-                Instantiate(level3Prefabs[3], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[3], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[3].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
 
             /////////////////////////////////// Level 4 Building Displays
             else if (name == "G4")
             {
-                Instantiate(level4Prefabs[0], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[0], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[0].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "R4")
             {
-                Instantiate(level4Prefabs[1], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[1], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[1].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "Y4")
             {
-                Instantiate(level4Prefabs[2], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[2], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[2].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
             else if (name == "B4")
             {
-                Instantiate(level4Prefabs[3], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[3], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[3].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                ChangeTagForPlayer(building);
             }
         }
 
@@ -794,92 +813,124 @@ public class Player : Photon.MonoBehaviour
 
             if (name == "G2")
             {
-                Instantiate(level2Prefabs[4], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[4], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[0].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "R2")
             {
-                Instantiate(level2Prefabs[5], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[5], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[1].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "Y2")
             {
-                Instantiate(level2Prefabs[6], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[6], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[2].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "B2")
             {
-                Instantiate(level2Prefabs[7], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level2Prefabs[7], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[3].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
 
             /////////////////////////////////// Level 3 Wonder Displays
             else if (name == "G3")
             {
-                Instantiate(level3Prefabs[4], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[4], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[0].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "R3")
             {
-                Instantiate(level3Prefabs[5], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[5], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[1].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "Y3")
             {
-                Instantiate(level3Prefabs[6], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[6], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[2].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "B3")
             {
-                Instantiate(level3Prefabs[7], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level3Prefabs[7], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[3].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
 
             /////////////////////////////////// Level 4 Wonder Displays
             else if (name == "G4")
             {
-                Instantiate(level4Prefabs[4], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[4], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[0].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "R4")
             {
-                Instantiate(level4Prefabs[5], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[5], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[1].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "Y4")
             {
-                Instantiate(level4Prefabs[6], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[6], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[2].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
             else if (name == "B4")
             {
-                Instantiate(level4Prefabs[7], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = Instantiate(level4Prefabs[7], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[3].transform.position.z + (num - 1) * zOffset),
                                       quat, this.gameObject.transform);
+                
             }
+        }
+    }
+
+    private void ChangeTagForPlayer(GameObject obj)
+    {
+        if (playerNumber == 1)
+        {
+            obj.tag = "BuildingPlayer1";
+        }
+        else if (playerNumber == 2)
+        {
+            obj.tag = "BuildingPlayer2";
+        }
+        else if (playerNumber == 3)
+        {
+            obj.tag = "BuildingPlayer3";
+        }
+        else
+        {
+            Debug.Log("Invalid player number.");
         }
     }
 

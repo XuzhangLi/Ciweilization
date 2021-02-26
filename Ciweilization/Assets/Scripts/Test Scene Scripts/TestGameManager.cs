@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//using Photon;
 
-public class TestGameManager : MonoBehaviour
+public class TestGameManager : Photon.MonoBehaviour
 {
 
     public GameObject playerPrefab;
@@ -13,6 +14,8 @@ public class TestGameManager : MonoBehaviour
     public GameObject disconnectUI;
     public TestPlayer player1;
     public GameObject testObj;
+
+    public int playerCount = 0;
 
     private bool Off = false;
 
@@ -25,10 +28,6 @@ public class TestGameManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        //GameObject playerObj = PhotonNetwork.Instantiate(playerPrefab.name,
-        //                            new Vector2(this.transform.position.x, this.transform.position.y),
-        //                            Quaternion.identity, 0);
-        //playerObj.name = "test player name";
 
         GameObject player1Obj = PhotonNetwork.Instantiate(playerPrefab.name,
                         new Vector2(this.transform.position.x, this.transform.position.y),
@@ -36,6 +35,14 @@ public class TestGameManager : MonoBehaviour
 
         GameCanvas.SetActive(false);
         //SceneCamera.SetActive(false);
+
+        photonView.RPC("AddPlayerCount", PhotonTargets.AllBuffered);
+    }
+
+    [PunRPC]
+    public void AddPlayerCount()
+    {
+        playerCount += 1;
     }
 
     private void Awake()
@@ -45,7 +52,7 @@ public class TestGameManager : MonoBehaviour
 
     private void Update()
     {
-        pingText.text = ("Ping: + " + PhotonNetwork.GetPing());
+        pingText.text = ("Ping: " + PhotonNetwork.GetPing());
         CheckInput(); 
     }
 

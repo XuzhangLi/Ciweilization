@@ -45,4 +45,9 @@ MonoBehaviour:
   - TaggedPlayer
   - FlipFalse
   - FlipTrue
+  - AddPlayerCount
+  - SetCardName
+  - AssignPlayerParameters
+  - NextActivePlayer
+  - CiweilizationNextTurn
   DisableAutoOpenWizard: 1

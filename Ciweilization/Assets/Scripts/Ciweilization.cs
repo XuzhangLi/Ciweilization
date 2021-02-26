@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 using System.Linq;
 using TMPro;
 
-public class Ciweilization : MonoBehaviour
+public class Ciweilization : Photon.MonoBehaviour
 {
     public static string[] suits = new string[] { "G", "R", "Y", "B" };
     public static string[] values = new string[] { "1", "2", "3", "4" };
@@ -14,6 +14,9 @@ public class Ciweilization : MonoBehaviour
     private AudioManager audioManager;
 
     public GameObject playerPrefab;
+    public GameObject playerPrefab1;
+    public GameObject playerPrefab2;
+    public GameObject playerPrefab3;
 
     public Player player1;
     public Player player2;
@@ -92,6 +95,7 @@ public class Ciweilization : MonoBehaviour
     private TextMeshProUGUI turnText;
     private TextMeshProUGUI ruleText;
     private TextMeshProUGUI playerConnectionText;
+    private TextMeshProUGUI pingText;
 
     private Locations locations;
 
@@ -113,7 +117,7 @@ public class Ciweilization : MonoBehaviour
     public Image[] actives;
     public Sprite isActive;
 
-    public int playerNum = 0;
+    public int playerCount = 0;
 
     public GameObject sceneCamera;
 
@@ -137,8 +141,11 @@ public class Ciweilization : MonoBehaviour
         ruleText = GameObject.Find("Canvas/Rule Text").GetComponent<TextMeshProUGUI>();
         ruleText.text = "";
 
+        pingText = GameObject.Find("Canvas/Ping Text").GetComponent<TextMeshProUGUI>();
+        pingText.text = "";
+
         playerConnectionText = GameObject.Find("Canvas/Player Connection Text").GetComponent<TextMeshProUGUI>();
-        playerConnectionText.text = "Players Connected: " + playerNum;
+        playerConnectionText.text = "Players Connected: " + playerCount;
 
         audioManager = FindObjectOfType<AudioManager>();
 
@@ -176,13 +183,14 @@ public class Ciweilization : MonoBehaviour
         actives[0].enabled = false;
         actives[1].enabled = false;
         actives[2].enabled = false;
-
     }
 
     /* Update is called once per frame */
     void Update()
     {
-        playerConnectionText.text = "Players Connected: " + playerNum;
+        playerConnectionText.text = "Players Connected: " + playerCount;
+
+        pingText.text = ("Ping: + " + PhotonNetwork.GetPing());
 
         ShowActivePlayerBar();
     }
@@ -275,62 +283,97 @@ public class Ciweilization : MonoBehaviour
      * and its player number. */
     public void CiweilizationSetUpPlayer()
     {
-        if (playerNum <= 3)
-        {
-            playerNum += 1;
-        }
+        photonView.RPC("AddPlayerCount", PhotonTargets.AllBuffered);
 
-        if (playerNum == 1)
+        if (playerCount == 1)
         {
-            GameObject player1Obj = PhotonNetwork.Instantiate(playerPrefab.name,
+            GameObject player1Obj = PhotonNetwork.Instantiate(playerPrefab1.name,
                                     new Vector2(this.transform.position.x, this.transform.position.y),
                                     Quaternion.identity, 0);
-            player1Obj.name = "Test Player 1";
-            player1 = player1Obj.GetComponent<Player>();
+
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 1);
+        }
+        else if (playerCount == 2)
+        {
+            GameObject player2Obj = PhotonNetwork.Instantiate(playerPrefab2.name,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
+
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 2);
+        }
+        else if (playerCount == 3)
+        {
+            GameObject player3Obj = PhotonNetwork.Instantiate(playerPrefab3.name,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
+
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 3);
+        }
+        else
+        {
+            Debug.Log("Error! A player has an invalid number.");
+        }
+    }
+
+    [PunRPC]
+    public void AssignPlayerParameters(int num)
+    {
+        if (num == 1)
+        {
+
+            GameObject obj = GameObject.FindGameObjectWithTag("Player1");
+            obj.name = "Test Player 1";
+            player1 = obj.GetComponent<Player>();
             player1.level1Pos = locations.player1Level1Pos;
             player1.level2Pos = locations.player1Level2Pos;
             player1.level3Pos = locations.player1Level3Pos;
             player1.level4Pos = locations.player1Level4Pos;
             player1.GetComponent<Energy>().energies = locations.player1Energies;
+            player1.startEnergy = true;
 
             player1.playerNumber = 1;
             player1.heroPos = heroPos[0];
+            
+            
         }
-        else if (playerNum == 2)
+        else if (num == 2)
         {
-            GameObject player2Obj = PhotonNetwork.Instantiate(playerPrefab.name,
-                                    new Vector2(this.transform.position.x, this.transform.position.y),
-                                    Quaternion.identity, 0);
-            player2Obj.name = "Test Player 2";
-            player2 = player2Obj.GetComponent<Player>();
+            GameObject obj = GameObject.FindGameObjectWithTag("Player2");
+            obj.name = "Test Player 2";
+            player2 = obj.GetComponent<Player>();
             player2.level1Pos = locations.player2Level1Pos;
             player2.level2Pos = locations.player2Level2Pos;
             player2.level3Pos = locations.player2Level3Pos;
             player2.level4Pos = locations.player2Level4Pos;
             player2.GetComponent<Energy>().energies = locations.player2Energies;
+            player2.startEnergy = true;
 
             player2.playerNumber = 2;
             player2.heroPos = heroPos[1];
         }
-        else if (playerNum == 3)
+        else if (num == 3)
         {
-            GameObject player3Obj = PhotonNetwork.Instantiate(playerPrefab.name,
-                                    new Vector2(this.transform.position.x, this.transform.position.y),
-                                    Quaternion.identity, 0);
-            player3Obj.name = "Test Player 3";
-            player3 = player3Obj.GetComponent<Player>();
+            GameObject obj = GameObject.FindGameObjectWithTag("Player3");
+            obj.name = "Test Player 3";
+            player3 = obj.GetComponent<Player>();
             player3.level1Pos = locations.player3Level1Pos;
             player3.level2Pos = locations.player3Level2Pos;
             player3.level3Pos = locations.player3Level3Pos;
             player3.level4Pos = locations.player3Level4Pos;
             player3.GetComponent<Energy>().energies = locations.player3Energies;
+            player3.startEnergy = true;
 
             player3.playerNumber = 3;
             player3.heroPos = heroPos[2];
         }
-        else
+    }
+
+    [PunRPC]
+    public void AddPlayerCount()
+    {
+        if (playerCount < 3)
         {
-            Debug.Log("Error! A player has an invalid number.");
+            playerCount += 1;
         }
     }
 
@@ -360,8 +403,9 @@ public class Ciweilization : MonoBehaviour
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, 
                                                     level1Pos[i].transform.position, 
                                                     Quaternion.identity, 0);
-                newCard.name = card;
-                newCard.GetComponent<Selectable>().faceUp = true;
+                int id = newCard.GetPhotonView().viewID;
+
+                photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
             }
         }
     }
@@ -377,8 +421,9 @@ public class Ciweilization : MonoBehaviour
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
                                     level2Pos[i].transform.position,
                                     Quaternion.identity, 0);
-                newCard.name = card;
-                newCard.GetComponent<Selectable>().faceUp = true;
+                int id = newCard.GetPhotonView().viewID;
+
+                photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
             }
         }
     }
@@ -394,8 +439,9 @@ public class Ciweilization : MonoBehaviour
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
                                      level3Pos[i].transform.position,
                                      Quaternion.identity, 0);
-                newCard.name = card;
-                newCard.GetComponent<Selectable>().faceUp = true;
+                int id = newCard.GetPhotonView().viewID;
+
+                photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
             }
         }
     }
@@ -411,8 +457,9 @@ public class Ciweilization : MonoBehaviour
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
                                     level4Pos[i].transform.position,
                                     Quaternion.identity, 0);
-                newCard.name = card;
-                newCard.GetComponent<Selectable>().faceUp = true;
+                int id = newCard.GetPhotonView().viewID;
+
+                photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
             }
         }
     }
@@ -422,34 +469,44 @@ public class Ciweilization : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            if (playerNum == 1)
+            if (playerNum == 1 && player1.photonView.isMine)
             {
                 string card = player1Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
+                
                 GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
                                                             Quaternion.identity, 0);
-                newCard.name = card;
-                newCard.GetComponent<Selectable>().faceUp = true;             
+                int id = newCard.GetPhotonView().viewID;
+                
+                photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);       
             }
-            else if (playerNum == 2)
+            else if (playerNum == 2 && player2.photonView.isMine)
             {
                 string card = player2Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
                 GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
                                                             Quaternion.identity, 0);
-                newCard.name = card;
-                newCard.GetComponent<Selectable>().faceUp = true;
+                int id = newCard.GetPhotonView().viewID;
+
+                photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
             }
-            else if (playerNum == 3)
+            else if (playerNum == 3 && player3.photonView.isMine)
             {
                 string card = player3Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
                 GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
                                                             Quaternion.identity, 0);
-                newCard.name = card;
-                newCard.GetComponent<Selectable>().faceUp = true;
+                int id = newCard.GetPhotonView().viewID;
+
+                photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
             }
         }
+    }
+
+    [PunRPC]
+    public void SetCardName(int id, string cardName)
+    {
+        PhotonView.Find(id).gameObject.name = cardName;
     }
 
     /* Deal out three chances from the box, and prepares the box for next time.*/
@@ -459,11 +516,12 @@ public class Ciweilization : MonoBehaviour
         {
             string card = chances[i].Last<string>();
             yield return new WaitForSeconds(0.1f);
-            GameObject newCard1 = PhotonNetwork.Instantiate(chanceCardPrefab.name, 
+            GameObject newCard = PhotonNetwork.Instantiate(chanceCardPrefab.name, 
                                                             chancePos[i].transform.position,
                                                             Quaternion.identity, 0);
-            newCard1.name = card;
-            newCard1.GetComponent<Selectable>().faceUp = true;
+            int id = newCard.GetPhotonView().viewID;
+
+            photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
         }
 
         CiweilizationSortChances();
@@ -648,7 +706,10 @@ public class Ciweilization : MonoBehaviour
                     + "(1) Gain 0.25 move for every level-1.\n"
                     + "(2) Gain 0.5 move for every level-2.\n"
                     + "(3) Doubles for Green.";
-            StartCoroutine(CiweilizationDeal1());
+            if (player1.photonView.isMine)
+            {
+                StartCoroutine(CiweilizationDeal1());
+            }
         }
         if (turn == 4 && isSpring == true)
         {
@@ -664,7 +725,10 @@ public class Ciweilization : MonoBehaviour
                     + "(3) Doubles for Red.";
             //ruleText.color = Color.red;
             Debug.Log("Spring has past and summer has come.");
-            StartCoroutine(CiweilizationDeal2());
+            if (player1.photonView.isMine)
+            {
+                StartCoroutine(CiweilizationDeal2());
+            }
         }
         else if (turn == 7 && isSummer == true)
         {
@@ -680,7 +744,10 @@ public class Ciweilization : MonoBehaviour
                     + "(3) Doubles for Yellow.";
             //ruleText.color = Color.yellow;
             Debug.Log("Summer has past and Fall has come.");
-            StartCoroutine(CiweilizationDeal3());
+            if (player1.photonView.isMine)
+            {
+                StartCoroutine(CiweilizationDeal3());
+            }
         }
         else if (turn == 10 && isFall == true)
         {
@@ -695,14 +762,43 @@ public class Ciweilization : MonoBehaviour
                     + "(2) Gain 0.25 move for every blue-3, level-4, or wonder.";
             //ruleText.color = Color.cyan;
             Debug.Log("Fall has past and winter has come.");
-            StartCoroutine(CiweilizationDeal4());
+            if (player1.photonView.isMine)
+            {
+                StartCoroutine(CiweilizationDeal4());
+            }
         }
 
         turnText.text = "Turn" + " " + turn.ToString();
 
         //Give the players the correct number of moves for their next turn;
+
         player1.moves = CiweilizationCountPlayerMoves(player1);
         player2.moves = CiweilizationCountPlayerMoves(player2);
         player3.moves = CiweilizationCountPlayerMoves(player3);
+    }
+
+    /* Deal out the starting building cards according to season. */
+    public void CiweilizationNextTurnDeal()
+    {
+        if (turn == 1)
+        {
+            StartCoroutine(CiweilizationDeal1());
+        }
+        else if (turn == 4)
+        {
+            StartCoroutine(CiweilizationDeal2());
+        }
+        else if (turn == 7)
+        {
+            StartCoroutine(CiweilizationDeal3());
+        }
+        else if (turn == 10)
+        {
+            StartCoroutine(CiweilizationDeal4());
+        }
+        else
+        {
+            Debug.Log("Error! Invalid turn number.");
+        }
     }
 }

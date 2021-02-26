@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class EndTurnButton : MonoBehaviour
+public class EndTurnButton : Photon.MonoBehaviour
 {
     Ciweilization ciweilization;
     AudioManager audioManager;
@@ -23,11 +23,13 @@ public class EndTurnButton : MonoBehaviour
 
     public void OnButtonPress()
     {
-        NextActivePlayer();
+        //DealHeroesOnTurnZero();
+        photonView.RPC("NextActivePlayer", PhotonTargets.AllBuffered);
  
         audioManager.Play("End Turn");
     }
 
+    [PunRPC]
     public void NextActivePlayer()
     {
         if  (ciweilization.turn == 0)
@@ -35,19 +37,16 @@ public class EndTurnButton : MonoBehaviour
             if (ciweilization.activePlayerNumber == 1)
             {
                 ciweilization.activePlayerNumber = 2;
-                //activePlayerText.text = "player 2's turn!";
                 StartCoroutine(ciweilization.CiweilizationDealHeroes(2));
             }
             else if (ciweilization.activePlayerNumber == 2)
             {
                 ciweilization.activePlayerNumber = 3;
-                //activePlayerText.text = "player 3's turn!";
                 StartCoroutine(ciweilization.CiweilizationDealHeroes(3));
             }
             else if (ciweilization.activePlayerNumber == 3)
             {
                 ciweilization.activePlayerNumber = 1;
-                //activePlayerText.text = "player 1's turn!";
                 ciweilization.CiweilizationNextTurn();
                 ciweilization.CiweilizationSortHeroes();
             }
@@ -61,17 +60,14 @@ public class EndTurnButton : MonoBehaviour
             if (ciweilization.activePlayerNumber == 1)
             {
                 ciweilization.activePlayerNumber = 2;
-                //activePlayerText.text = "player 2's turn!";
             }
             else if (ciweilization.activePlayerNumber == 2)
             {
                 ciweilization.activePlayerNumber = 3;
-                //activePlayerText.text = "player 3's turn!";
             }
             else if (ciweilization.activePlayerNumber == 3)
             {
                 ciweilization.activePlayerNumber = 1;
-                //activePlayerText.text = "player 1's turn!";
                 ciweilization.CiweilizationNextTurn();
             }
             else
@@ -80,4 +76,24 @@ public class EndTurnButton : MonoBehaviour
             }
         }
     }
+
+    public void DealHeroesOnTurnZero()
+    {
+        if (ciweilization.turn == 0)
+        {
+            if (ciweilization.activePlayerNumber == 1)
+            {
+                StartCoroutine(ciweilization.CiweilizationDealHeroes(2));
+            }
+            else if (ciweilization.activePlayerNumber == 2)
+            {
+                StartCoroutine(ciweilization.CiweilizationDealHeroes(3));
+            }
+            else if (ciweilization.activePlayerNumber == 3)
+            {
+
+            }
+        }
+    }
+
 }

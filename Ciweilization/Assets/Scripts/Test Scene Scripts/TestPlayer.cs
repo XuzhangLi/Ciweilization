@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TestPlayer : Photon.MonoBehaviour
 {
-    public PhotonView photonView;
     public Rigidbody2D rb;
     public GameObject PlayerCamera;
     public SpriteRenderer sr;
@@ -56,20 +55,12 @@ public class TestPlayer : Photon.MonoBehaviour
 
     private void Awake()
     {
-        if (photonView.isMine)
-        {
-            //PlayerCamera.SetActive(true);
-            //PlayerNameText.text = PhotonNetwork.playerName;
-        }
-        else
-        {
-            //PlayerNameText.text = photonView.owner.NickName;
-            //PlayerNameText.color = Color.red;
-        }
+
     }
 
     private void Start()
     {
+
         moves = 0;
 
         G1 = G2 = G3 = G4 = R1 = R2 = R3 = R4 = Y1 = Y2 = Y3 = Y4 = B1 = B2 = B3 = B4 = 0;
@@ -81,40 +72,51 @@ public class TestPlayer : Photon.MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         testGameManager = FindObjectOfType<TestGameManager>();
+
+        if (photonView.isMine)
+        {
+            //photonView.RPC("AddPlayerCount", PhotonTargets.AllBuffered);
+        }
     }
 
-    //private void Update()
-    //{
-    //    if (photonView.isMine)
-    //    {
-    //        CheckInput();
-    //    }
-    //}
-    //private void CheckInput()
-    //{
-    //    var move = new Vector3(Input.GetAxisRaw("Horizontal"), 0);
-    //    this.gameObject.transform.position += move * moveSpeed * Time.deltaTime;
+    [PunRPC]
+    public void AddPlayerCount()
+    {
+        //testGameManager.playerCount += 1;
+    }
 
-    //    if(Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        photonView.RPC("FlipTrue", PhotonTargets.AllBuffered);
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.D))
-    //    {
-    //        photonView.RPC("FlipFalse", PhotonTargets.AllBuffered);
-    //    }
-    //}
+    private void Update()
+    {
+        if (photonView.isMine)
+        {
+            CheckInput();
+        }
+    }
+    private void CheckInput()
+    {
+        var move = new Vector3(Input.GetAxisRaw("Horizontal"), 0);
+        this.gameObject.transform.position += move * moveSpeed * Time.deltaTime;
 
-    //[PunRPC]
-    //private void FlipTrue()
-    //{
-    //    sr.flipX = true;
-    //}
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            photonView.RPC("FlipTrue", PhotonTargets.AllBuffered);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            photonView.RPC("FlipFalse", PhotonTargets.AllBuffered);
+        }
+    }
 
-    //[PunRPC]
-    //private void FlipFalse()
-    //{
-    //    sr.flipX = false;
-    //}
+    [PunRPC]
+    public void FlipTrue()
+    {
+        sr.flipX = true;
+    }
+
+    [PunRPC]
+    public void FlipFalse()
+    {
+        sr.flipX = false;
+    }
 }
 
