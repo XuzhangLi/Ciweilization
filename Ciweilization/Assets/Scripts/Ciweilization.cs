@@ -590,52 +590,69 @@ public class Ciweilization : Photon.MonoBehaviour
      * and fill in the top card from the level-1 building deck.*/
     public void CiweilizationFill1(Vector3 position)
     {
-        string card = deck1.Last<string>();
-        deck1.RemoveAt(deck1.Count - 1);
+        if (player1.photonView.isMine)
+        {
+            string card = deck1.Last<string>();
+            deck1.RemoveAt(deck1.Count - 1);
 
-        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
-                                                       Quaternion.identity, 0);
-        newCard.name = card;
-        newCard.GetComponent<Selectable>().faceUp = true;
+            GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                           Quaternion.identity, 0);
+
+            int id = newCard.GetPhotonView().viewID;
+
+            photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
+        }
     }
 
     /* Takes in the vector3 position of the missing level-2 card on the board,
      * and fill in the top card from the level-2 building deck.*/
     public void CiweilizationFill2(Vector3 position)
     {
-        string card = deck2.Last<string>();
-        deck2.RemoveAt(deck2.Count - 1);
+        if (player1.photonView.isMine)
+        {
+            string card = deck2.Last<string>();
+            deck2.RemoveAt(deck2.Count - 1);
 
-        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
-                                                       Quaternion.identity, 0);
-        newCard.name = card;
-        newCard.GetComponent<Selectable>().faceUp = true;
+            GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                           Quaternion.identity, 0);
+            int id = newCard.GetPhotonView().viewID;
+
+            photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
+        }
     }
 
     /* Takes in the vector3 position of the missing level-3 card on the board,
      * and fill in the top card from the level-3 building deck.*/
     public void CiweilizationFill3(Vector3 position)
     {
-        string card = deck3.Last<string>();
-        deck3.RemoveAt(deck3.Count - 1);
+        if (player1.photonView.isMine)
+        {
+            string card = deck3.Last<string>();
+            deck3.RemoveAt(deck3.Count - 1);
 
-        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
-                                                       Quaternion.identity, 0);
-        newCard.name = card;
-        newCard.GetComponent<Selectable>().faceUp = true;
+            GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                           Quaternion.identity, 0);
+            int id = newCard.GetPhotonView().viewID;
+
+            photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
+        }
     }
 
     /* Takes in the vector3 position of the missing level-4 card on the board,
      * and fill in the top card from the level-4 building deck.*/
     public void CiweilizationFill4(Vector3 position)
     {
-        string card = deck4.Last<string>();
-        deck4.RemoveAt(deck4.Count - 1);
+        if (player1.photonView.isMine)
+        {
+            string card = deck4.Last<string>();
+            deck4.RemoveAt(deck4.Count - 1);
 
-        GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
-                                                       Quaternion.identity, 0);
-        newCard.name = card;
-        newCard.GetComponent<Selectable>().faceUp = true;
+            GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, position,
+                                                           Quaternion.identity, 0);
+            int id = newCard.GetPhotonView().viewID;
+
+            photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
+        }
     }
 
     /* Takes in a player, and return the numder of moves that player should get in the current season.*/

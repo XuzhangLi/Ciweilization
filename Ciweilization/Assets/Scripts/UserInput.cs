@@ -24,29 +24,9 @@ public class UserInput : Photon.MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ciweilization.activePlayerNumber == player.playerNumber)
+        if (photonView.isMine && ciweilization.activePlayerNumber == player.playerNumber)
         {
-            if (ciweilization.activePlayerNumber == 1)
-            {
-                if (ciweilization.player1.photonView.isMine)
-                {
-                    GetMouseClick();
-                }
-            }
-            else if (ciweilization.activePlayerNumber == 2)
-            {
-                if (ciweilization.player2.photonView.isMine)
-                {
-                    GetMouseClick();
-                }
-            }
-            else if (ciweilization.activePlayerNumber == 3)
-            {
-                if (ciweilization.player3.photonView.isMine)
-                {
-                    GetMouseClick();
-                }
-            }
+            GetMouseClick();
         }
     }
 
@@ -64,7 +44,8 @@ public class UserInput : Photon.MonoBehaviour
                 {
                     if (player.moves >= 1)
                     {
-                        BuyCard(hit.collider.gameObject);
+                        int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                        photonView.RPC("BuyCard", PhotonTargets.AllBuffered, objID);
                     }
                     else
                     {
@@ -74,7 +55,8 @@ public class UserInput : Photon.MonoBehaviour
 
                 else if (hit.collider.CompareTag("TestCard"))
                 {
-                    BuyTestCard(hit.collider.gameObject);
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    photonView.RPC("BuyTestCard", PhotonTargets.AllBuffered, objID);
                 }
 
                 else if (hit.collider.CompareTag("Emote"))
@@ -133,7 +115,8 @@ public class UserInput : Photon.MonoBehaviour
             {
                 if (hit.collider.CompareTag("Card"))
                 {
-                    DiscardCard(hit.collider.gameObject);
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
                 }
                 else if (hit.collider.CompareTag("BuildingPlayer1"))
                 {
@@ -166,11 +149,14 @@ public class UserInput : Photon.MonoBehaviour
 
         audioManager.Play("Discard");
     }
-    void BuyCard(GameObject obj)
+
+    [PunRPC]
+    public void BuyCard(int objID)
     {
+        GameObject obj = PhotonView.Find(objID).gameObject;
+
         char chr = (obj.name[1]);
         int level = (int)(chr - '0');
-        Debug.Log("you just clicked on a card." + level);
 
         Vector3 position = obj.transform.position;
         Destroy(obj);
@@ -179,21 +165,10 @@ public class UserInput : Photon.MonoBehaviour
         player.moves -= 1;
     }
 
-    void DiscardCard(GameObject obj)
+    [PunRPC]
+    public void BuyTestCard(int objID)
     {
-        char chr = (obj.name[1]);
-        int level = (int)(chr - '0');
-        Debug.Log("you just right clicked on a card." + level);
-
-        Vector3 position = obj.transform.position;
-        Destroy(obj);
-        Fill(level, position);
-
-        audioManager.Play("Discard");
-    }
-    void BuyTestCard(GameObject obj)
-    {
-        Debug.Log("you just clicked on a test card.");
+        GameObject obj = PhotonView.Find(objID).gameObject;
 
         string name = obj.GetComponent<BuildingDisplay>().testName;
 
@@ -227,6 +202,21 @@ public class UserInput : Photon.MonoBehaviour
         }
 
         player.PlayerBuild(name);
+    }
+
+    [PunRPC]
+    public void DiscardCard(int objID)
+    {
+        GameObject obj = PhotonView.Find(objID).gameObject;
+
+        char chr = (obj.name[1]);
+        int level = (int)(chr - '0');
+
+        Vector3 position = obj.transform.position;
+        Destroy(obj);
+        Fill(level, position);
+
+        audioManager.Play("Discard");
     }
 
     void Fill(int level, Vector3 position)

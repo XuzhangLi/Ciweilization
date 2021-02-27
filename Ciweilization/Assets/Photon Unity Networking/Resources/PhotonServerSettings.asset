@@ -50,4 +50,7 @@ MonoBehaviour:
   - AssignPlayerParameters
   - NextActivePlayer
   - CiweilizationNextTurn
+  - BuyCard
+  - BuyTestCard
+  - DiscardCard
   DisableAutoOpenWizard: 1

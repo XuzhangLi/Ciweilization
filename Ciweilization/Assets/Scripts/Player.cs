@@ -63,6 +63,7 @@ public class Player : Photon.MonoBehaviour
 
     }
 
+    /* Build the given building for the player and build a wonders if triples. */
     public void PlayerBuild(string name)
     {
         ////////////////////////////////////////////// Level 1 buildings
@@ -393,6 +394,7 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
+    /* Build the given wonder for the player and build another wonders if triples. */
     public void PlayerWBuild(string name)
     {
         //////////////////////////////////////////////  Level 2 buildings
@@ -582,6 +584,7 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
+    /* Delete the given building for the player. */
     public void PlayerDelete(string name)
     {
         if (name == "G1")
@@ -654,15 +657,15 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
-    //public void CountPlayerMoves()
-    void EndGameWhenTurnEnds()
+    /* Plays a winning sound. */
+    private void EndGameWhenTurnEnds()
     {
         audioManager.Play("Win");
         Debug.Log("You have reached the victory condition. The game ends by the end of the turn.");
     }
 
     /* Instantiate a building for the player. */
-    void PlayerDisplay(string name, int num, bool isWonder)
+    private void PlayerDisplay(string name, int num, bool isWonder)
     {
         Quaternion quat = Quaternion.identity;
         GameObject building;
@@ -914,6 +917,7 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
+    /* Change the given object's tag to the player's building according to the player number. */
     private void ChangeTagForPlayer(GameObject obj)
     {
         if (playerNumber == 1)
