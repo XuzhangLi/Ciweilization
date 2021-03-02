@@ -62,4 +62,5 @@ MonoBehaviour:
   - ChangePlayerCount
   - HideSitButton
   - ShowStartButton
+  - ShowEndTurnButton
   DisableAutoOpenWizard: 1

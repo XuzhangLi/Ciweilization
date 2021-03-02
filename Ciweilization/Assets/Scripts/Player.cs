@@ -644,7 +644,8 @@ public class Player : Photon.MonoBehaviour
             ciweilization.win = true;
             audioManager.Play("Win");
         }
-        Debug.Log("You have reached the victory condition. The game ends by the end of the turn.");
+        Debug.Log("Some player has reached the victory condition. " +
+            "The game ends by the end of the turn.");
         ciweilization.isLastTurn = true;
     }
 

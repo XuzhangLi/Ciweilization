@@ -368,9 +368,15 @@ public class Ciweilization : Photon.MonoBehaviour
     {
         photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Theme");
         photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+        photonView.RPC("ShowEndTurnButton", PhotonTargets.AllBuffered);
         startButton.SetActive(false);
-        endTurnButton.SetActive(true);
         StartCoroutine(CiweilizationDealHeroes(1));
+    }
+
+    [PunRPC]
+    public void ShowEndTurnButton()
+    {
+        endTurnButton.SetActive(true);
     }
 
     [PunRPC]
