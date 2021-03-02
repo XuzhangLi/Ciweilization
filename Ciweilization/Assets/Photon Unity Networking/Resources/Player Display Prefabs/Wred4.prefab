@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 497904947814632800}
   - component: {fileID: 8763581765510840659}
   - component: {fileID: -268659038524311128}
+  - component: {fileID: 6428690465215180700}
   m_Layer: 0
   m_Name: Wred4
   m_TagString: Wonder
@@ -149,3 +150,29 @@ MonoBehaviour:
     type: 3}
   xCursorOffset: 10
   yCursorOffset: 6
+--- !u!114 &6428690465215180700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804931150090093030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents: []
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0

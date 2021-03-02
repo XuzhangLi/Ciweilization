@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c09dc08085309e94a84979f425b6d21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerNameText: {fileID: 0}
+  nameText: {fileID: 0}
   playerNumber: 0
   heroObj: {fileID: 0}
   testEmptyObj: {fileID: 0}
@@ -266,11 +266,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  fullEnergy: {fileID: 6474278674946417186, guid: d9276c72a02b8c5448fd39dc92e002a0,
+  fullEnergy: {fileID: -273227775412110896, guid: aabadebf8a3bcd24789700a0dbd9df49,
     type: 3}
-  halfEnergy: {fileID: 5765439960744631173, guid: d9276c72a02b8c5448fd39dc92e002a0,
+  threeQuarterEnergy: {fileID: 8783851482921416483, guid: aabadebf8a3bcd24789700a0dbd9df49,
     type: 3}
-  emptyEnergy: {fileID: 2682891592873716606, guid: d9276c72a02b8c5448fd39dc92e002a0,
+  halfEnergy: {fileID: 2324104336118338403, guid: aabadebf8a3bcd24789700a0dbd9df49,
+    type: 3}
+  quarterEnergy: {fileID: -7046209773171421307, guid: aabadebf8a3bcd24789700a0dbd9df49,
+    type: 3}
+  emptyEnergy: {fileID: -1921638652666270743, guid: aabadebf8a3bcd24789700a0dbd9df49,
     type: 3}
 --- !u!114 &726743777574519801
 MonoBehaviour:

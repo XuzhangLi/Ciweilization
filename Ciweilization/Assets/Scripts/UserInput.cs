@@ -63,8 +63,8 @@ public class UserInput : Photon.MonoBehaviour
                 {
 
                     Debug.Log("You just clicked on an emote.");
-                    string name = hit.collider.gameObject.GetComponent<Emote>().name;
-                    audioManager.Play(name);
+                    string emoteName = hit.collider.gameObject.GetComponent<Emote>().name;
+                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, emoteName);
                 }
 
                 else if (hit.collider.CompareTag("HeroTrigger"))
@@ -73,14 +73,14 @@ public class UserInput : Photon.MonoBehaviour
                     //write these into a function later
                     StartCoroutine(ciweilization.CiweilizationDealHeroes(player.playerNumber));
                     ciweilization.CiweilizationSortHeroes();
-                    audioManager.Play("Coin");
+                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
                 }
 
                 else if (hit.collider.CompareTag("HeroCard"))
                 {
                     Debug.Log("You just clicked on a hero card.");
                     SelectHero(hit.collider.gameObject);
-                    audioManager.Play("Coin");
+                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
                 }
 
                 else if (hit.collider.CompareTag("ChanceTrigger"))
@@ -88,7 +88,7 @@ public class UserInput : Photon.MonoBehaviour
                     Debug.Log("You just clicked on a chance trigger.");
                     //write these into a function later
                     StartCoroutine(ciweilization.CiweilizationDealChances());
-                    audioManager.Play("Coin");
+                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
                 }
 
                 else if (hit.collider.CompareTag("ChanceCard"))
@@ -96,14 +96,14 @@ public class UserInput : Photon.MonoBehaviour
                     Debug.Log("You just clicked on a chance card.");
                     //write these into a function later
                     DestroyAll("ChanceCard");
-                    audioManager.Play("Coin");
+                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
                 }
 
                 else if (hit.collider.CompareTag("Hero"))
                 {
                     Debug.Log("You just clicked on a hero. You get half extra move.");
-                    player.moves += 0.5f;
-                    audioManager.Play("Discard");
+                    photonView.RPC("ChangePlayerMoves", PhotonTargets.AllBuffered, 0.5f);
+                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Discard");
                 }
             }
         }
@@ -120,34 +120,26 @@ public class UserInput : Photon.MonoBehaviour
                 }
                 else if (hit.collider.CompareTag("BuildingPlayer1"))
                 {
-                    DestroyBuilding(hit.collider.gameObject, ciweilization.player1);
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    photonView.RPC("DestroyBuilding", PhotonTargets.AllBuffered, objID, 1);
                 }
                 else if (hit.collider.CompareTag("BuildingPlayer2"))
                 {
-                    DestroyBuilding(hit.collider.gameObject, ciweilization.player2);
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    photonView.RPC("DestroyBuilding", PhotonTargets.AllBuffered, objID, 2);
                 }
                 else if (hit.collider.CompareTag("BuildingPlayer3"))
                 {
-                    DestroyBuilding(hit.collider.gameObject, ciweilization.player3);
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    photonView.RPC("DestroyBuilding", PhotonTargets.AllBuffered, objID, 3);
                 }
                 else if (hit.collider.CompareTag("Hero"))
                 {
-                    player.moves -= 0.5f;
-                    audioManager.Play("Discard");
+                    photonView.RPC("ChangePlayerMoves", PhotonTargets.AllBuffered, -0.5f);
+                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Discard");
                 }
             }
         }
-    }
-
-    void DestroyBuilding(GameObject obj, Player attackedPlayer)
-    {
-        Debug.Log("you just right clicked on a building.");
-
-        string name = obj.GetComponent<BuildingDisplay>().testName;
-        Destroy(obj);
-        attackedPlayer.PlayerDelete(name);
-
-        audioManager.Play("Discard");
     }
 
     [PunRPC]
@@ -207,6 +199,7 @@ public class UserInput : Photon.MonoBehaviour
     [PunRPC]
     public void DiscardCard(int objID)
     {
+        Debug.Log("Discard Card Called");
         GameObject obj = PhotonView.Find(objID).gameObject;
 
         char chr = (obj.name[1]);
@@ -215,6 +208,35 @@ public class UserInput : Photon.MonoBehaviour
         Vector3 position = obj.transform.position;
         Destroy(obj);
         Fill(level, position);
+
+        audioManager.Play("Discard");
+    }
+
+    [PunRPC]
+    public void DestroyBuilding(int objID, int playerNum)
+    {
+        GameObject obj = PhotonView.Find(objID).gameObject;
+        Debug.Log("DestoryBuildingCalled");
+
+        string name = obj.GetComponent<BuildingDisplay>().testName;
+        Destroy(obj);
+        
+        if (playerNum == 1)
+        {
+            ciweilization.player1.PlayerDelete(name);
+        }
+        else if (playerNum == 2)
+        {
+            ciweilization.player2.PlayerDelete(name);
+        }
+        else if (playerNum == 3)
+        {
+            ciweilization.player3.PlayerDelete(name);
+        }
+        else
+        {
+            Debug.Log("Error! Invalid player number.");
+        }
 
         audioManager.Play("Discard");
     }
@@ -275,5 +297,11 @@ public class UserInput : Photon.MonoBehaviour
     public void SetCardName(int id, string cardName)
     {
         PhotonView.Find(id).gameObject.name = cardName;
+    }
+
+    [PunRPC]
+    public void PlayAudioForAll(string name)
+    {
+        audioManager.Play(name);
     }
 }

@@ -53,4 +53,13 @@ MonoBehaviour:
   - BuyCard
   - BuyTestCard
   - DiscardCard
+  - ChangePlayerMoves
+  - DestroyBuilding
+  - PlayerDisplay
+  - ChangeTagForPlayer
+  - PlayAudioForAll
+  - DisplayPlayerName
+  - ChangePlayerCount
+  - HideSitButton
+  - ShowStartButton
   DisableAutoOpenWizard: 1

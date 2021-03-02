@@ -14,7 +14,9 @@ public class Energy : MonoBehaviour
 
     public Image[] energies;
     public Sprite fullEnergy;
+    public Sprite threeQuarterEnergy;
     public Sprite halfEnergy;
+    public Sprite quarterEnergy;
     public Sprite emptyEnergy;
 
     private void Start()
@@ -29,7 +31,7 @@ public class Energy : MonoBehaviour
             return;
         }
 
-        energy = Mathf.Floor((float) player.moves * 2) / 2;
+        energy = player.moves;
 
         //energy can't exceed max count 
         if (energy > numOfEnergies)
@@ -40,13 +42,21 @@ public class Energy : MonoBehaviour
         for (int i = 0; i < energies.Length; i++)
         {
             //decide whether to display full, half, or empty energy sprite for each spot
-            if (i < energy - 0.5f)
+            if (i < energy - 0.75f)
             {
                 energies[i].sprite = fullEnergy;
+            }
+            else if (i == energy - 0.75f)
+            {
+                energies[i].sprite = threeQuarterEnergy;
             }
             else if (i == energy - 0.5f)
             {
                 energies[i].sprite = halfEnergy;
+            }
+            else if (i == energy - 0.25f)
+            {
+                energies[i].sprite = quarterEnergy;
             }
             else
             {

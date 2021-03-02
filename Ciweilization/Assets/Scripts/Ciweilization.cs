@@ -96,6 +96,9 @@ public class Ciweilization : Photon.MonoBehaviour
     private TextMeshProUGUI ruleText;
     private TextMeshProUGUI playerConnectionText;
     private TextMeshProUGUI pingText;
+    private TextMeshProUGUI player1NameText;
+    private TextMeshProUGUI player2NameText;
+    private TextMeshProUGUI player3NameText;
 
     private Locations locations;
 
@@ -120,7 +123,14 @@ public class Ciweilization : Photon.MonoBehaviour
     public int playerCount = 0;
 
     public GameObject sceneCamera;
+    public GameObject disconnectUI;
+    private bool disconnectPanelOn = false;
+    public GameObject sitButton;
+    public GameObject startButton;
+    public GameObject endTurnButton;
 
+    [HideInInspector] public bool isLastTurn = false;
+    [HideInInspector] public bool win = false;
 
     /* Start is called before the first frame update. */
     void Start()
@@ -146,6 +156,10 @@ public class Ciweilization : Photon.MonoBehaviour
 
         playerConnectionText = GameObject.Find("Canvas/Player Connection Text").GetComponent<TextMeshProUGUI>();
         playerConnectionText.text = "Players Connected: " + playerCount;
+
+        player1NameText = GameObject.Find("Canvas/Player 1 Name Text").GetComponent<TextMeshProUGUI>();
+        player2NameText = GameObject.Find("Canvas/Player 2 Name Text").GetComponent<TextMeshProUGUI>();
+        player3NameText = GameObject.Find("Canvas/Player 3 Name Text").GetComponent<TextMeshProUGUI>();
 
         audioManager = FindObjectOfType<AudioManager>();
 
@@ -175,7 +189,6 @@ public class Ciweilization : Photon.MonoBehaviour
         //StartCoroutine(CiweilizationDealHeroes(1));
 
         audioManager.Play("Season Start");
-        audioManager.Play("Theme");
 
         actives[0].sprite = isActive;
         actives[1].sprite = isActive;
@@ -190,9 +203,11 @@ public class Ciweilization : Photon.MonoBehaviour
     {
         playerConnectionText.text = "Players Connected: " + playerCount;
 
-        pingText.text = ("Ping: + " + PhotonNetwork.GetPing());
+        pingText.text = ("Ping: " + PhotonNetwork.GetPing() + " ");
 
         ShowActivePlayerBar();
+
+        CheckDisconnectInput();
     }
 
     /* Show active player bar according to current active player. */
@@ -218,6 +233,27 @@ public class Ciweilization : Photon.MonoBehaviour
         }
     }
 
+    /* Checks if the player is trying to opne/close the disconnect panel and react accordingly.*/
+    private void CheckDisconnectInput()
+    {
+        if (disconnectPanelOn == true && Input.GetKeyDown(KeyCode.Escape))
+        {
+            disconnectUI.SetActive(false);
+            disconnectPanelOn = false;
+        }
+        else if (disconnectPanelOn == false && Input.GetKeyDown(KeyCode.Escape))
+        {
+            disconnectUI.SetActive(true);
+            disconnectPanelOn = true;
+        }
+    }
+
+    public void Disconnect()
+    {
+        photonView.RPC("ChangePlayerCount", PhotonTargets.AllBuffered, -1);
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel("Main Menu");
+    }
 
     /* Takes in a level and how many copies are there for each card; 
     Gives out a deck of buildings. */
@@ -283,7 +319,7 @@ public class Ciweilization : Photon.MonoBehaviour
      * and its player number. */
     public void CiweilizationSetUpPlayer()
     {
-        photonView.RPC("AddPlayerCount", PhotonTargets.AllBuffered);
+        photonView.RPC("ChangePlayerCount", PhotonTargets.AllBuffered, 1);
 
         if (playerCount == 1)
         {
@@ -292,6 +328,10 @@ public class Ciweilization : Photon.MonoBehaviour
                                     Quaternion.identity, 0);
 
             photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 1);
+            photonView.RPC("DisplayPlayerName", PhotonTargets.AllBuffered, 1, PhotonNetwork.playerName);
+            photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+            sitButton.SetActive(false);
+            startButton.SetActive(true);
         }
         else if (playerCount == 2)
         {
@@ -300,6 +340,9 @@ public class Ciweilization : Photon.MonoBehaviour
                                     Quaternion.identity, 0);
 
             photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 2);
+            photonView.RPC("DisplayPlayerName", PhotonTargets.AllBuffered, 2, PhotonNetwork.playerName);
+            photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+            sitButton.SetActive(false);
         }
         else if (playerCount == 3)
         {
@@ -308,10 +351,52 @@ public class Ciweilization : Photon.MonoBehaviour
                                     Quaternion.identity, 0);
 
             photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 3);
+            photonView.RPC("DisplayPlayerName", PhotonTargets.AllBuffered, 3, PhotonNetwork.playerName);
+            photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+            sitButton.SetActive(false);
         }
         else
         {
             Debug.Log("Error! A player has an invalid number.");
+        }
+    }
+
+    /* Start the game!
+       Namely, start the theme music, and deal heroes to the first player.
+       Only the client owning player1 can call this function.*/
+    public void StartGame()
+    {
+        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Theme");
+        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+        startButton.SetActive(false);
+        endTurnButton.SetActive(true);
+        StartCoroutine(CiweilizationDealHeroes(1));
+    }
+
+    [PunRPC]
+    public void PlayAudioForAll(string name)
+    {
+        audioManager.Play(name);
+    }
+
+    [PunRPC]
+    public void DisplayPlayerName(int playerNum, string name)
+    {
+        if (playerNum == 1)
+        {
+            player1NameText.text = name;
+        }
+        else if (playerNum == 2)
+        {
+            player2NameText.text = name;
+        }
+        else if (playerNum == 3)
+        {
+            player3NameText.text = name;
+        }
+        else
+        {
+            Debug.Log("Error! Invalid player number when displaying player name.");
         }
     }
 
@@ -369,11 +454,11 @@ public class Ciweilization : Photon.MonoBehaviour
     }
 
     [PunRPC]
-    public void AddPlayerCount()
+    public void ChangePlayerCount(int x)
     {
         if (playerCount < 3)
         {
-            playerCount += 1;
+            playerCount += x;
         }
     }
 
@@ -399,7 +484,7 @@ public class Ciweilization : Photon.MonoBehaviour
         {
             foreach (string card in level1s[i])
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name, 
                                                     level1Pos[i].transform.position, 
                                                     Quaternion.identity, 0);
@@ -417,7 +502,7 @@ public class Ciweilization : Photon.MonoBehaviour
         {
             foreach (string card in level2s[i])
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
                                     level2Pos[i].transform.position,
                                     Quaternion.identity, 0);
@@ -435,7 +520,7 @@ public class Ciweilization : Photon.MonoBehaviour
         {
             foreach (string card in level3s[i])
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
                                      level3Pos[i].transform.position,
                                      Quaternion.identity, 0);
@@ -453,7 +538,7 @@ public class Ciweilization : Photon.MonoBehaviour
         {
             foreach (string card in level4s[i])
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
                 GameObject newCard = PhotonNetwork.Instantiate(cardPrefab.name,
                                     level4Pos[i].transform.position,
                                     Quaternion.identity, 0);
@@ -472,7 +557,7 @@ public class Ciweilization : Photon.MonoBehaviour
             if (playerNum == 1 && player1.photonView.isMine)
             {
                 string card = player1Heroes[i].Last<string>();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
                 
                 GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
                                                             Quaternion.identity, 0);
@@ -503,19 +588,13 @@ public class Ciweilization : Photon.MonoBehaviour
         }
     }
 
-    [PunRPC]
-    public void SetCardName(int id, string cardName)
-    {
-        PhotonView.Find(id).gameObject.name = cardName;
-    }
-
     /* Deal out three chances from the box, and prepares the box for next time.*/
     public IEnumerator CiweilizationDealChances()
     {
         for (int i = 0; i < 3; i++)
         {
             string card = chances[i].Last<string>();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
             GameObject newCard = PhotonNetwork.Instantiate(chanceCardPrefab.name, 
                                                             chancePos[i].transform.position,
                                                             Quaternion.identity, 0);
@@ -525,6 +604,12 @@ public class Ciweilization : Photon.MonoBehaviour
         }
 
         CiweilizationSortChances();
+    }
+
+    [PunRPC]
+    public void SetCardName(int id, string cardName)
+    {
+        PhotonView.Find(id).gameObject.name = cardName;
     }
 
     /* Put cards in building decks into their corresponding boxs, so they are ready to be dealt out.*/
@@ -709,6 +794,21 @@ public class Ciweilization : Photon.MonoBehaviour
     /* Start next turn, give players moves, and changes season if needed.*/
     public void CiweilizationNextTurn()
     {
+        if (isLastTurn == true)
+        {
+            if (win == true)
+            {
+                audioManager.Play("Player Win");
+                turnText.text = "You Won!";
+            }
+            else
+            {
+                audioManager.Play("Player Lose");
+                turnText.text = "You Lost.";
+            }
+            return;
+        }
+
         turn += 1;
 
         if (turn == 1)

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : Photon.MonoBehaviour
 {
-    public Text PlayerNameText;
+    public TextMeshProUGUI nameText;
 
     public int playerNumber = 0;
 
@@ -63,7 +64,8 @@ public class Player : Photon.MonoBehaviour
 
     }
 
-    /* Build the given building for the player and build a wonders if triples. */
+    /* Build the given building for the player and build a wonders if triples.
+     * Only display the building if the client owns the player. */
     public void PlayerBuild(string name)
     {
         ////////////////////////////////////////////// Level 1 buildings
@@ -72,7 +74,9 @@ public class Player : Photon.MonoBehaviour
             G1 += 1;
             Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
-            //instantiate a G1 object
+            //Change PlayerDisplay function into non-RPC, target player from both 
+            //player already calls PlayerBuild. We should only call PlayerDisplay if
+            //photonView.isMine is true.
             PlayerDisplay("G1", G1, false);
             if (G1 == 3)
             {
@@ -85,7 +89,6 @@ public class Player : Photon.MonoBehaviour
             R1 += 1;
             Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
-            //instantiate a G1 object
             PlayerDisplay("R1", R1, false);
             if (R1 == 3)
             {
@@ -98,7 +101,6 @@ public class Player : Photon.MonoBehaviour
             Y1 += 1;
             Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
-            //instantiate a G1 object
             PlayerDisplay("Y1", Y1, false);
             if (Y1 == 3)
             {
@@ -111,7 +113,6 @@ public class Player : Photon.MonoBehaviour
             B1 += 1;
             Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
-            //instantiate a G1 object
             PlayerDisplay("B1", B1, false);
             if (B1 == 3)
             {
@@ -129,7 +130,6 @@ public class Player : Photon.MonoBehaviour
                 G2 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("G2", G2, false);
                 if (G2 == 3)
                 {
@@ -150,7 +150,6 @@ public class Player : Photon.MonoBehaviour
                 R2 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("R2", R2, false);
                 if (R2 == 3)
                 {
@@ -171,7 +170,6 @@ public class Player : Photon.MonoBehaviour
                 Y2 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("Y2", Y2, false);
                 if (Y2 == 3)
                 {
@@ -192,7 +190,6 @@ public class Player : Photon.MonoBehaviour
                 B2 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("B2", B2, false);
                 if (B2 == 3)
                 {
@@ -216,7 +213,6 @@ public class Player : Photon.MonoBehaviour
                 G3 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("G3", G3, false);
                 if (G3 == 3)
                 {
@@ -237,7 +233,6 @@ public class Player : Photon.MonoBehaviour
                 R3 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("R3", R3, false);
                 if (R3 == 3)
                 {
@@ -258,7 +253,6 @@ public class Player : Photon.MonoBehaviour
                 Y3 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("Y3", Y3, false);
                 if (Y3 == 3)
                 {
@@ -279,7 +273,6 @@ public class Player : Photon.MonoBehaviour
                 B3 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G1 object
                 PlayerDisplay("B3", B3, false);
                 if (B3 == 3)
                 {
@@ -303,7 +296,6 @@ public class Player : Photon.MonoBehaviour
                 G4 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G4 object
                 PlayerDisplay("G4", G4, false);
                 if ((R4 + Y4 + B4 > 0) || (Wonder_G4 == true))
                 {
@@ -327,7 +319,6 @@ public class Player : Photon.MonoBehaviour
                 R4 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G4 object
                 PlayerDisplay("R4", R4, false);
                 if ((G4 + Y4 + B4 > 0) || (Wonder_R4 == true))
                 {
@@ -351,7 +342,6 @@ public class Player : Photon.MonoBehaviour
                 Y4 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G4 object
                 PlayerDisplay("Y4", Y4, false);
                 if ((G4 + R4 + B4 > 0) || (Wonder_Y4 == true))
                 {
@@ -375,7 +365,6 @@ public class Player : Photon.MonoBehaviour
                 B4 += 1;
                 Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
-                //instantiate a G4 object
                 PlayerDisplay("B4", B4, false);
                 if ((G4 + R4 + Y4 > 0) || (Wonder_B4 == true))
                 {
@@ -404,7 +393,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_G2 = true;
             G2 += 1;
             ciweilization.wonderG2 = true;
-            //instantiate a G1 object
             PlayerDisplay("G2", G2, true);
             audioManager.Play("Wonder");
             if (G2 == 3)
@@ -417,7 +405,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_R2 = true;
             R2 += 1;
             ciweilization.wonderR2 = true;
-            //instantiate a G1 object
             PlayerDisplay("R2", R2, true);
             audioManager.Play("Wonder");
             if (R2 == 3)
@@ -430,7 +417,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_Y2 = true;
             Y2 += 1;
             ciweilization.wonderY2 = true;
-            //instantiate a G1 object
             PlayerDisplay("Y2", Y2, true);
             audioManager.Play("Wonder");
             if (Y2 == 3)
@@ -443,7 +429,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_B2 = true;
             B2 += 1;
             ciweilization.wonderB2 = true;
-            //instantiate a G1 object
             PlayerDisplay("B2", B2, true);
             audioManager.Play("Wonder");
             if (B2 == 3)
@@ -459,7 +444,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_G3 = true;
             G3 += 1;
             ciweilization.wonderG3 = true;
-            //instantiate a G1 object
             PlayerDisplay("G3", G3, true);
             audioManager.Play("Wonder");
             if (G3 == 3)
@@ -472,7 +456,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_R3 = true;
             R3 += 1;
             ciweilization.wonderR3 = true;
-            //instantiate a G1 object
             PlayerDisplay("R3", R3, true);
             audioManager.Play("Wonder");
             if (R3 == 3)
@@ -485,7 +468,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_Y3 = true;
             Y3 += 1;
             ciweilization.wonderY3 = true;
-            //instantiate a G1 object
             PlayerDisplay("Y3", Y3, true);
             audioManager.Play("Wonder");
             if (Y3 == 3)
@@ -498,7 +480,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_B3 = true;
             B3 += 1;
             ciweilization.wonderB3 = true;
-            //instantiate a G1 object
             PlayerDisplay("B3", B3, true);
             audioManager.Play("Wonder");
             if (B3 == 3)
@@ -514,7 +495,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_G4 = true;
             G4 += 1;
             ciweilization.wonderG4 = true;
-            //instantiate a G4 object
             PlayerDisplay("G4", G4, true);
             audioManager.Play("Wonder");
             if ((G4 + R4 + Y4 + B4 >= 2))
@@ -532,7 +512,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_R4 = true;
             R4 += 1;
             ciweilization.wonderR4 = true;
-            //instantiate a G4 object
             PlayerDisplay("R4", R4, true);
             audioManager.Play("Wonder");
             if ((G4 + R4 + Y4 + B4 >= 2))
@@ -549,7 +528,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_Y4 = true;
             Y4 += 1;
             ciweilization.wonderY4 = true;
-            //instantiate a G4 object
             PlayerDisplay("Y4", Y4, true);
             audioManager.Play("Wonder");
             if ((G4 + R4 + Y4 + B4 >= 2))
@@ -566,7 +544,6 @@ public class Player : Photon.MonoBehaviour
             Wonder_B4 = true;
             B4 += 1;
             ciweilization.wonderB4 = true;
-            //instantiate a G4 object
             PlayerDisplay("B4", B4, true);
             audioManager.Play("Wonder");
             if ((G4 + R4 + Y4 + B4 >= 2))
@@ -657,155 +634,190 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
-    /* Plays a winning sound. */
+    /* Mark this is the last turn of the game. 
+     * If the client owns the winnign player, plays a winning sound and mark
+     the player as winning. */
     private void EndGameWhenTurnEnds()
     {
-        audioManager.Play("Win");
+        if (photonView.isMine)
+        {
+            ciweilization.win = true;
+            audioManager.Play("Win");
+        }
         Debug.Log("You have reached the victory condition. The game ends by the end of the turn.");
+        ciweilization.isLastTurn = true;
     }
 
-    /* Instantiate a building for the player. */
-    private void PlayerDisplay(string name, int num, bool isWonder)
+    /* Instantiate a building for the player and set its tag to the player's building tag if 
+     the client owns the player. */
+    public void PlayerDisplay(string name, int num, bool isWonder)
     {
         Quaternion quat = Quaternion.identity;
         GameObject building;
+
+        // This function does nothing if the client doesn't own the player.
+        if (photonView.isMine == false)
+        {
+            Debug.Log("PlayerDisplayCalledWithWrongClient.");
+            return;
+        }
+        else
+        {
+            Debug.Log("PlayerDisplayCalledWithRightClient.");
+        }
 
         if (isWonder == false)
         {
             /////////////////////////////////// Level 1 Building Displays
             if (name == "G1")
             {
-                building = Instantiate(level1Prefabs[0], new Vector3(level1Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level1Prefabs[0].name, 
+                                                  new Vector3(level1Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "R1")
             {
-                building = Instantiate(level1Prefabs[1], new Vector3(level1Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level1Prefabs[1].name,
+                                                  new Vector3(level1Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "Y1")
             {
-                building = Instantiate(level1Prefabs[2], new Vector3(level1Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level1Prefabs[2].name,
+                                                  new Vector3(level1Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "B1")
             {
-                building = Instantiate(level1Prefabs[3], new Vector3(level1Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level1Prefabs[3].name,
+                                                  new Vector3(level1Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level1Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level1Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
 
             /////////////////////////////////// Level 2 Building Displays
             else if (name == "G2")
             {
-                building = Instantiate(level2Prefabs[0], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[0].name,
+                                                  new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "R2")
             {
-                building = Instantiate(level2Prefabs[1], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[1].name,
+                                                  new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "Y2")
             {
-                building = Instantiate(level2Prefabs[2], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[2].name,
+                                                  new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "B2")
             {
-                building = Instantiate(level2Prefabs[3], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[3].name,
+                                                  new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
 
             /////////////////////////////////// Level 3 Building Displays
             else if (name == "G3")
             {
-                building = Instantiate(level3Prefabs[0], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[0].name,
+                                                  new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "R3")
             {
-                building = Instantiate(level3Prefabs[1], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[1].name,
+                                                  new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "Y3")
             {
-                building = Instantiate(level3Prefabs[2], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[2].name,
+                                                  new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "B3")
             {
-                building = Instantiate(level3Prefabs[3], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[3].name,
+                                                  new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
 
             /////////////////////////////////// Level 4 Building Displays
             else if (name == "G4")
             {
-                building = Instantiate(level4Prefabs[0], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[0].name,
+                                                  new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "R4")
             {
-                building = Instantiate(level4Prefabs[1], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[1].name,
+                                                  new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "Y4")
             {
-                building = Instantiate(level4Prefabs[2], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[2].name,
+                                                  new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
             else if (name == "B4")
             {
-                building = Instantiate(level4Prefabs[3], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[3].name,
+                                                  new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                ChangeTagForPlayer(building);
+                                                  quat, 0);
+                photonView.RPC("ChangeTagForPlayer", PhotonTargets.AllBuffered, building.GetPhotonView().viewID);
             }
         }
 
@@ -816,110 +828,113 @@ public class Player : Photon.MonoBehaviour
 
             if (name == "G2")
             {
-                building = Instantiate(level2Prefabs[4], new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[4].name, 
+                                                  new Vector3(level2Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "R2")
             {
-                building = Instantiate(level2Prefabs[5], new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[5].name,
+                                                  new Vector3(level2Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "Y2")
             {
-                building = Instantiate(level2Prefabs[6], new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[6].name,
+                                                  new Vector3(level2Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "B2")
             {
-                building = Instantiate(level2Prefabs[7], new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level2Prefabs[7].name,
+                                                  new Vector3(level2Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level2Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level2Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
 
             /////////////////////////////////// Level 3 Wonder Displays
             else if (name == "G3")
             {
-                building = Instantiate(level3Prefabs[4], new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[4].name,
+                                                  new Vector3(level3Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "R3")
             {
-                building = Instantiate(level3Prefabs[5], new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[5].name,
+                                                  new Vector3(level3Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "Y3")
             {
-                building = Instantiate(level3Prefabs[6], new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[6].name,
+                                                  new Vector3(level3Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "B3")
             {
-                building = Instantiate(level3Prefabs[7], new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level3Prefabs[7].name,
+                                                  new Vector3(level3Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level3Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level3Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
 
             /////////////////////////////////// Level 4 Wonder Displays
             else if (name == "G4")
             {
-                building = Instantiate(level4Prefabs[4], new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[4].name,
+                                                  new Vector3(level4Pos[0].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[0].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[0].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "R4")
             {
-                building = Instantiate(level4Prefabs[5], new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[5].name,
+                                                  new Vector3(level4Pos[1].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[1].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[1].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "Y4")
             {
-                building = Instantiate(level4Prefabs[6], new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[6].name,
+                                                  new Vector3(level4Pos[2].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[2].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[2].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
             else if (name == "B4")
             {
-                building = Instantiate(level4Prefabs[7], new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
+                building = PhotonNetwork.Instantiate("Player Display Prefabs/" + level4Prefabs[7].name,
+                                                  new Vector3(level4Pos[3].transform.position.x + (num - 1) * xOffset,
                                                   level4Pos[3].transform.position.y + (num - 1) * yOffset,
                                                   level4Pos[3].transform.position.z + (num - 1) * zOffset),
-                                      quat, this.gameObject.transform);
-                
+                                                  quat, 0);
             }
         }
     }
 
     /* Change the given object's tag to the player's building according to the player number. */
-    private void ChangeTagForPlayer(GameObject obj)
+    [PunRPC]
+    public void ChangeTagForPlayer(int objID)
     {
+        GameObject obj = PhotonView.Find(objID).gameObject;
+
         if (playerNumber == 1)
         {
             obj.tag = "BuildingPlayer1";
@@ -936,6 +951,13 @@ public class Player : Photon.MonoBehaviour
         {
             Debug.Log("Invalid player number.");
         }
+    }
+
+    /* Change the player's moves by given amount.*/
+    [PunRPC]
+    public void ChangePlayerMoves(float x)
+    {
+        moves += x;
     }
 
     public int BoolToInt(bool b)

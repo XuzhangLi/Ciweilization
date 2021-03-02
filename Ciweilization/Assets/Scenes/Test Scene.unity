@@ -268,7 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c4515d9ca0ba774885274f8d889967f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pv: {fileID: 474596125}
   playerPrefab: {fileID: 6767717256941813416, guid: c8c39835c3801ca41b0c79209a718634,
     type: 3}
   GameCanvas: {fileID: 2010538999}
