@@ -124,10 +124,11 @@ public class Ciweilization : Photon.MonoBehaviour
 
     public GameObject sceneCamera;
     public GameObject disconnectUI;
-    private bool disconnectPanelOn = false;
+    [HideInInspector] public bool disconnectPanelOn = false;
     public GameObject sitButton;
     public GameObject startButton;
     public GameObject endTurnButton;
+    [HideInInspector] public int screenWidth = 800;
 
     [HideInInspector] public bool isLastTurn = false;
     [HideInInspector] public bool win = false;
@@ -135,18 +136,14 @@ public class Ciweilization : Photon.MonoBehaviour
     /* Start is called before the first frame update. */
     void Start()
     {
-        Debug.Log("Switched to main scene.");
-        Debug.Log("" + playerPrefab.name);
-
         locations = GetComponent<Locations>();
+
+        // Doesn't actually change the screen size, only changes 
+        //      what this game manager thinks the screen size is.
+        screenWidth = 800;
 
         turnText = GameObject.Find("Canvas/Turn Text").GetComponent<TextMeshProUGUI>();
         turnText.text = "Hero Selection Time";
-
-        //numOfPlayers += 1;
-        //CiweilizationSetUpPlayer(1);
-        //CiweilizationSetUpPlayer(2);
-        //CiweilizationSetUpPlayer(3);
 
         ruleText = GameObject.Find("Canvas/Rule Text").GetComponent<TextMeshProUGUI>();
         ruleText.text = "";
@@ -247,7 +244,9 @@ public class Ciweilization : Photon.MonoBehaviour
             disconnectPanelOn = true;
         }
     }
-
+    
+    /* Disconnect the client from the room, reduce player count by 1, 
+     * and take the player back to the main menu.*/
     public void Disconnect()
     {
         photonView.RPC("ChangePlayerCount", PhotonTargets.AllBuffered, -1);
@@ -255,6 +254,26 @@ public class Ciweilization : Photon.MonoBehaviour
         PhotonNetwork.LoadLevel("Main Menu");
     }
 
+    /* Switch from windowed mode to full screen mode or the other way around.*/
+    public void ToggleScreenSize()
+    {
+        if (screenWidth == 800)
+        {
+            Screen.SetResolution(1280, 720, false);
+            screenWidth = 1280;
+        }
+        else if (screenWidth == 1280)
+        {
+            Screen.SetResolution(2560, 1440, true);
+            screenWidth = 2560;
+        }
+        else if (screenWidth == 2560)
+        {
+            Screen.SetResolution(800, 450, false);
+            screenWidth = 800;
+        }
+    }
+    
     /* Takes in a level and how many copies are there for each card; 
     Gives out a deck of buildings. */
     public static List<string> GenerateDeck(string v, int x) 

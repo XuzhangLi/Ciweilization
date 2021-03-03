@@ -26,7 +26,10 @@ public class UserInput : Photon.MonoBehaviour
     {
         if (photonView.isMine && ciweilization.activePlayerNumber == player.playerNumber)
         {
-            GetMouseClick();
+            if (ciweilization.disconnectPanelOn == false)
+            {
+                GetMouseClick();
+            }
         }
     }
 

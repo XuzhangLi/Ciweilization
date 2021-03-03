@@ -65,7 +65,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        Play("Theme");
+        Play("Default Theme");
     }
 
 }
