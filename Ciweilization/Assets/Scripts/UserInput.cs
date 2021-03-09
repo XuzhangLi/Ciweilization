@@ -286,8 +286,15 @@ public class UserInput : Photon.MonoBehaviour
         photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, obj.name);
 
         DestroyAll("HeroCard");
+
+        int heroNumber = int.Parse(player.heroObj.name.Substring(1));
+
+        ciweilization.CiweilizationSetUpHeroPlayer(player.playerNumber, 
+                                                   ciweilization.currentHeroNames[heroNumber]);
+        Destroy(this.gameObject);
     }
-    void DestroyAll(string tag)
+
+    private void DestroyAll(string tag)
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
         for (int i = 0; i < targets.Length; i++)

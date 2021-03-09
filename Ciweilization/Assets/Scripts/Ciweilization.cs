@@ -14,13 +14,11 @@ public class Ciweilization : Photon.MonoBehaviour
     private AudioManager audioManager;
 
     public GameObject playerPrefab;
-    public GameObject playerPrefab1;
-    public GameObject playerPrefab2;
-    public GameObject playerPrefab3;
 
     public Player player1;
     public Player player2;
     public Player player3;
+    public GameObject testObj;
 
     public List<string>[] level1s;
     public List<string>[] level2s;
@@ -42,24 +40,22 @@ public class Ciweilization : Photon.MonoBehaviour
     public GameObject heroCardPrefab;
     public GameObject chanceCardPrefab;
 
-    public GameObject[] level1Pos;
-    public GameObject[] level2Pos;
-    public GameObject[] level3Pos;
-    public GameObject[] level4Pos;
-    public GameObject[] player1Pos;
-    public GameObject[] player2Pos;
-    public GameObject[] player3Pos;
-    public GameObject[] chancePos;
+    [HideInInspector] public GameObject[] level1Pos;
+    [HideInInspector] public GameObject[] level2Pos;
+    [HideInInspector] public GameObject[] level3Pos;
+    [HideInInspector] public GameObject[] level4Pos;
+    public GameObject[] discoverPos;
     public GameObject[] heroPos;
+
+    public List<string> heroNames;
+    public List<string> currentHeroNames;
 
     [HideInInspector] public List<string> deck1;
     [HideInInspector] public List<string> deck2;
     [HideInInspector] public List<string> deck3;
     [HideInInspector] public List<string> deck4;
-    public List<string> deckHeroes;
-    public List<string> deckHeroesCopy;
-    public List<string> deckChances;
-    public List<string> deckChancesCopy;
+    [HideInInspector] public List<string> deckHeroes;
+    [HideInInspector] public List<string> deckChances;
 
     private List<string> level1_0 = new List<string>();
     private List<string> level1_1 = new List<string>();
@@ -86,11 +82,11 @@ public class Ciweilization : Photon.MonoBehaviour
     private List<string> chance1 = new List<string>();
     private List<string> chance2 = new List<string>();
 
-    public int turn;
-    public bool isSpring;
-    public bool isSummer;
-    public bool isFall;
-    public bool isWinter;
+    [HideInInspector] public int turn;
+    [HideInInspector] public bool isSpring;
+    [HideInInspector] public bool isSummer;
+    [HideInInspector] public bool isFall;
+    [HideInInspector] public bool isWinter;
 
     private TextMeshProUGUI turnText;
     private TextMeshProUGUI ruleText;
@@ -120,9 +116,8 @@ public class Ciweilization : Photon.MonoBehaviour
     public Image[] actives;
     public Sprite isActive;
 
-    public int playerCount = 0;
+    [HideInInspector] public int playerCount = 0;
 
-    public GameObject sceneCamera;
     public GameObject disconnectUI;
     [HideInInspector] public bool disconnectPanelOn = false;
     public GameObject sitButton;
@@ -342,11 +337,11 @@ public class Ciweilization : Photon.MonoBehaviour
 
         if (playerCount == 1)
         {
-            GameObject player1Obj = PhotonNetwork.Instantiate(playerPrefab1.name,
+            GameObject player1Obj = PhotonNetwork.Instantiate("Player Prefabs/" + playerPrefab.name,
                                     new Vector2(this.transform.position.x, this.transform.position.y),
                                     Quaternion.identity, 0);
-
-            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 1);
+            int playerID = player1Obj.GetPhotonView().viewID;
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 1, playerID);
             photonView.RPC("DisplayPlayerName", PhotonTargets.AllBuffered, 1, PhotonNetwork.playerName);
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
             sitButton.SetActive(false);
@@ -354,25 +349,65 @@ public class Ciweilization : Photon.MonoBehaviour
         }
         else if (playerCount == 2)
         {
-            GameObject player2Obj = PhotonNetwork.Instantiate(playerPrefab2.name,
+            GameObject player2Obj = PhotonNetwork.Instantiate("Player Prefabs/" + playerPrefab.name,
                                     new Vector2(this.transform.position.x, this.transform.position.y),
                                     Quaternion.identity, 0);
-
-            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 2);
+            int playerID = player2Obj.GetPhotonView().viewID;
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 2, playerID);
             photonView.RPC("DisplayPlayerName", PhotonTargets.AllBuffered, 2, PhotonNetwork.playerName);
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
             sitButton.SetActive(false);
         }
         else if (playerCount == 3)
         {
-            GameObject player3Obj = PhotonNetwork.Instantiate(playerPrefab3.name,
+            GameObject player3Obj = PhotonNetwork.Instantiate("Player Prefabs/" + playerPrefab.name,
                                     new Vector2(this.transform.position.x, this.transform.position.y),
                                     Quaternion.identity, 0);
-
-            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 3);
+            int playerID = player3Obj.GetPhotonView().viewID;
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 3, playerID);
             photonView.RPC("DisplayPlayerName", PhotonTargets.AllBuffered, 3, PhotonNetwork.playerName);
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
             sitButton.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Error! A player has an invalid number.");
+        }
+    }
+
+    public void CiweilizationSetUpHeroPlayer(int playerNum, string heroName)
+    {
+        if (heroName == "na")
+        {
+            heroName = "Main Player";
+        }
+
+        if (playerNum == 1)
+        {
+            GameObject player1Obj = PhotonNetwork.Instantiate("Player Prefabs/" + heroName,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
+            int playerID = player1Obj.GetPhotonView().viewID;
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 1, playerID);
+            photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+        }
+        else if (playerNum == 2)
+        {
+            GameObject player2Obj = PhotonNetwork.Instantiate("Player Prefabs/" + heroName,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
+            int playerID = player2Obj.GetPhotonView().viewID;
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 2, playerID);
+            photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+        }
+        else if (playerNum == 3)
+        {
+            GameObject player3Obj = PhotonNetwork.Instantiate("Player Prefabs/" + heroName,
+                                    new Vector2(this.transform.position.x, this.transform.position.y),
+                                    Quaternion.identity, 0);
+            int playerID = player3Obj.GetPhotonView().viewID;
+            photonView.RPC("AssignPlayerParameters", PhotonTargets.AllBuffered, 3, playerID);
+            photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
         }
         else
         {
@@ -426,14 +461,14 @@ public class Ciweilization : Photon.MonoBehaviour
     }
 
     [PunRPC]
-    public void AssignPlayerParameters(int num)
+    public void AssignPlayerParameters(int num, int playerID)
     {
         if (num == 1)
         {
-
-            GameObject obj = GameObject.FindGameObjectWithTag("Player1");
+            GameObject obj = PhotonView.Find(playerID).gameObject;
             obj.name = "Test Player 1";
             player1 = obj.GetComponent<Player>();
+            //testObj = obj.GetComponent<Photon.MonoBehaviour>().gameObject;
             player1.level1Pos = locations.player1Level1Pos;
             player1.level2Pos = locations.player1Level2Pos;
             player1.level3Pos = locations.player1Level3Pos;
@@ -442,13 +477,11 @@ public class Ciweilization : Photon.MonoBehaviour
             player1.startEnergy = true;
 
             player1.playerNumber = 1;
-            player1.heroPos = heroPos[0];
-            
-            
+            player1.heroPos = heroPos[0];          
         }
         else if (num == 2)
         {
-            GameObject obj = GameObject.FindGameObjectWithTag("Player2");
+            GameObject obj = PhotonView.Find(playerID).gameObject;
             obj.name = "Test Player 2";
             player2 = obj.GetComponent<Player>();
             player2.level1Pos = locations.player2Level1Pos;
@@ -463,7 +496,7 @@ public class Ciweilization : Photon.MonoBehaviour
         }
         else if (num == 3)
         {
-            GameObject obj = GameObject.FindGameObjectWithTag("Player3");
+            GameObject obj = PhotonView.Find(playerID).gameObject;
             obj.name = "Test Player 3";
             player3 = obj.GetComponent<Player>();
             player3.level1Pos = locations.player3Level1Pos;
@@ -584,7 +617,7 @@ public class Ciweilization : Photon.MonoBehaviour
                 string card = player1Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.01f);
                 
-                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
+                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, discoverPos[i].transform.position,
                                                             Quaternion.identity, 0);
                 int id = newCard.GetPhotonView().viewID;
                 
@@ -594,7 +627,7 @@ public class Ciweilization : Photon.MonoBehaviour
             {
                 string card = player2Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
+                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, discoverPos[i].transform.position,
                                                             Quaternion.identity, 0);
                 int id = newCard.GetPhotonView().viewID;
 
@@ -604,7 +637,7 @@ public class Ciweilization : Photon.MonoBehaviour
             {
                 string card = player3Heroes[i].Last<string>();
                 yield return new WaitForSeconds(0.1f);
-                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, player1Pos[i].transform.position,
+                GameObject newCard = PhotonNetwork.Instantiate(heroCardPrefab.name, discoverPos[i].transform.position,
                                                             Quaternion.identity, 0);
                 int id = newCard.GetPhotonView().viewID;
 
@@ -620,8 +653,8 @@ public class Ciweilization : Photon.MonoBehaviour
         {
             string card = chances[i].Last<string>();
             yield return new WaitForSeconds(0.01f);
-            GameObject newCard = PhotonNetwork.Instantiate(chanceCardPrefab.name, 
-                                                            chancePos[i].transform.position,
+            GameObject newCard = PhotonNetwork.Instantiate(chanceCardPrefab.name,
+                                                            discoverPos[i].transform.position,
                                                             Quaternion.identity, 0);
             int id = newCard.GetPhotonView().viewID;
 
@@ -765,57 +798,6 @@ public class Ciweilization : Photon.MonoBehaviour
         }
     }
 
-    /* Takes in a player, and return the numder of moves that player should get in the current season.*/
-    public double CiweilizationCountPlayerMoves(Player player)
-    {
-        double count = 1f;
-        int wonderLevel2 = player.PlayerGetWonder_G2() + player.PlayerGetWonder_R2()
-                        + player.PlayerGetWonder_Y2() + player.PlayerGetWonder_B2();
-        int wonderLevel3 = player.PlayerGetWonder_G3() + player.PlayerGetWonder_R3()
-                        + player.PlayerGetWonder_Y3() + player.PlayerGetWonder_B3();
-        int wonderLevel4 = player.PlayerGetWonder_G4() + player.PlayerGetWonder_R4()
-                        + player.PlayerGetWonder_Y4() + player.PlayerGetWonder_B4();
-        int level1 = player.PlayerGetG1() + player.PlayerGetR1() +
-                        player.PlayerGetY1() + player.PlayerGetB1();
-        int level2 = player.PlayerGetG2() + player.PlayerGetR2() +
-                        player.PlayerGetY2() + player.PlayerGetB2();
-        int level3 = player.PlayerGetG3() + player.PlayerGetR3() +
-                        player.PlayerGetY3() + player.PlayerGetB3();
-        int level4 = player.PlayerGetG4() + player.PlayerGetR4() +
-                        player.PlayerGetY4() + player.PlayerGetB4();
-        if (isSpring == true)
-        {
-            count += level1 * 0.25f;
-            count += level2 * 0.5f;
-            count += player.PlayerGetG1() * 0.25f;
-            count += player.PlayerGetG2() * 0.5f;
-        }
-        else if (isSummer == true)
-        {
-            count += level2 * 0.25f;
-            count += level3 * 0.5f;
-            count += player.PlayerGetR2() * 0.25f;
-            count += player.PlayerGetR3() * 0.5f;
-        }
-        else if (isFall == true)
-        {
-            count += level3 * 0.25f;
-            count += level4 * 0.5f;
-            count += player.PlayerGetY3() * 0.25f;
-            count += player.PlayerGetY4() * 0.5f;
-        }
-        else if (isWinter == true)
-        {
-            count += player.PlayerGetB4() * 0.25f;
-            count += level4 * 0.25f;
-            count += player.PlayerGetB3() * 0.25f;
-            count += (wonderLevel3 * 0.25f + wonderLevel2 * 0.25f);
-            count -= player.PlayerGetWonder_B3() * 0.25f;
-        }
-        
-        return count;
-    }
-
     /* Start next turn, give players moves, and changes season if needed.*/
     public void CiweilizationNextTurn()
     {
@@ -900,8 +882,10 @@ public class Ciweilization : Photon.MonoBehaviour
             isFall = false;
             isWinter = true;
             ruleText.text = "Era of Science! \n\n"
-                    + "(1) Gain 0.5 move for every blue-4.\n"
-                    + "(2) Gain 0.25 move for every blue-3, level-4, or wonder.";
+                    + "(1) Gain 0.25 move for every \n"
+                    + "wonder or level-4 building.\n"
+                    + "(2) Gain 0.25 move for every \n"
+                    + "blue-3 or blue-4.";
             //ruleText.color = Color.cyan;
             Debug.Log("Fall has past and winter has come.");
             if (player1.photonView.isMine)
@@ -914,9 +898,9 @@ public class Ciweilization : Photon.MonoBehaviour
 
         //Give the players the correct number of moves for their next turn;
 
-        player1.moves = CiweilizationCountPlayerMoves(player1);
-        player2.moves = CiweilizationCountPlayerMoves(player2);
-        player3.moves = CiweilizationCountPlayerMoves(player3);
+        player1.moves = player1.CountMoves();
+        player2.moves = player2.CountMoves();
+        player3.moves = player3.CountMoves();
     }
 
     /* Deal out the starting building cards according to season. */

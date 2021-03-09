@@ -143,15 +143,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9002192639971640145}
-  - component: {fileID: 269941711752299469}
+  - component: {fileID: -2917711348599286200}
   - component: {fileID: 8275910259078666825}
   - component: {fileID: 726743777574519801}
   - component: {fileID: 4354698131590351990}
   - component: {fileID: 4682697264766683767}
   - component: {fileID: 8813240224395602889}
+  - component: {fileID: -7162776189193369450}
   m_Layer: 0
-  m_Name: Main Player 2
-  m_TagString: Player2
+  m_Name: Lich
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,7 +172,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &269941711752299469
+--- !u!114 &-2917711348599286200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,10 +181,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1149746780906104956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c09dc08085309e94a84979f425b6d21b, type: 3}
+  m_Script: {fileID: 11500000, guid: eb2311865aa85e24dae94bc5ecd8c97b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
   playerNumber: 0
   heroObj: {fileID: 0}
   testEmptyObj: {fileID: 0}
@@ -445,6 +445,80 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-7162776189193369450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149746780906104956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec13c2733e1ad544b2652ace937bcc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 0
+  heroObj: {fileID: 0}
+  testEmptyObj: {fileID: 0}
+  moves: 0
+  xOffset: 0.08
+  yOffset: -0.08
+  zOffset: -0.08
+  ciweilization: {fileID: 0}
+  level1Prefabs:
+  - {fileID: 1833812469489925098, guid: ac306665b1b3de843b8189a105b692e8, type: 3}
+  - {fileID: 316965121470738867, guid: 2b7efc12f34dacb4ca8edbcb6726c71f, type: 3}
+  - {fileID: 7300590919505122308, guid: 247f035197404894584b575dd192a7fc, type: 3}
+  - {fileID: 8521573116019784081, guid: ac667a80ec089ca468a5bd938c33dca3, type: 3}
+  level2Prefabs:
+  - {fileID: 8534977272379056045, guid: d0623e8cf3d78e44a99f0dbfe1ca543d, type: 3}
+  - {fileID: 5559314339987330282, guid: c79303a3e7ad96240ac809d39e7a897b, type: 3}
+  - {fileID: 6237864459456230054, guid: cd523ffd1a407dc45a5fa253e90b0982, type: 3}
+  - {fileID: 5598874372494088345, guid: 8e636e443f2579048bcc328fa09755b7, type: 3}
+  - {fileID: 6453238340876042011, guid: b603476950217994f8f340179a79281e, type: 3}
+  - {fileID: 5442349168183780682, guid: 45f142acf797c8c49a6554192e63c6e8, type: 3}
+  - {fileID: 5960280327996983316, guid: 2dd396def0ea950488a656e622341278, type: 3}
+  - {fileID: 4096805262013916103, guid: 82c17c8d2b88be64a8f5c8ce148389c7, type: 3}
+  level3Prefabs:
+  - {fileID: 8436251072461968666, guid: a19440c4fb8a9cd42a2065246340f3cf, type: 3}
+  - {fileID: 2890742490991607886, guid: d79cb39e59719a44eacc75bfa88953f4, type: 3}
+  - {fileID: 6774055076239017723, guid: c3e46b5dada952a4e9a2b3e516ab8e8c, type: 3}
+  - {fileID: 2368685861962866528, guid: b993ba1baf6fd004f802813917b9e338, type: 3}
+  - {fileID: 4760907674073197558, guid: fcfcfde2240a1754c87965658c5473c0, type: 3}
+  - {fileID: 4627914829521184291, guid: d4ffdae5af62c6e41a97580dbc0b1644, type: 3}
+  - {fileID: 2356631023956033684, guid: f6a1adbd369b94b478bbd27c46b514a7, type: 3}
+  - {fileID: 2259882556615499869, guid: 9386dcab2fe2578479f83cf265786d0c, type: 3}
+  level4Prefabs:
+  - {fileID: 3776717179500023775, guid: e8b679a82dd16d4448ced498313358f5, type: 3}
+  - {fileID: 5380564715834914161, guid: 36a3698c08dd6ad4ea1716280251f527, type: 3}
+  - {fileID: 3298398399094936360, guid: 450faea561ec88843aab2e6b316dd19f, type: 3}
+  - {fileID: 6155080470787940148, guid: 1ae4f330c45f39f4db5f2f61445d2438, type: 3}
+  - {fileID: 7389202523038725308, guid: 4043ebb7cfedc714ea21a9c8b9f6751a, type: 3}
+  - {fileID: 1804931150090093030, guid: 61f486930db38a447875f82183ca181a, type: 3}
+  - {fileID: 8481777061369881678, guid: 0828a3175cf26104bb25645fbad5971b, type: 3}
+  - {fileID: 9173969341678235726, guid: fd584ea9e400f5d4086352910c13177d, type: 3}
+  level1Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  level2Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  level3Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  level4Pos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  heroPos: {fileID: 0}
+  startEnergy: 0
 --- !u!1 &4455343036587504669
 GameObject:
   m_ObjectHideFlags: 0

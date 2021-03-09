@@ -6,16 +6,15 @@ using TMPro;
 
 public class Player : Photon.MonoBehaviour
 {
-    public TextMeshProUGUI nameText;
 
     public int playerNumber = 0;
 
-    private int G1, G2, G3, G4, R1, R2, R3, R4, Y1, Y2, Y3, Y4, B1, B2, B3, B4;
+    protected int G1, G2, G3, G4, R1, R2, R3, R4, Y1, Y2, Y3, Y4, B1, B2, B3, B4;
 
-    private bool Wonder_G1, Wonder_G2, Wonder_G3, Wonder_G4, Wonder_R1, Wonder_R2, Wonder_R3, Wonder_R4,
+    protected bool Wonder_G1, Wonder_G2, Wonder_G3, Wonder_G4, Wonder_R1, Wonder_R2, Wonder_R3, Wonder_R4,
         Wonder_Y1, Wonder_Y2, Wonder_Y3, Wonder_Y4, Wonder_B1, Wonder_B2, Wonder_B3, Wonder_B4;
 
-    private AudioManager audioManager;
+    protected AudioManager audioManager;
 
     public GameObject heroObj;
 
@@ -23,9 +22,9 @@ public class Player : Photon.MonoBehaviour
 
     public double moves;
 
-    public float xOffset = 0.5f;
-    public float yOffset = -0.03f;
-    public float zOffset = -0.03f;
+    [HideInInspector] public float xOffset = 0.08f;
+    [HideInInspector] public float yOffset = -0.08f;
+    [HideInInspector] public float zOffset = -0.08f;
 
     [HideInInspector] public Ciweilization ciweilization;
 
@@ -34,16 +33,16 @@ public class Player : Photon.MonoBehaviour
     public GameObject[] level3Prefabs;
     public GameObject[] level4Prefabs;
 
-    public GameObject[] level1Pos;
-    public GameObject[] level2Pos;
-    public GameObject[] level3Pos;
-    public GameObject[] level4Pos;
+    [HideInInspector] public GameObject[] level1Pos = new GameObject[4];
+    [HideInInspector] public GameObject[] level2Pos = new GameObject[4];
+    [HideInInspector] public GameObject[] level3Pos = new GameObject[4];
+    [HideInInspector] public GameObject[] level4Pos = new GameObject[4];
     public GameObject heroPos;
 
     public bool startEnergy = false;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         moves = 0;
 
@@ -59,7 +58,7 @@ public class Player : Photon.MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
 
     }
@@ -637,12 +636,12 @@ public class Player : Photon.MonoBehaviour
     /* Mark this is the last turn of the game. 
      * If the client owns the winnign player, plays a winning sound and mark
      the player as winning. */
-    private void EndGameWhenTurnEnds()
+    protected void EndGameWhenTurnEnds()
     {
         if (photonView.isMine)
         {
             ciweilization.win = true;
-            audioManager.Play("Win");
+            photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Win");
         }
         Debug.Log("Some player has reached the victory condition. " +
             "The game ends by the end of the turn.");
@@ -930,6 +929,103 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
+    /* Count the number of moves the player should get in the current season.*/
+    public virtual double CountMoves()
+    {
+        double count = 1f;
+
+        if (ciweilization.isSpring == true)
+        {
+            count += CountMovesSpring();
+        }
+        else if (ciweilization.isSummer == true)
+        {
+            count += CountMovesSummer();
+        }
+        else if (ciweilization.isFall == true)
+        {
+            count += CountMovesFall();
+        }
+        else if (ciweilization.isWinter == true)
+        {
+            count += CountMovesWinter();
+        }
+
+        return count;
+    }
+
+    /* Count the number of extra moves the player should get in Spring.*/
+    protected virtual double CountMovesSpring()
+    {
+        int level1 = PlayerGetG1() + PlayerGetR1() +
+                        PlayerGetY1() + PlayerGetB1();
+        int level2 = PlayerGetG2() + PlayerGetR2() +
+                        PlayerGetY2() + PlayerGetB2();
+
+        double count = 0f;
+        count += level1 * 0.25f;
+        count += level2 * 0.5f;
+        count += PlayerGetG1() * 0.25f;
+        count += PlayerGetG2() * 0.5f;
+
+        return count;
+    }
+
+    /* Count the number of extra moves the player should get in Summer.*/
+    protected virtual double CountMovesSummer()
+    {
+
+        int level2 = PlayerGetG2() + PlayerGetR2() +
+                        PlayerGetY2() + PlayerGetB2();
+        int level3 = PlayerGetG3() + PlayerGetR3() +
+                        PlayerGetY3() + PlayerGetB3();
+
+        double count = 0f;
+        count += level2 * 0.25f;
+        count += level3 * 0.5f;
+        count += PlayerGetR2() * 0.25f;
+        count += PlayerGetR3() * 0.5f;
+
+        return count;
+    }
+
+    /* Count the number of extra moves the player should get in Fall.*/
+    protected virtual double CountMovesFall()
+    {
+        int level3 = PlayerGetG3() + PlayerGetR3() +
+                        PlayerGetY3() + PlayerGetB3();
+        int level4 = PlayerGetG4() + PlayerGetR4() +
+                        PlayerGetY4() + PlayerGetB4();
+
+        double count = 0f;
+        count += level3 * 0.25f;
+        count += level4 * 0.5f;
+        count += PlayerGetY3() * 0.25f;
+        count += PlayerGetY4() * 0.5f;
+
+        return count;
+    }
+
+    /* Count the number of extra moves the player should get in Winter.*/
+    protected virtual double CountMovesWinter()
+    {
+        int level4 = PlayerGetG4() + PlayerGetR4() +
+                        PlayerGetY4() + PlayerGetB4();
+
+        int wonderLevel2 = PlayerGetWonder_G2() + PlayerGetWonder_R2()
+                + PlayerGetWonder_Y2() + PlayerGetWonder_B2();
+        int wonderLevel3 = PlayerGetWonder_G3() + PlayerGetWonder_R3()
+                        + PlayerGetWonder_Y3() + PlayerGetWonder_B3();
+
+        double count = 0f;
+        count += level4 * 0.25f;
+        count += (wonderLevel3 * 0.25f + wonderLevel2 * 0.25f);
+        count += PlayerGetB4() * 0.25f;
+        count += PlayerGetB3() * 0.25f;
+
+        return count;
+    }
+
     /* Change the given object's tag to the player's building according to the player number. */
     [PunRPC]
     public void ChangeTagForPlayer(int objID)
@@ -954,7 +1050,7 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
-    /* Change the player's moves by given amount.*/
+    /* Change the player's moves by given amount. */
     [PunRPC]
     public void ChangePlayerMoves(float x)
     {

@@ -143,15 +143,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9002192639971640145}
-  - component: {fileID: 269941711752299469}
+  - component: {fileID: -1208255877712790291}
   - component: {fileID: 8275910259078666825}
   - component: {fileID: 726743777574519801}
   - component: {fileID: 4354698131590351990}
   - component: {fileID: 4682697264766683767}
   - component: {fileID: 8813240224395602889}
   m_Layer: 0
-  m_Name: Main Player 1
-  m_TagString: Player1
+  m_Name: Barbarian
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,7 +171,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &269941711752299469
+--- !u!114 &-1208255877712790291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,10 +180,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1149746780906104956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c09dc08085309e94a84979f425b6d21b, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ec13c2733e1ad544b2652ace937bcc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
   playerNumber: 0
   heroObj: {fileID: 0}
   testEmptyObj: {fileID: 0}
