@@ -17,10 +17,11 @@ public class Player : Photon.MonoBehaviour
     protected AudioManager audioManager;
 
     public GameObject heroObj;
-
     public GameObject testEmptyObj;
 
-    public double moves;
+    public double moves = 0f;
+    [HideInInspector] public double defaultMoves = 1f;
+    public double savedMoves = 0f;
 
     [HideInInspector] public float xOffset = 0.08f;
     [HideInInspector] public float yOffset = -0.08f;
@@ -41,10 +42,13 @@ public class Player : Photon.MonoBehaviour
 
     public bool startEnergy = false;
 
+    public bool heroPowerModeOn = false;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         moves = 0;
+        savedMoves = 0;
 
         G1 = G2 = G3 = G4 = R1 = R2 = R3 = R4 = Y1 = Y2 = Y3 = Y4 = B1 = B2 = B3 = B4 = 0;
 
@@ -65,13 +69,12 @@ public class Player : Photon.MonoBehaviour
 
     /* Build the given building for the player and build a wonders if triples.
      * Only display the building if the client owns the player. */
-    public void PlayerBuild(string name)
+    public virtual void PlayerBuild(string name)
     {
         ////////////////////////////////////////////// Level 1 buildings
         if (name == "G1")
         {
             G1 += 1;
-            Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
             //Change PlayerDisplay function into non-RPC, target player from both 
             //player already calls PlayerBuild. We should only call PlayerDisplay if
@@ -86,7 +89,6 @@ public class Player : Photon.MonoBehaviour
         else if (name == "R1")
         {
             R1 += 1;
-            Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
             PlayerDisplay("R1", R1, false);
             if (R1 == 3)
@@ -98,7 +100,6 @@ public class Player : Photon.MonoBehaviour
         else if (name == "Y1")
         {
             Y1 += 1;
-            Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
             PlayerDisplay("Y1", Y1, false);
             if (Y1 == 3)
@@ -110,7 +111,6 @@ public class Player : Photon.MonoBehaviour
         else if (name == "B1")
         {
             B1 += 1;
-            Debug.Log("Successfully Built.");
             audioManager.Play("Coin");
             PlayerDisplay("B1", B1, false);
             if (B1 == 3)
@@ -127,7 +127,6 @@ public class Player : Photon.MonoBehaviour
             if (G1 + G2 != 0)
             {
                 G2 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("G2", G2, false);
                 if (G2 == 3)
@@ -147,7 +146,6 @@ public class Player : Photon.MonoBehaviour
             if (R1 + R2 != 0)
             {
                 R2 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("R2", R2, false);
                 if (R2 == 3)
@@ -167,7 +165,6 @@ public class Player : Photon.MonoBehaviour
             if (Y1 + Y2 != 0)
             {
                 Y2 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("Y2", Y2, false);
                 if (Y2 == 3)
@@ -187,7 +184,6 @@ public class Player : Photon.MonoBehaviour
             if (B1 + B2 != 0)
             {
                 B2 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("B2", B2, false);
                 if (B2 == 3)
@@ -210,7 +206,6 @@ public class Player : Photon.MonoBehaviour
             if (G2 + G3 != 0)
             {
                 G3 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("G3", G3, false);
                 if (G3 == 3)
@@ -230,7 +225,6 @@ public class Player : Photon.MonoBehaviour
             if (R2 + R3 != 0)
             {
                 R3 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("R3", R3, false);
                 if (R3 == 3)
@@ -250,7 +244,6 @@ public class Player : Photon.MonoBehaviour
             if (Y2 + Y3 != 0)
             {
                 Y3 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("Y3", Y3, false);
                 if (Y3 == 3)
@@ -270,7 +263,6 @@ public class Player : Photon.MonoBehaviour
             if (B2 + B3 != 0)
             {
                 B3 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("B3", B3, false);
                 if (B3 == 3)
@@ -293,7 +285,6 @@ public class Player : Photon.MonoBehaviour
             if (G3 + G4 != 0)
             {
                 G4 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("G4", G4, false);
                 if ((R4 + Y4 + B4 > 0) || (Wonder_G4 == true))
@@ -316,7 +307,6 @@ public class Player : Photon.MonoBehaviour
             if (R3 + R4 != 0)
             {
                 R4 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("R4", R4, false);
                 if ((G4 + Y4 + B4 > 0) || (Wonder_R4 == true))
@@ -339,7 +329,6 @@ public class Player : Photon.MonoBehaviour
             if (Y3 + Y4 != 0)
             {
                 Y4 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("Y4", Y4, false);
                 if ((G4 + R4 + B4 > 0) || (Wonder_Y4 == true))
@@ -362,7 +351,6 @@ public class Player : Photon.MonoBehaviour
             if (B3 + B4 != 0)
             {
                 B4 += 1;
-                Debug.Log("Successfully Built.");
                 audioManager.Play("Coin");
                 PlayerDisplay("B4", B4, false);
                 if ((G4 + R4 + Y4 > 0) || (Wonder_B4 == true))
@@ -383,10 +371,9 @@ public class Player : Photon.MonoBehaviour
     }
 
     /* Build the given wonder for the player and build another wonders if triples. */
-    public void PlayerWBuild(string name)
+    public virtual void PlayerWBuild(string name)
     {
         //////////////////////////////////////////////  Level 2 buildings
-
         if (name == "Wonder_G2" && ciweilization.wonderG2 == false)
         {
             Wonder_G2 = true;
@@ -394,6 +381,9 @@ public class Player : Photon.MonoBehaviour
             ciweilization.wonderG2 = true;
             PlayerDisplay("G2", G2, true);
             audioManager.Play("Wonder");
+
+            //Gives a random level-1/level-2/level-3 at the start of every future era.
+
             if (G2 == 3)
             {
                 PlayerWBuild("Wonder_G3");
@@ -406,6 +396,10 @@ public class Player : Photon.MonoBehaviour
             ciweilization.wonderR2 = true;
             PlayerDisplay("R2", R2, true);
             audioManager.Play("Wonder");
+
+            //Ignore all passive negative effects applied to you;
+            //Everytime one of your building is destroyed, gain 0.25 base move.
+
             if (R2 == 3)
             {
                 PlayerWBuild("Wonder_R3");
@@ -422,6 +416,7 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayerWBuild("Wonder_Y3");
             }
+            //You only need to pay one move to discover a chance instead of an entire turn.
         }
         else if (name == "Wonder_B2" && ciweilization.wonderB2 == false)
         {
@@ -434,10 +429,10 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayerWBuild("Wonder_B3");
             }
+            //Prevent other players to build B1.
         }
 
         //////////////////////////////////////////////  Level 3 buildings
-
         else if (name == "Wonder_G3" && ciweilization.wonderG3 == false)
         {
             Wonder_G3 = true;
@@ -449,6 +444,7 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayerWBuild("Wonder_G4");
             }
+            //If you have 4 or more different kinds of level-2 buildings, build 3 random level-4 buildings.
         }
         else if (name == "Wonder_R3" && ciweilization.wonderR3 == false)
         {
@@ -461,6 +457,7 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayerWBuild("Wonder_R4");
             }
+            //If you have 6 or more other Red buildings, gain 0.25 base move. 
         }
         else if (name == "Wonder_Y3" && ciweilization.wonderY3 == false)
         {
@@ -473,6 +470,8 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayerWBuild("Wonder_Y4");
             }
+            //If you have discovered a chance this game,
+                //you may store any number of leftover moves to your next turn.
         }
         else if (name == "Wonder_B3" && ciweilization.wonderB3 == false)
         {
@@ -485,10 +484,10 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayerWBuild("Wonder_B4");
             }
+            //If you have a Blue-4 already, upgrades all your level-1 buildings.
         }
 
         //////////////////////////////////////////////  Level 4 buildings
-
         else if (name == "Wonder_G4" && ciweilization.wonderG4 == false)
         {
             Wonder_G4 = true;
@@ -504,7 +503,7 @@ public class Player : Photon.MonoBehaviour
             {
                 Debug.Log("You only need another different level-4 to win!");
             }
-
+            //For each of your green buildings, build a random building of the same level.
         }
         else if (name == "Wonder_R4" && ciweilization.wonderR4 == false)
         {
@@ -521,6 +520,8 @@ public class Player : Photon.MonoBehaviour
             {
                 Debug.Log("You only need another different level-4 to win!");
             }
+            //Lose 0.5 base move, but gain 0.5 extra move this turn.
+                //(If you have less than 1 move at the start of your turn, it counts as you have 1 move.)
         }
         else if (name == "Wonder_Y4" && ciweilization.wonderY4 == false)
         {
@@ -537,6 +538,7 @@ public class Player : Photon.MonoBehaviour
             {
                 Debug.Log("You only need another different level-4 to win!");
             }
+            //Discover a free chance a the start of your next turn.
         }
         else if (name == "Wonder_B4" && ciweilization.wonderB4 == false)
         {
@@ -553,11 +555,42 @@ public class Player : Photon.MonoBehaviour
             {
                 Debug.Log("You only need another different level-4 to win!");
             }
+            //Build a copy of each level-4 building owned by players.
+                //If you can't build a certain level-4 building, 
+                    //build the highest level building you can of that color insetad.
         }
+
+        ////////////////////////////////////////////// Wonder already built
         else
         {
-            Debug.Log("Cannot build wonder because it's already built.");
+            Debug.Log("You can't build the wonder because it's already built.");
         }
+    }
+
+    /* Return a random color building name of the given level. */
+    public string RandomBuilding(int level)
+    {
+        string suit = "";
+        System.Random random = new System.Random();
+        int k = random.Next(4);
+        if (k == 0)
+        {
+            suit = "G";
+        }
+        else if (k == 1)
+        {
+            suit = "R";
+        }
+        else if (k == 2)
+        {
+            suit = "Y";
+        }
+        else if (k == 3)
+        {
+            suit = "B";
+        }
+
+        return suit + level;
     }
 
     /* Delete the given building for the player. */
@@ -932,7 +965,23 @@ public class Player : Photon.MonoBehaviour
     /* Count the number of moves the player should get in the current season.*/
     public virtual double CountMoves()
     {
-        double count = 1f;
+        /* Unused parameters but useful notes when coding for hero players:
+        int level1 = PlayerGetG1() + PlayerGetR1() +
+                PlayerGetY1() + PlayerGetB1();
+        int level2 = PlayerGetG2() + PlayerGetR2() +
+                        PlayerGetY2() + PlayerGetB2();
+        int level3 = PlayerGetG3() + PlayerGetR3() +
+                PlayerGetY3() + PlayerGetB3();
+        int level4 = PlayerGetG4() + PlayerGetR4() +
+                        PlayerGetY4() + PlayerGetB4();
+        int wonderLevel2 = PlayerGetWonder_G2() + PlayerGetWonder_R2()
+                + PlayerGetWonder_Y2() + PlayerGetWonder_B2();
+        int wonderLevel3 = PlayerGetWonder_G3() + PlayerGetWonder_R3()
+                + PlayerGetWonder_Y3() + PlayerGetWonder_B3();
+        int wonderLevel4 = PlayerGetWonder_G4() + PlayerGetWonder_R4()
+                + PlayerGetWonder_Y4() + PlayerGetWonder_B4(); */
+
+        double count = defaultMoves;
 
         if (ciweilization.isSpring == true)
         {
@@ -950,6 +999,9 @@ public class Player : Photon.MonoBehaviour
         {
             count += CountMovesWinter();
         }
+
+        count += savedMoves;
+        savedMoves = 0f;
 
         return count;
     }
@@ -1015,7 +1067,10 @@ public class Player : Photon.MonoBehaviour
         int wonderLevel2 = PlayerGetWonder_G2() + PlayerGetWonder_R2()
                 + PlayerGetWonder_Y2() + PlayerGetWonder_B2();
         int wonderLevel3 = PlayerGetWonder_G3() + PlayerGetWonder_R3()
-                        + PlayerGetWonder_Y3() + PlayerGetWonder_B3();
+                + PlayerGetWonder_Y3() + PlayerGetWonder_B3();
+        int wonderLevel4 = PlayerGetWonder_G4() + PlayerGetWonder_R4()
+                + PlayerGetWonder_Y4() + PlayerGetWonder_B4();
+        int wonderTotal = wonderLevel2 + wonderLevel3 + wonderLevel4;
 
         double count = 0f;
         count += level4 * 0.25f;
@@ -1057,6 +1112,118 @@ public class Player : Photon.MonoBehaviour
         moves += x;
     }
 
+    public virtual void PlayerStartSpring()
+    {
+        //Do nothing if there isn't any hero powers.
+    }
+    public virtual void PlayerStartSummer()
+    {
+        if (Wonder_G2)
+        {
+            string suit = "";
+            int level = 1;
+            System.Random random = new System.Random();
+            int k = random.Next(4);
+            if (k == 0)
+            {
+                suit = "G";
+            }
+            else if (k == 1)
+            {
+                suit = "R";
+            }
+            else if (k == 2)
+            {
+                suit = "Y";
+            }
+            else if (k == 3)
+            {
+                suit = "B";
+            }
+
+            PlayWonderAbilityAudio();
+            PlayerBuild(suit + level);
+        }
+    }
+    public virtual void PlayerStartFall()
+    {
+        if (Wonder_G2)
+        {
+            string suit = "";
+            int level = 2;
+            System.Random random = new System.Random();
+            int k = random.Next(4);
+            if (k == 0)
+            {
+                suit = "G";
+            }
+            else if (k == 1)
+            {
+                suit = "R";
+            }
+            else if (k == 2)
+            {
+                suit = "Y";
+            }
+            else if (k == 3)
+            {
+                suit = "B";
+            }
+
+            PlayWonderAbilityAudio();
+            PlayerBuild(suit + level);
+        }
+    }
+    public virtual void PlayerStartWinter()
+    {
+        if (Wonder_G2)
+        {
+            string suit = "";
+            int level = 3;
+            System.Random random = new System.Random();
+            int k = random.Next(4);
+            if (k == 0)
+            {
+                suit = "G";
+            }
+            else if (k == 1)
+            {
+                suit = "R";
+            }
+            else if (k == 2)
+            {
+                suit = "Y";
+            }
+            else if (k == 3)
+            {
+                suit = "B";
+            }
+
+            PlayWonderAbilityAudio();
+            PlayerBuild(suit + level);
+        }
+    }
+    public virtual void PlayerStartRound()
+    {
+        //Do nothing if there isn't any hero powers.
+    }
+    public virtual void PlayerAtTheStartOfTurn()
+    {
+        //Do nothing if there isn't any hero powers.
+    }
+
+    /* Play the hero power audio for the player's client. */
+    public void PlayHeroPowerAudio()
+    {
+        audioManager.Play("Hero Power");
+    }
+
+    /* Play the wonder ability audio for the player's client. */
+    public void PlayWonderAbilityAudio()
+    {
+        audioManager.Play("Wonder Ability");
+    }
+
     public int BoolToInt(bool b)
     {
         if (b == true)
@@ -1065,6 +1232,7 @@ public class Player : Photon.MonoBehaviour
         }
         return 0;
     }
+
     public int PlayerGetG1()
     {
         return G1;

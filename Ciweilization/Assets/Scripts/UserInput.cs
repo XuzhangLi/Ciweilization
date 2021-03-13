@@ -24,11 +24,14 @@ public class UserInput : Photon.MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (photonView.isMine && ciweilization.activePlayerNumber == player.playerNumber)
+        if (photonView.isMine)
         {
             if (ciweilization.disconnectPanelOn == false)
             {
-                GetMouseClick();
+                if (ciweilization.activePlayerNumber == player.playerNumber && player.heroPowerModeOn == false)
+                {
+                    GetMouseClick();
+                }
             }
         }
     }

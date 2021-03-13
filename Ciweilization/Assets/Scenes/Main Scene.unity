@@ -7833,7 +7833,7 @@ RectTransform:
   - {fileID: 1164435426}
   - {fileID: 1066769495}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10721,6 +10721,18 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Hero Power
+    clip: {fileID: 8300000, guid: c3029414bc6a1df4380f2f1a3d53c8c4, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Wonder Ability
+    clip: {fileID: 8300000, guid: c3029414bc6a1df4380f2f1a3d53c8c4, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &1687478931
 Transform:
   m_ObjectHideFlags: 0
@@ -13453,7 +13465,7 @@ MonoBehaviour:
   - Barbarian
   - na
   - na
-  - na
+  - Tinker
   - na
   - Lich
   - na
@@ -13461,6 +13473,13 @@ MonoBehaviour:
   - Merchant
   - na
   - na
+  - Chimera
+  - na
+  - na
+  - Banker
+  - TimeTraveler
+  - na
+  - Researcher
   - na
   - na
   - na
@@ -13473,14 +13492,7 @@ MonoBehaviour:
   - na
   - na
   - na
-  - na
-  - na
-  - na
-  - na
-  - na
-  - na
-  - na
-  - na
+  - Rat
   - na
   - na
   - na
@@ -14079,11 +14091,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6722234269234918908}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.31, y: 2.31, z: -1.238086}
+  m_LocalPosition: {x: -8.31, y: 1.5, z: -1.238086}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3771000276029179348
 Transform:
@@ -14093,7 +14105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6722234269124672362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.31, y: 1.44, z: -1.238086}
+  m_LocalPosition: {x: -8.31, y: 2.42, z: -1.238086}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

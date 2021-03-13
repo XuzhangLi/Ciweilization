@@ -664,6 +664,7 @@ public class Ciweilization : Photon.MonoBehaviour
         CiweilizationSortChances();
     }
 
+    /* Set the name of object with the given photonview id to be the given cardname. */
     [PunRPC]
     public void SetCardName(int id, string cardName)
     {
@@ -834,6 +835,15 @@ public class Ciweilization : Photon.MonoBehaviour
             {
                 StartCoroutine(CiweilizationDeal1());
             }
+            player1.PlayerStartSpring();
+            if (player2)
+            {
+                player2.PlayerStartSpring();
+            }
+            if (player3)
+            {
+                player3.PlayerStartSpring();
+            }
         }
         if (turn == 4 && isSpring == true)
         {
@@ -853,6 +863,15 @@ public class Ciweilization : Photon.MonoBehaviour
             {
                 StartCoroutine(CiweilizationDeal2());
             }
+            player1.PlayerStartSummer();
+            if (player2)
+            {
+                player2.PlayerStartSummer();
+            }
+            if (player3)
+            {
+                player3.PlayerStartSummer();
+            }
         }
         else if (turn == 7 && isSummer == true)
         {
@@ -871,6 +890,15 @@ public class Ciweilization : Photon.MonoBehaviour
             if (player1.photonView.isMine)
             {
                 StartCoroutine(CiweilizationDeal3());
+            }
+            player1.PlayerStartFall();
+            if (player2)
+            {
+                player2.PlayerStartFall();
+            }
+            if (player3)
+            {
+                player3.PlayerStartFall();
             }
         }
         else if (turn == 10 && isFall == true)
@@ -892,15 +920,41 @@ public class Ciweilization : Photon.MonoBehaviour
             {
                 StartCoroutine(CiweilizationDeal4());
             }
+            player1.PlayerStartWinter();
+            if (player2)
+            {
+                player2.PlayerStartWinter();
+            }
+            if (player3)
+            {
+                player3.PlayerStartWinter();
+            }
         }
 
         turnText.text = "Turn" + " " + turn.ToString();
 
-        //Give the players the correct number of moves for their next turn;
-
+        //Give the players the correct number of moves for their next turn.
         player1.moves = player1.CountMoves();
-        player2.moves = player2.CountMoves();
-        player3.moves = player3.CountMoves();
+        if (player2)
+        {
+            player2.moves = player2.CountMoves();
+        }
+        if (player3)
+        {
+            player3.moves = player3.CountMoves();
+        }
+        
+
+        //Let players do hero-unique things at the start of a big turn (i.e. round).
+        player1.PlayerStartRound();
+        if (player2)
+        {
+            player2.PlayerStartRound();
+        }
+        if (player3)
+        {
+            player3.PlayerStartRound();
+        }
     }
 
     /* Deal out the starting building cards according to season. */
@@ -925,6 +979,19 @@ public class Ciweilization : Photon.MonoBehaviour
         else
         {
             Debug.Log("Error! Invalid turn number.");
+        }
+    }
+
+    /* Return 1 or 0 based on the given boolean. */
+    public int BoolToInt(bool b)
+    {
+        if (b)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
         }
     }
 }

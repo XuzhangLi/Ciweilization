@@ -6,11 +6,10 @@ using TMPro;
 
 public class BarbarianPlayer : Player
 {
-
-    /* Count the number of moves the player should get in the current season.*/
     public override double CountMoves()
     {
-        double count = 1.25f;
+        double count = defaultMoves;
+        count += 0.25f; //Barbarian Hero Power
 
         if (ciweilization.isSpring == true)
         {
@@ -28,6 +27,9 @@ public class BarbarianPlayer : Player
         {
             count += CountMovesWinter();
         }
+
+        count += savedMoves;
+        savedMoves = 0f;
 
         return count;
     }

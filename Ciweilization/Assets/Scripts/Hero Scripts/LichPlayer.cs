@@ -18,36 +18,36 @@ public class LichPlayer : Player
         {
             if (heroPowerCount > 0)
             {
-                heroPower();
+                HeroPower();
             }
         }
         else if (G3 > 0 & R3 > 0 & B3 > 0)
         {
             if (heroPowerCount > 0)
             {
-                heroPower();
+                HeroPower();
             }
         }
         else if (G3 > 0 & Y3 > 0 & B3 > 0)
         {
             if (heroPowerCount > 0)
             {
-                heroPower();
+                HeroPower();
             }
         }
         else if (R3 > 0 & Y3 > 0 & B3 > 0)
         {
             if (heroPowerCount > 0)
             {
-                heroPower();
+                HeroPower();
             }
         }
     }
 
-    private void heroPower()
+    private void HeroPower()
     {
+        PlayHeroPowerAudio();
         moves += 3;
-        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Lich");
         heroPowerCount -= 1;
     }
 }

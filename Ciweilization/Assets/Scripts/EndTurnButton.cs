@@ -60,15 +60,24 @@ public class EndTurnButton : Photon.MonoBehaviour
             if (ciweilization.activePlayerNumber == 1)
             {
                 ciweilization.activePlayerNumber = 2;
+                if (ciweilization.player2)
+                {
+                    ciweilization.player2.PlayerAtTheStartOfTurn();
+                }
             }
             else if (ciweilization.activePlayerNumber == 2)
             {
                 ciweilization.activePlayerNumber = 3;
+                if (ciweilization.player3)
+                {
+                    ciweilization.player3.PlayerAtTheStartOfTurn();
+                }
             }
             else if (ciweilization.activePlayerNumber == 3)
             {
                 ciweilization.activePlayerNumber = 1;
                 ciweilization.CiweilizationNextTurn();
+                ciweilization.player1.PlayerAtTheStartOfTurn();
             }
             else
             {

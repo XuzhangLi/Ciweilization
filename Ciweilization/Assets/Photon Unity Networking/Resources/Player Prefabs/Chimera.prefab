@@ -143,14 +143,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9002192639971640145}
-  - component: {fileID: 1518546955613544701}
+  - component: {fileID: 4562992181159911062}
   - component: {fileID: 8275910259078666825}
   - component: {fileID: 726743777574519801}
   - component: {fileID: 4354698131590351990}
   - component: {fileID: 4682697264766683767}
   - component: {fileID: 8813240224395602889}
   m_Layer: 0
-  m_Name: Merchant
+  m_Name: Chimera
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +171,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1518546955613544701
+--- !u!114 &4562992181159911062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1149746780906104956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d0d5be3cceb22f4f86ecd4d8804e822, type: 3}
+  m_Script: {fileID: 11500000, guid: 58371fd964d8ba84490bbc9dcf2a16ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
