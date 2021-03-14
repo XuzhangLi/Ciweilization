@@ -382,7 +382,7 @@ public class Player : Photon.MonoBehaviour
             PlayerDisplay("G2", G2, true);
             audioManager.Play("Wonder");
 
-            //Gives a random level-1/level-2/level-3 at the start of every future era.
+            //Gives a random level-1 building at the start of every future era.
 
             if (G2 == 3)
             {
@@ -1150,7 +1150,7 @@ public class Player : Photon.MonoBehaviour
         if (Wonder_G2)
         {
             string suit = "";
-            int level = 2;
+            int level = 1;
             System.Random random = new System.Random();
             int k = random.Next(4);
             if (k == 0)
@@ -1179,7 +1179,7 @@ public class Player : Photon.MonoBehaviour
         if (Wonder_G2)
         {
             string suit = "";
-            int level = 3;
+            int level = 1;
             System.Random random = new System.Random();
             int k = random.Next(4);
             if (k == 0)
@@ -1224,6 +1224,7 @@ public class Player : Photon.MonoBehaviour
         audioManager.Play("Wonder Ability");
     }
 
+    /* Return 1 or 0 corresponding to the given boolean. */
     public int BoolToInt(bool b)
     {
         if (b == true)
@@ -1233,6 +1234,7 @@ public class Player : Photon.MonoBehaviour
         return 0;
     }
 
+    #region Get Methods
     public int PlayerGetG1()
     {
         return G1;
@@ -1346,4 +1348,5 @@ public class Player : Photon.MonoBehaviour
     {
         return BoolToInt(Wonder_B4);
     }
+    #endregion Get Methods
 }

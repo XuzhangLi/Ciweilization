@@ -1,14 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class EndTurnButton : Photon.MonoBehaviour
 {
     Ciweilization ciweilization;
     AudioManager audioManager;
-
-    //private TextMeshProUGUI activePlayerText;
 
     // Start is called before the first frame update
     private void Start()
@@ -21,69 +18,68 @@ public class EndTurnButton : Photon.MonoBehaviour
         //activePlayerText.text = "player 1's turn!";
     }
 
+
     public void OnButtonPress()
     {
-        //DealHeroesOnTurnZero();
-        photonView.RPC("NextActivePlayer", PhotonTargets.AllBuffered);
- 
-        audioManager.Play("End Turn");
-    }
-
-    [PunRPC]
-    public void NextActivePlayer()
-    {
-        if  (ciweilization.turn == 0)
+        if (ciweilization.activePlayerNumber == 1 && (ciweilization.player1 
+            && ciweilization.player1.photonView.isMine))
         {
-            if (ciweilization.activePlayerNumber == 1)
-            {
-                ciweilization.activePlayerNumber = 2;
-                StartCoroutine(ciweilization.CiweilizationDealHeroes(2));
-            }
-            else if (ciweilization.activePlayerNumber == 2)
-            {
-                ciweilization.activePlayerNumber = 3;
-                StartCoroutine(ciweilization.CiweilizationDealHeroes(3));
-            }
-            else if (ciweilization.activePlayerNumber == 3)
-            {
-                ciweilization.activePlayerNumber = 1;
-                ciweilization.CiweilizationNextTurn();
-                ciweilization.CiweilizationSortHeroes();
-            }
-            else
-            {
-                Debug.Log("Error! Invalid active player number.");
-            }
+            photonView.RPC("NextActivePlayer", PhotonTargets.AllBuffered);
+        }
+        else if (ciweilization.activePlayerNumber == 2 && (ciweilization.player2 
+            && ciweilization.player2.photonView.isMine))
+        {
+            photonView.RPC("NextActivePlayer", PhotonTargets.AllBuffered);
+        }
+        else if (ciweilization.activePlayerNumber == 3 && (ciweilization.player3 
+            && ciweilization.player3.photonView.isMine))
+        {
+            photonView.RPC("NextActivePlayer", PhotonTargets.AllBuffered);
         }
         else
         {
+            Debug.Log("You can't end turn when its not your turn!");
+        }
+    }
+
+    /* Pass active player to the next player.*/
+    [PunRPC]
+    public void NextActivePlayer()
+    {
+        //Play end turn sound for the client.
+        audioManager.Play("End Turn");
+
+        // Change active player number.
+        ciweilization.activePlayerNumber =
+                (ciweilization.activePlayerNumber % ciweilization.playerCount) + 1;
+
+            // Trigger player start of turn abilities;
+            //    deal heroes on turn 0.
             if (ciweilization.activePlayerNumber == 1)
             {
-                ciweilization.activePlayerNumber = 2;
-                if (ciweilization.player2)
-                {
-                    ciweilization.player2.PlayerAtTheStartOfTurn();
-                }
-            }
-            else if (ciweilization.activePlayerNumber == 2)
-            {
-                ciweilization.activePlayerNumber = 3;
-                if (ciweilization.player3)
-                {
-                    ciweilization.player3.PlayerAtTheStartOfTurn();
-                }
-            }
-            else if (ciweilization.activePlayerNumber == 3)
-            {
-                ciweilization.activePlayerNumber = 1;
                 ciweilization.CiweilizationNextTurn();
                 ciweilization.player1.PlayerAtTheStartOfTurn();
             }
+            else if (ciweilization.activePlayerNumber == 2)
+            { 
+                if (ciweilization.turn == 0)
+                {
+                    StartCoroutine(ciweilization.CiweilizationDealHeroes(2));
+                }
+                ciweilization.player2.PlayerAtTheStartOfTurn();
+            }
+            else if (ciweilization.activePlayerNumber == 3)
+            {
+                if (ciweilization.turn == 0)
+                {
+                    StartCoroutine(ciweilization.CiweilizationDealHeroes(3));
+                }
+                ciweilization.player3.PlayerAtTheStartOfTurn();
+            }
             else
             {
-                Debug.Log("Error! Invalid active player number.");
+                Debug.Log("Error! Invalid active player number!");
             }
-        }
     }
 
     public void DealHeroesOnTurnZero()

@@ -18,7 +18,6 @@ public class Ciweilization : Photon.MonoBehaviour
     public Player player1;
     public Player player2;
     public Player player3;
-    public GameObject testObj;
 
     public List<string>[] level1s;
     public List<string>[] level2s;
@@ -244,7 +243,6 @@ public class Ciweilization : Photon.MonoBehaviour
      * and take the player back to the main menu.*/
     public void Disconnect()
     {
-        photonView.RPC("ChangePlayerCount", PhotonTargets.AllBuffered, -1);
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel("Main Menu");
     }
