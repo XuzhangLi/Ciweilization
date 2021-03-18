@@ -5,7 +5,7 @@ using UnityEngine;
 public class Emote : MonoBehaviour
 {
 
-    public string name;
+    public string emoteName;
 
     // Start is called before the first frame update
     void Start()

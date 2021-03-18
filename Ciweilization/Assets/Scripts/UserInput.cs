@@ -100,6 +100,7 @@ public class UserInput : Photon.MonoBehaviour
                 else if (hit.collider.CompareTag("ChanceCard"))
                 {
                     Debug.Log("You just clicked on a chance card.");
+                    player.chanceCount += 1;
                     //write these into a function later
                     DestroyAll("ChanceCard");
                     photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
@@ -159,6 +160,20 @@ public class UserInput : Photon.MonoBehaviour
         Vector3 position = obj.transform.position;
         Destroy(obj);
         Fill(level, position);
+
+        if (obj.name == "B1")
+        {
+            /* The player can't build Blue-1 from the board if Blue-2-Wonder 
+                has been built by one of their opponent. */
+            if (ciweilization.wonderB2 == true && player.PlayerGetWonder_B2() == 0)
+            {
+                Debug.Log("You can't build Blue-1 on the board as Blue-2-Wonder " +
+                                    "has been built by one of your opponent.");
+                audioManager.Play("Coin");
+                audioManager.Play("Wonder Ability");
+                return;
+            }
+        }
         player.PlayerBuild(obj.name);
         player.moves -= 1;
     }
@@ -168,38 +183,27 @@ public class UserInput : Photon.MonoBehaviour
     {
         GameObject obj = PhotonView.Find(objID).gameObject;
 
-        string name = obj.GetComponent<BuildingDisplay>().testName;
+        string testCardName = obj.GetComponent<BuildingDisplay>().testName;
 
-        if (name[0] == 'M')
+        char suit = testCardName[0];
+        char chr = testCardName[1];
+        int level = (int)(chr - '0');
+
+        // If the given test card is the random building test card.
+        if (suit == 'M')
         {
-            string suit = "";
-            System.Random random = new System.Random();
-            int k = random.Next(4);
-            if (k == 0)
-            {
-                suit = "G";
-            }
-            else if (k == 1)
-            {
-                suit = "R";
-            }
-            else if (k == 2)
-            {
-                suit = "Y";
-            }
-            else if (k == 3)
-            {
-                suit = "B";
-            }
-            else
-            {
-                Debug.Log("Error! Randomed an invalid suit.");
-            }
-
-            name = suit + name[1].ToString();
+            player.PlayerBuildRandom(level);
         }
+        else
+        {
+            player.PlayerBuild(testCardName);
+        }
+    }
 
-        player.PlayerBuild(name);
+    [PunRPC]
+    public void ChangeTempCardName(string cardName)
+    {
+        ciweilization.tempCardName = cardName;
     }
 
     [PunRPC]

@@ -256,14 +256,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Default Theme
-    clip: {fileID: 8300000, guid: 5bb4baf03ea89f340888a0e48515ba80, type: 3}
+    clip: {fileID: 8300000, guid: 53b217d40de4eb0418d983d812c0fb92, type: 3}
     volume: 0.01
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: Click
     clip: {fileID: 8300000, guid: 29bc0d881cd8af144bdcbd02c5376447, type: 3}
-    volume: 0.1
+    volume: 0.05
     pitch: 1
     loop: 0
     source: {fileID: 0}

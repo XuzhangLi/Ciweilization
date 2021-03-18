@@ -63,4 +63,6 @@ MonoBehaviour:
   - HideSitButton
   - ShowStartButton
   - ShowEndTurnButton
+  - ChangeTempCardName
+  - AllClientsPlayerBuild
   DisableAutoOpenWizard: 1

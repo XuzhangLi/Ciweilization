@@ -14,44 +14,8 @@ public class TestPlayer : Photon.MonoBehaviour
     public bool isGrounded;
     public float jumpForce;
 
-    public GameObject testErrorObj;
-
-    public int playerNumber = 0;
-
-    private int G1, G2, G3, G4, R1, R2, R3, R4, Y1, Y2, Y3, Y4, B1, B2, B3, B4;
-
-    private bool Wonder_G1, Wonder_G2, Wonder_G3, Wonder_G4, Wonder_R1, Wonder_R2, Wonder_R3, Wonder_R4,
-        Wonder_Y1, Wonder_Y2, Wonder_Y3, Wonder_Y4, Wonder_B1, Wonder_B2, Wonder_B3, Wonder_B4;
-
-    private AudioManager audioManager;
-
-    public GameObject heroObj;
-
-    public GameObject testEmptyObj;
-
-    ////////////////////////////////////////////
-    ////////////////////////////////////////////
-
-    public double moves;
-
-    public float xOffset = 0.5f;
-    public float yOffset = -0.03f;
-    public float zOffset = -0.03f;
-
-    public GameObject playerCenter;
-
     [HideInInspector] public TestGameManager testGameManager;
-
-    public GameObject[] level1Prefabs;
-    public GameObject[] level2Prefabs;
-    public GameObject[] level3Prefabs;
-    public GameObject[] level4Prefabs;
-
-    public GameObject[] level1Pos;
-    public GameObject[] level2Pos;
-    public GameObject[] level3Pos;
-    public GameObject[] level4Pos;
-    public GameObject heroPos;
+    [HideInInspector] public AudioManager audioManager;
 
     private void Awake()
     {
@@ -61,28 +25,10 @@ public class TestPlayer : Photon.MonoBehaviour
     private void Start()
     {
 
-        moves = 0;
-
-        G1 = G2 = G3 = G4 = R1 = R2 = R3 = R4 = Y1 = Y2 = Y3 = Y4 = B1 = B2 = B3 = B4 = 0;
-
-        Wonder_G1 = Wonder_G2 = Wonder_G3 = Wonder_G4 = Wonder_R1 = Wonder_R2 = Wonder_R3 = Wonder_R4
-    = Wonder_Y1 = Wonder_Y2 = Wonder_Y3 = Wonder_Y4 = Wonder_B1 = Wonder_B2 = Wonder_B3 = Wonder_B4 = false;
-        //Debug.Log(Y4 + " " + Wonder_G1 + " " + Wonder_B4);
-
         audioManager = FindObjectOfType<AudioManager>();
 
         testGameManager = FindObjectOfType<TestGameManager>();
 
-        if (photonView.isMine)
-        {
-            //photonView.RPC("AddPlayerCount", PhotonTargets.AllBuffered);
-        }
-    }
-
-    [PunRPC]
-    public void AddPlayerCount()
-    {
-        //testGameManager.playerCount += 1;
     }
 
     private void Update()

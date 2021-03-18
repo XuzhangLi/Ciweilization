@@ -13,8 +13,6 @@ public class Ciweilization : Photon.MonoBehaviour
 
     private AudioManager audioManager;
 
-    public GameObject playerPrefab;
-
     public Player player1;
     public Player player2;
     public Player player3;
@@ -126,6 +124,8 @@ public class Ciweilization : Photon.MonoBehaviour
 
     [HideInInspector] public bool isLastTurn = false;
     [HideInInspector] public bool win = false;
+
+    public string tempCardName;
 
     /* Start is called before the first frame update. */
     void Start()
@@ -335,7 +335,7 @@ public class Ciweilization : Photon.MonoBehaviour
 
         if (playerCount == 1)
         {
-            GameObject player1Obj = PhotonNetwork.Instantiate("Player Prefabs/" + playerPrefab.name,
+            GameObject player1Obj = PhotonNetwork.Instantiate("Player Prefabs/MainPlayer",
                                     new Vector2(this.transform.position.x, this.transform.position.y),
                                     Quaternion.identity, 0);
             int playerID = player1Obj.GetPhotonView().viewID;
@@ -347,7 +347,7 @@ public class Ciweilization : Photon.MonoBehaviour
         }
         else if (playerCount == 2)
         {
-            GameObject player2Obj = PhotonNetwork.Instantiate("Player Prefabs/" + playerPrefab.name,
+            GameObject player2Obj = PhotonNetwork.Instantiate("Player Prefabs/MainPlayer",
                                     new Vector2(this.transform.position.x, this.transform.position.y),
                                     Quaternion.identity, 0);
             int playerID = player2Obj.GetPhotonView().viewID;
@@ -358,7 +358,7 @@ public class Ciweilization : Photon.MonoBehaviour
         }
         else if (playerCount == 3)
         {
-            GameObject player3Obj = PhotonNetwork.Instantiate("Player Prefabs/" + playerPrefab.name,
+            GameObject player3Obj = PhotonNetwork.Instantiate("Player Prefabs/MainPlayer",
                                     new Vector2(this.transform.position.x, this.transform.position.y),
                                     Quaternion.identity, 0);
             int playerID = player3Obj.GetPhotonView().viewID;
@@ -373,11 +373,13 @@ public class Ciweilization : Photon.MonoBehaviour
         }
     }
 
+    /* Takes in a player number and a hero name;
+    * Set up the corresponding player with the given hero and its player number. */
     public void CiweilizationSetUpHeroPlayer(int playerNum, string heroName)
     {
         if (heroName == "na")
         {
-            heroName = "Main Player";
+            heroName = "MainPlayer";
         }
 
         if (playerNum == 1)
