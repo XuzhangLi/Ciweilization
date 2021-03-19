@@ -66,4 +66,5 @@ MonoBehaviour:
   - ChangeTempCardName
   - AllClientsPlayerBuild
   - AllClientsPlayerDistinctBuild
+  - HeroPower
   DisableAutoOpenWizard: 1

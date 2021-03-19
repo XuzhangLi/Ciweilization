@@ -59,8 +59,15 @@ public class RatPlayer : Player
             count -= PlayerGetWonder_B3() * 0.25f;
         }
 
+        //Adding saved moves and reseting saved moves to 0;
         count += savedMoves;
-        savedMoves = 0;
+        savedMoves = 0f;
+
+        //If in any case, the player has less than 1 move for a turn, it will have 1 move instead.
+        if (count < 1f)
+        {
+            count = 1f;
+        }
 
         return count;
     }

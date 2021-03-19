@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -4774391770626386670}
   - component: {fileID: 3282018798161377992}
   - component: {fileID: -6410308413041383560}
+  - component: {fileID: -6910825899224437733}
   m_Layer: 0
   m_Name: Wred2
   m_TagString: Wonder
@@ -171,9 +172,25 @@ MonoBehaviour:
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &-6910825899224437733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5442349168183780682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 690663e214bd2b24bb65c6cd342b51e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testName: R2
+  wonderSprite: {fileID: 21300000, guid: d5ec0fd603809cd4bb4499c6100ad425, type: 3}
+  spriteRenderer: {fileID: 0}

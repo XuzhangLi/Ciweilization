@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -251004064201915678}
   - component: {fileID: -2045905491683898060}
   - component: {fileID: 5928661845853614925}
+  - component: {fileID: -1615410799944450227}
   m_Layer: 0
   m_Name: Wblue3
   m_TagString: Wonder
@@ -171,9 +172,25 @@ MonoBehaviour:
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &-1615410799944450227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259882556615499869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 690663e214bd2b24bb65c6cd342b51e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testName: B3
+  wonderSprite: {fileID: 21300000, guid: e7ce89e986d10544e968a03dcec1591c, type: 3}
+  spriteRenderer: {fileID: 0}

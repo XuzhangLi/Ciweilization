@@ -44,6 +44,7 @@ public class Player : Photon.MonoBehaviour
     [HideInInspector] public bool startEnergy = false;
 
     public bool heroPowerModeOn = false;
+    public bool clickChanceOnly = false;
 
     [HideInInspector] public int chanceCount = 0;
     [HideInInspector] public bool freeChance = false;
@@ -386,7 +387,7 @@ public class Player : Photon.MonoBehaviour
             PlayerDisplay("G2", G2, true);
             audioManager.Play("Wonder");
 
-            //Gives a random level-1 building at the start of every future era.
+            //Gain a free random level-1 building at the start of every future era.
             //Implemented!
             if (G2 == 3)
             {
@@ -436,7 +437,7 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayerWBuild("Wonder_B3");
             }
-            //Prevent other players to build B1 from the board.
+            //Prohibit other players to build B1 from the board.
             //Implemented!
         }
 
@@ -580,7 +581,7 @@ public class Player : Photon.MonoBehaviour
             }
             //Build a copy of each level-4 building owned by players.
             //(If you can't build a certain level-4 building, 
-            //build the highest level building you can of that color insetad.)
+            //build the highest level building you can of that color instead.)
             //Implemented!
             StartCoroutine(WonderB4Ability());
         }
@@ -1529,6 +1530,7 @@ public class Player : Photon.MonoBehaviour
         if (freeChance && photonView.isMine)
         {
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Wonder Ability");
+            clickChanceOnly = true;
             StartCoroutine(ciweilization.CiweilizationDealChances());
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
         }
@@ -1664,7 +1666,7 @@ public class Player : Photon.MonoBehaviour
             PlayerDistinctBuildRandom(3);
             yield return new WaitForSeconds(0.2f);
         }
-        for (int i = 1; i <= G4; i++)
+        for (int i = 1; i <= G4 - 1; i++)
         {
             PlayerDistinctBuildRandom(4);
             yield return new WaitForSeconds(0.2f);

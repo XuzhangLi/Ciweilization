@@ -48,6 +48,11 @@ public class UserInput : Photon.MonoBehaviour
 
                 if (hit.collider.CompareTag("Card"))
                 {
+                    if (player.clickChanceOnly)
+                    {
+                        return;
+                    }
+
                     if (player.moves >= 1)
                     {
                         int objID = hit.collider.gameObject.GetPhotonView().viewID;
@@ -95,6 +100,7 @@ public class UserInput : Photon.MonoBehaviour
                     //write these into a function later
                     if (player.chances >= 1)
                     {
+                        player.clickChanceOnly = true;
                         player.chances -= 1;
                         StartCoroutine(ciweilization.CiweilizationDealChances());
                         photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
@@ -107,6 +113,7 @@ public class UserInput : Photon.MonoBehaviour
 
                 else if (hit.collider.CompareTag("ChanceCard"))
                 {
+                    player.clickChanceOnly = false;
                     Debug.Log("You just clicked on a chance card.");
                     player.chanceCount += 1;
                     //write these into a function later
@@ -130,6 +137,10 @@ public class UserInput : Photon.MonoBehaviour
             {
                 if (hit.collider.CompareTag("Card"))
                 {
+                    if (player.clickChanceOnly)
+                    {
+                        return;
+                    }
                     int objID = hit.collider.gameObject.GetPhotonView().viewID;
                     photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
                 }

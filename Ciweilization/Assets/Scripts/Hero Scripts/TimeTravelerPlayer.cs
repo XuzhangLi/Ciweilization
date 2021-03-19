@@ -22,7 +22,7 @@ public class TimeTravelerPlayer : Player
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            HeroPower();
+            photonView.RPC("HeroPower", PhotonTargets.AllBuffered);
         }
     }
 
@@ -54,10 +54,21 @@ public class TimeTravelerPlayer : Player
             count += CountMovesWinter();
         }
 
+        //Adding saved moves and reseting saved moves to 0;
+        count += savedMoves;
+        savedMoves = 0f;
+
+        //If in any case, the player has less than 1 move for a turn, it will have 1 move instead.
+        if (count < 1f)
+        {
+            count = 1f;
+        }
+
         return count;
     }
-
-    void HeroPower()
+    
+    [PunRPC]
+    public void HeroPower()
     {
         PlayHeroPowerAudio();
         moves = CountMoves();
