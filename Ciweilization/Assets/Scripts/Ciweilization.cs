@@ -910,10 +910,9 @@ public class Ciweilization : Photon.MonoBehaviour
             isFall = false;
             isWinter = true;
             ruleText.text = "Era of Science! \n\n"
-                    + "(1) Gain 0.25 move for every \n"
-                    + "wonder or level-4 building.\n"
-                    + "(2) Gain 0.25 move for every \n"
-                    + "blue-3 or blue-4.";
+                    + "(1) Gain 0.5 move for every level-4,\n"
+                    + "doubles for Blue-4.\n"
+                    + "(2) Gain 0.25 move for every blue-3.";
             //ruleText.color = Color.cyan;
             Debug.Log("Fall has past and winter has come.");
             if (player1.photonView.isMine)
@@ -932,20 +931,9 @@ public class Ciweilization : Photon.MonoBehaviour
         }
 
         turnText.text = "Turn" + " " + turn.ToString();
-
-        //Give the players the correct number of moves for their next turn.
-        player1.moves = player1.CountMoves();
-        if (player2)
-        {
-            player2.moves = player2.CountMoves();
-        }
-        if (player3)
-        {
-            player3.moves = player3.CountMoves();
-        }
         
-
-        //Let players do hero-unique things at the start of a big turn (i.e. round).
+        /* Make players reset their moves, 
+        * and possibly do some hero-unique things at the start of a big turn (i.e. round). */
         player1.PlayerStartRound();
         if (player2)
         {

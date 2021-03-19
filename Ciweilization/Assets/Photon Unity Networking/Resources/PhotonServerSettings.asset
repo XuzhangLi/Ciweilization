@@ -65,4 +65,5 @@ MonoBehaviour:
   - ShowEndTurnButton
   - ChangeTempCardName
   - AllClientsPlayerBuild
+  - AllClientsPlayerDistinctBuild
   DisableAutoOpenWizard: 1

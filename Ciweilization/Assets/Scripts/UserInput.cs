@@ -93,8 +93,16 @@ public class UserInput : Photon.MonoBehaviour
                 {
                     Debug.Log("You just clicked on a chance trigger.");
                     //write these into a function later
-                    StartCoroutine(ciweilization.CiweilizationDealChances());
-                    photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
+                    if (player.chances >= 1)
+                    {
+                        player.chances -= 1;
+                        StartCoroutine(ciweilization.CiweilizationDealChances());
+                        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
+                    }
+                    else
+                    {
+                        audioManager.Play("Warning");
+                    }
                 }
 
                 else if (hit.collider.CompareTag("ChanceCard"))
@@ -169,8 +177,8 @@ public class UserInput : Photon.MonoBehaviour
             {
                 Debug.Log("You can't build Blue-1 on the board as Blue-2-Wonder " +
                                     "has been built by one of your opponent.");
-                audioManager.Play("Coin");
                 audioManager.Play("Wonder Ability");
+                audioManager.Play("Warning");
                 return;
             }
         }

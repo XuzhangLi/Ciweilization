@@ -20,7 +20,9 @@ public class Player : Photon.MonoBehaviour
 
     public double moves = 0f;
     [HideInInspector] public double defaultMoves = 1f;
-    public double savedMoves = 0f;
+    [HideInInspector] public double savedMoves = 0f;
+    
+    
 
     [HideInInspector] public float xOffset = 0.08f;
     [HideInInspector] public float yOffset = -0.08f;
@@ -39,12 +41,14 @@ public class Player : Photon.MonoBehaviour
     [HideInInspector] public GameObject[] level4Pos = new GameObject[4];
     public GameObject heroPos;
 
-    public bool startEnergy = false;
+    [HideInInspector] public bool startEnergy = false;
 
     public bool heroPowerModeOn = false;
 
-    public int chanceCount = 0;
-    public bool freeChance = false;
+    [HideInInspector] public int chanceCount = 0;
+    [HideInInspector] public bool freeChance = false;
+    public int defaultChances = 1;
+    public int chances = 1;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -368,7 +372,9 @@ public class Player : Photon.MonoBehaviour
         }
     }
 
-    /* Build the given wonder for the player and build another wonders if triples. */
+    /* Build the given wonder for the player and build another wonders if triples. 
+     * (Wonder Red-2 and Yellow-2 are not completely implemented now.) */
+
     public virtual void PlayerWBuild(string name)
     {
         //////////////////////////////////////////////  Level 2 buildings
@@ -416,7 +422,8 @@ public class Player : Photon.MonoBehaviour
                 PlayerWBuild("Wonder_Y3");
             }
             //You only need to pay one move to discover a chance instead of an entire turn.
-            //Not implemented as chances are implemented!
+            //Not completely implemented as chances are not completely implemented!
+            defaultChances += 100;
         }
         else if (name == "Wonder_B2" && ciweilization.wonderB2 == false)
         {
@@ -513,7 +520,9 @@ public class Player : Photon.MonoBehaviour
                 Debug.Log("You only need another different level-4 to win!");
             }
             //For each of your green buildings, build a random building of the same level.
-            //Not Implemented! Need to fix the random building bug first.
+            //(Can't build buildings you already own.)
+            //Implemented! 
+            StartCoroutine(WonderG4Ability());
         }
         else if (name == "Wonder_R4" && ciweilization.wonderR4 == false)
         {
@@ -618,6 +627,341 @@ public class Player : Photon.MonoBehaviour
             //photonView.RPC("ChangeTempCardName", PhotonTargets.AllBuffered, randomBuildingName);
             photonView.RPC("AllClientsPlayerBuild", PhotonTargets.AllBuffered, randomBuildingName);
         }
+    }
+
+    /* Build the given building for the player, but with an addition "distinct" requirement
+     * that the building can be built only if its not already built.
+     * Only display the building if the client owns the player. */
+    public virtual void PlayerDistinctBuild(string name)
+    {
+        ////////////////////////////////////////////// Level 1 buildings
+        if (name == "G1")
+        {
+            if (G1 > 0)
+            {
+                return;
+            }
+            G1 += 1;
+            audioManager.Play("Wonder Ability");
+            //Change PlayerDisplay function into non-RPC, target player from both 
+            //player already calls PlayerBuild. We should only call PlayerDisplay if
+            //photonView.isMine is true.
+            PlayerDisplay("G1", G1, false);
+            if (G1 == 3)
+            {
+                PlayerWBuild("Wonder_G2");
+            }
+        }
+        else if (name == "R1")
+        {
+            if (R1 > 0)
+            {
+                return;
+            }
+            R1 += 1;
+            audioManager.Play("Wonder Ability");
+            PlayerDisplay("R1", R1, false);
+            if (R1 == 3)
+            {
+                PlayerWBuild("Wonder_R2");
+            }
+        }
+        else if (name == "Y1")
+        {
+            if (Y1 > 0)
+            {
+                return;
+            }
+            Y1 += 1;
+            audioManager.Play("Wonder Ability");
+            PlayerDisplay("Y1", Y1, false);
+            if (Y1 == 3)
+            {
+                PlayerWBuild("Wonder_Y2");
+            }
+        }
+        else if (name == "B1")
+        {
+            if (B1 > 0)
+            {
+                return;
+            }
+            B1 += 1;
+            audioManager.Play("Wonder Ability");
+            PlayerDisplay("B1", B1, false);
+            if (B1 == 3)
+            {
+                PlayerWBuild("Wonder_B2");
+            }
+        }
+
+        //////////////////////////////////////////////  Level 2 buildings
+
+        else if (name == "G2")
+        {
+            if (G1 + G2 != 0 && G2 - BoolToInt(Wonder_G2) == 0)
+            {
+                G2 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("G2", G2, false);
+                if (G2 == 3)
+                {
+                    PlayerWBuild("Wonder_G3");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "R2")
+        {
+            if (R1 + R2 != 0 && R2 - BoolToInt(Wonder_R2) == 0)
+            {
+                R2 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("R2", R2, false);
+                if (R2 == 3)
+                {
+                    PlayerWBuild("Wonder_R3");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "Y2")
+        {
+            if (Y1 + Y2 != 0 && Y2 - BoolToInt(Wonder_Y2) == 0)
+            {
+                Y2 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("Y2", Y2, false);
+                if (Y2 == 3)
+                {
+                    PlayerWBuild("Wonder_Y3");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "B2")
+        {
+            if (B1 + B2 != 0 && B2 - BoolToInt(Wonder_B2) == 0)
+            {
+                B2 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("B2", B2, false);
+                if (B2 == 3)
+                {
+                    PlayerWBuild("Wonder_B3");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+
+        //////////////////////////////////////////////  Level 3 buildings
+
+        else if (name == "G3")
+        {
+            if (G2 + G3 != 0 && G3 - BoolToInt(Wonder_G3) == 0)
+            {
+                G3 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("G3", G3, false);
+                if (G3 == 3)
+                {
+                    PlayerWBuild("Wonder_G4");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "R3")
+        {
+            if (R2 + R3 != 0 && R3 - BoolToInt(Wonder_R3) == 0)
+            {
+                R3 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("R3", R3, false);
+                if (R3 == 3)
+                {
+                    PlayerWBuild("Wonder_R4");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "Y3")
+        {
+            if (Y2 + Y3 != 0 && Y3 - BoolToInt(Wonder_Y3) == 0)
+            {
+                Y3 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("Y3", Y3, false);
+                if (Y3 == 3)
+                {
+                    PlayerWBuild("Wonder_Y4");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "B3")
+        {
+            if (B2 + B3 != 0 && B3 - BoolToInt(Wonder_B3) == 0)
+            {
+                B3 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("B3", B3, false);
+                if (B3 == 3)
+                {
+                    PlayerWBuild("Wonder_B4");
+                    Debug.Log("A triple! You get a wonder!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+
+        //////////////////////////////////////////////  Level 4 buildings
+
+        else if (name == "G4")
+        {
+            if (G3 + G4 != 0 && G4 - BoolToInt(Wonder_G4) == 0)
+            {
+                G4 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("G4", G4, false);
+                if ((R4 + Y4 + B4 > 0) || (Wonder_G4 == true))
+                {
+                    EndGameWhenTurnEnds();
+                }
+                else
+                {
+                    Debug.Log("You only need another different level-4 to win!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "R4")
+        {
+            if (R3 + R4 != 0 && R4 - BoolToInt(Wonder_R4) == 0)
+            {
+                R4 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("R4", R4, false);
+                if ((G4 + Y4 + B4 > 0) || (Wonder_R4 == true))
+                {
+                    EndGameWhenTurnEnds();
+                }
+                else
+                {
+                    Debug.Log("You only need another different level-4 to win!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "Y4" && Y4 - BoolToInt(Wonder_Y4) == 0)
+        {
+            if (Y3 + Y4 != 0)
+            {
+                Y4 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("Y4", Y4, false);
+                if ((G4 + R4 + B4 > 0) || (Wonder_Y4 == true))
+                {
+                    EndGameWhenTurnEnds();
+                }
+                else
+                {
+                    Debug.Log("You only need another different level-4 to win!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+        else if (name == "B4" && B4 - BoolToInt(Wonder_B4) == 0)
+        {
+            if (B3 + B4 != 0)
+            {
+                B4 += 1;
+                audioManager.Play("Wonder Ability");
+                PlayerDisplay("B4", B4, false);
+                if ((G4 + R4 + Y4 > 0) || (Wonder_B4 == true))
+                {
+                    EndGameWhenTurnEnds();
+                }
+                else
+                {
+                    Debug.Log("You only need another different level-4 to win!");
+                }
+            }
+            else
+            {
+                audioManager.Play("Discard");
+                Debug.Log("You can't build this right now. You need to build the building below this first.");
+            }
+        }
+    }
+
+    /* Build a random building of the given level, with the "distict" requirement. */
+    public virtual void PlayerDistinctBuildRandom(int level)
+    {
+        if (ciweilization.player1.photonView.isMine)
+        {
+            string randomBuildingName = ciweilization.player1.RandomBuilding(level);
+            //photonView.RPC("ChangeTempCardName", PhotonTargets.AllBuffered, randomBuildingName);
+            photonView.RPC("AllClientsPlayerDistinctBuild", PhotonTargets.AllBuffered, randomBuildingName);
+        }
+    }
+
+    /* Make this player build the given building with the "distinct requirement", 
+     * for all clients. */
+    [PunRPC]
+    public void AllClientsPlayerDistinctBuild(string name)
+    {
+        PlayerDistinctBuild(name);
     }
 
     /* Make this player build the given building for all clients. */
@@ -1105,18 +1449,9 @@ public class Player : Photon.MonoBehaviour
         int level4 = PlayerGetG4() + PlayerGetR4() +
                         PlayerGetY4() + PlayerGetB4();
 
-        int wonderLevel2 = PlayerGetWonder_G2() + PlayerGetWonder_R2()
-                + PlayerGetWonder_Y2() + PlayerGetWonder_B2();
-        int wonderLevel3 = PlayerGetWonder_G3() + PlayerGetWonder_R3()
-                + PlayerGetWonder_Y3() + PlayerGetWonder_B3();
-        int wonderLevel4 = PlayerGetWonder_G4() + PlayerGetWonder_R4()
-                + PlayerGetWonder_Y4() + PlayerGetWonder_B4();
-        int wonderTotal = wonderLevel2 + wonderLevel3 + wonderLevel4;
-
         double count = 0f;
-        count += level4 * 0.25f;
-        count += (wonderLevel3 * 0.25f + wonderLevel2 * 0.25f);
-        count += PlayerGetB4() * 0.25f;
+        count += level4 * 0.5f;
+        count += PlayerGetB4() * 0.5f;
         count += PlayerGetB3() * 0.25f;
 
         return count;
@@ -1185,7 +1520,8 @@ public class Player : Photon.MonoBehaviour
 
     public virtual void PlayerStartRound()
     {
-        //Do nothing if there isn't any hero powers.
+        moves = CountMoves();
+        chances = defaultChances;
     }
     public virtual void PlayerAtTheStartOfTurn()
     {
@@ -1199,7 +1535,17 @@ public class Player : Photon.MonoBehaviour
         freeChance = false;
             
     }
+    /* Return 1 or 0 corresponding to the given boolean. */
+    public int BoolToInt(bool b)
+    {
+        if (b == true)
+        {
+            return 1;
+        }
+        return 0;
+    }
 
+    #region Play Audios
     /* Play the hero power audio for the player's client. */
     public void PlayHeroPowerAudio()
     {
@@ -1211,19 +1557,11 @@ public class Player : Photon.MonoBehaviour
     {
         audioManager.Play("Wonder Ability");
     }
+    #endregion
 
-    /* Return 1 or 0 corresponding to the given boolean. */
-    public int BoolToInt(bool b)
-    {
-        if (b == true)
-        {
-            return 1;
-        }
-        return 0;
-    }
-
+    #region Wonder Abilities
     /* Trigger Wonder G3 ability for the player. */
-    protected IEnumerator WonderG3Ability()
+    protected virtual IEnumerator WonderG3Ability()
     {
         int hasG2 = Mathf.Min(G2 - PlayerGetWonder_G2(), 1);
         int hasR2 = Mathf.Min(R2 - PlayerGetWonder_R2(), 1);
@@ -1252,7 +1590,7 @@ public class Player : Photon.MonoBehaviour
     }
 
     /* Trigger Wonder R3 ability for the player. */
-    protected void WonderR3Ability()
+    protected virtual void WonderR3Ability()
     {
         int redBuildingCount = R1 + R2 + R3 + R4;
 
@@ -1264,7 +1602,7 @@ public class Player : Photon.MonoBehaviour
     }
 
     /* Trigger Wonder Y3 ability for the player. */
-    protected void WonderY3Ability()
+    protected virtual void WonderY3Ability()
     {
         if (chanceCount >= 1)
         {
@@ -1275,7 +1613,7 @@ public class Player : Photon.MonoBehaviour
     }
 
     /* Trigger Wonder B3 ability for the player. */
-    protected IEnumerator WonderB3Ability()
+    protected virtual IEnumerator WonderB3Ability()
     {
         if (B3 >= 2)
         {
@@ -1308,14 +1646,30 @@ public class Player : Photon.MonoBehaviour
         yield return 0;
     }
 
-    /* Trigger Wonder G4 ability for the player. 
-    * Not Actually Implemented as fixing the random building bug is needed. */
-    protected void WonderG4Ability()
+    /* Trigger Wonder G4 ability for the player. */
+    protected IEnumerator WonderG4Ability()
     {
         for (int i = 1; i <= G1; i++)
         {
-            //playerDistinctBuild(ciweilization.tempCardName);
+            PlayerDistinctBuildRandom(1);
+            yield return new WaitForSeconds(0.2f);
         }
+        for (int i = 1; i <= G2; i++)
+        {
+            PlayerDistinctBuildRandom(2);
+            yield return new WaitForSeconds(0.2f);
+        }
+        for (int i = 1; i <= G3; i++)
+        {
+            PlayerDistinctBuildRandom(3);
+            yield return new WaitForSeconds(0.2f);
+        }
+        for (int i = 1; i <= G4; i++)
+        {
+            PlayerDistinctBuildRandom(4);
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield return 0;
     }
 
     /* Trigger Wonder R4 ability for the player. */
@@ -1449,8 +1803,7 @@ public class Player : Photon.MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
-
-
+    #endregion
 
     #region Get Methods
     public int PlayerGetG1()

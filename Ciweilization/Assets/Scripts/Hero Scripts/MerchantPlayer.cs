@@ -66,19 +66,14 @@ public class MerchantPlayer : Player
         int level4 = PlayerGetG4() + PlayerGetR4() +
                         PlayerGetY4() + PlayerGetB4();
 
-        int wonderLevel2 = PlayerGetWonder_G2() + PlayerGetWonder_R2()
-                + PlayerGetWonder_Y2() + PlayerGetWonder_B2();
-        int wonderLevel3 = PlayerGetWonder_G3() + PlayerGetWonder_R3()
-                        + PlayerGetWonder_Y3() + PlayerGetWonder_B3();
-
         double count = 0f;
-        count += level4 * 0.25f;
-        count += (wonderLevel3 * 0.25f + wonderLevel2 * 0.25f);
-        count += PlayerGetB4() * 0.25f;
+        count += level4 * 0.5f;
+        count += PlayerGetB4() * 0.5f;
         count += PlayerGetB3() * 0.25f;
-        count += PlayerGetY4() * 0.25f;
+        count += PlayerGetY4() * 0.5f;
         count += PlayerGetY3() * 0.25f;
 
         return count;
+
     }
 }

@@ -53,9 +53,10 @@ public class RatPlayer : Player
         {
             count += CountMovesWinter();
 
-            count += wonderLevel3 * 0.25f + wonderLevel4 * 0.25f;
+            count += wonderLevel4 * 0.5f;
+            count -= PlayerGetWonder_B4() * 0.5f;
+            count += wonderLevel3 * 0.25f;
             count -= PlayerGetWonder_B3() * 0.25f;
-            count -= PlayerGetWonder_B4() * 0.25f;
         }
 
         count += savedMoves;
