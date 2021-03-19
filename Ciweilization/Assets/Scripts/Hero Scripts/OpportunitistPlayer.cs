@@ -1,19 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
-public class BarbarianPlayer : Player
+public class OpportunitistPlayer : Player
 {
     // Start is called before the first frame update
     protected override void Start()
     {
-        defaultMoves = 1.25f; //The Barbarian has 0.25 extra base move.
+        defaultMoves = 1f;
         moves = 0f;
         savedMoves = 0f;
-        defaultChances = 2;
-        chances = 2;
+        defaultChances = 2; //The Opportunitist can discover twice when discovering chances.
+        chances = 2; //The Opportunitist can discover twice when discovering chances.
         chanceCount = 0;
 
         G1 = G2 = G3 = G4 = R1 = R2 = R3 = R4 = Y1 = Y2 = Y3 = Y4 = B1 = B2 = B3 = B4 = 0;

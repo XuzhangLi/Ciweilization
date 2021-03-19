@@ -13493,6 +13493,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80bd0356c39942a409d151711aff3788, type: 3}
   - {fileID: 21300000, guid: 5f9c48a6f2806854992b35d56dd5842a, type: 3}
   - {fileID: 21300000, guid: 9b9bc39ccbe5a4049b4495c39a5a3a3f, type: 3}
+  - {fileID: 21300000, guid: ade7baf7292e2bf41af0a5759ad85999, type: 3}
   cardFacesChances:
   - {fileID: 21300000, guid: 1d51118728510754cb8cfb37b18c8bb2, type: 3}
   - {fileID: 21300000, guid: f358f262c8ff4eb48a297b28ae00c14c, type: 3}
@@ -13565,11 +13566,7 @@ MonoBehaviour:
   - CunningTreant
   - DarkLord
   - Rat
-  - Pirate
-  - Rogue
-  - Pioneer
-  - Unknown34
-  - Unknown35
+  - PatientKitty
   currentHeroNames:
   - Barbarian
   - na
@@ -13589,7 +13586,7 @@ MonoBehaviour:
   - TimeTraveler
   - na
   - Researcher
-  - na
+  - Opportunitist
   - na
   - na
   - na
@@ -13602,7 +13599,7 @@ MonoBehaviour:
   - na
   - na
   - Rat
-  - na
+  - PatientKitty
   - na
   - na
   - na
@@ -16180,7 +16177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6740896090653129748
 MonoBehaviour:
   m_ObjectHideFlags: 0

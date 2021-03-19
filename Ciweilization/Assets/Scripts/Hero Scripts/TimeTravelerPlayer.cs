@@ -63,6 +63,10 @@ public class TimeTravelerPlayer : Player
         {
             count = 1f;
         }
+        else if (count > maxMoves)
+        {
+            count = maxMoves;
+        }
 
         return count;
     }

@@ -16,13 +16,13 @@ public class Player : Photon.MonoBehaviour
     protected AudioManager audioManager;
 
     public GameObject heroObj;
-    public GameObject testEmptyObj;
 
     public double moves = 0f;
     [HideInInspector] public double defaultMoves = 1f;
     [HideInInspector] public double savedMoves = 0f;
-    
-    
+    [HideInInspector] public double maxMoves = 6f;
+
+
 
     [HideInInspector] public float xOffset = 0.08f;
     [HideInInspector] public float yOffset = -0.08f;
@@ -39,7 +39,7 @@ public class Player : Photon.MonoBehaviour
     [HideInInspector] public GameObject[] level2Pos = new GameObject[4];
     [HideInInspector] public GameObject[] level3Pos = new GameObject[4];
     [HideInInspector] public GameObject[] level4Pos = new GameObject[4];
-    public GameObject heroPos;
+    [HideInInspector] public GameObject heroPos;
 
     [HideInInspector] public bool startEnergy = false;
 
@@ -48,24 +48,28 @@ public class Player : Photon.MonoBehaviour
 
     [HideInInspector] public int chanceCount = 0;
     [HideInInspector] public bool freeChance = false;
-    public int defaultChances = 1;
-    public int chances = 1;
+    [HideInInspector] public int defaultChances = 1;
+    [HideInInspector] public int chances = 1;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        moves = 0;
-        savedMoves = 0;
+        defaultMoves = 1f;
+        moves = 0f;
+        savedMoves = 0f;
+        defaultChances = 1;
+        chances = 1;
+        chanceCount = 0;
 
         G1 = G2 = G3 = G4 = R1 = R2 = R3 = R4 = Y1 = Y2 = Y3 = Y4 = B1 = B2 = B3 = B4 = 0;
-
-        Wonder_G1 = Wonder_G2 = Wonder_G3 = Wonder_G4 = Wonder_R1 = Wonder_R2 = Wonder_R3 = Wonder_R4
-    = Wonder_Y1 = Wonder_Y2 = Wonder_Y3 = Wonder_Y4 = Wonder_B1 = Wonder_B2 = Wonder_B3 = Wonder_B4 = false;
+        Wonder_G1 = Wonder_G2 = Wonder_G3 = Wonder_G4 = 
+            Wonder_R1 = Wonder_R2 = Wonder_R3 = Wonder_R4 = 
+            Wonder_Y1 = Wonder_Y2 = Wonder_Y3 = Wonder_Y4 = 
+            Wonder_B1 = Wonder_B2 = Wonder_B3 = Wonder_B4 = false;
 
         audioManager = FindObjectOfType<AudioManager>();
 
         ciweilization = FindObjectOfType<Ciweilization>();
-
     }
 
     // Update is called once per frame
@@ -1388,6 +1392,10 @@ public class Player : Photon.MonoBehaviour
         {
             count = 1f;
         }
+        else if (count > maxMoves)
+        {
+            count = maxMoves;
+        }
 
         return count;
     }
@@ -1489,10 +1497,22 @@ public class Player : Photon.MonoBehaviour
         moves += x;
     }
 
+    /* Return 1 or 0 corresponding to the given boolean. */
+    public int BoolToInt(bool b)
+    {
+        if (b == true)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    #region Player Turn Timings
     public virtual void PlayerStartSpring()
     {
         //Do nothing if there isn't any hero powers.
     }
+
     public virtual void PlayerStartSummer()
     {
         if (Wonder_G2)
@@ -1501,6 +1521,7 @@ public class Player : Photon.MonoBehaviour
             PlayerBuild(RandomBuilding(1));
         }
     }
+
     public virtual void PlayerStartFall()
     {
         if (Wonder_G2)
@@ -1524,6 +1545,7 @@ public class Player : Photon.MonoBehaviour
         moves = CountMoves();
         chances = defaultChances;
     }
+
     public virtual void PlayerAtTheStartOfTurn()
     {
         // Dealing with the free chance given by Wonder Y4.
@@ -1534,18 +1556,9 @@ public class Player : Photon.MonoBehaviour
             StartCoroutine(ciweilization.CiweilizationDealChances());
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
         }
-        freeChance = false;
-            
+        freeChance = false; 
     }
-    /* Return 1 or 0 corresponding to the given boolean. */
-    public int BoolToInt(bool b)
-    {
-        if (b == true)
-        {
-            return 1;
-        }
-        return 0;
-    }
+    #endregion
 
     #region Play Audios
     /* Play the hero power audio for the player's client. */
