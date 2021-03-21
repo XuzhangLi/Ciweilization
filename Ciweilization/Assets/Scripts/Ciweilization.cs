@@ -863,6 +863,7 @@ public class Ciweilization : Photon.MonoBehaviour
             {
                 StartCoroutine(CiweilizationDeal2());
             }
+
             player1.PlayerStartSummer();
             if (player2)
             {

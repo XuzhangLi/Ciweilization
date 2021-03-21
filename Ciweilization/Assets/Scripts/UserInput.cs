@@ -115,8 +115,7 @@ public class UserInput : Photon.MonoBehaviour
                 {
                     player.clickChanceOnly = false;
                     Debug.Log("You just clicked on a chance card.");
-                    player.chanceCount += 1;
-                    //write these into a function later
+                    photonView.RPC("ChangeChanceCount", PhotonTargets.AllBuffered, 1);
                     DestroyAll("ChanceCard");
                     photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
                 }
@@ -166,6 +165,12 @@ public class UserInput : Photon.MonoBehaviour
                 }
             }
         }
+    }
+
+    [PunRPC]
+    public void ChangeChanceCount(int num)
+    {
+        player.chanceCount += num;
     }
 
     [PunRPC]

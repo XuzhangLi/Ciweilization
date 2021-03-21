@@ -67,4 +67,5 @@ MonoBehaviour:
   - AllClientsPlayerBuild
   - AllClientsPlayerDistinctBuild
   - HeroPower
+  - ChangeChanceCount
   DisableAutoOpenWizard: 1
