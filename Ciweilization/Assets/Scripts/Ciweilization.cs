@@ -8,6 +8,7 @@ using TMPro;
 
 public class Ciweilization : Photon.MonoBehaviour
 {
+    #region Variables
     public static string[] suits = new string[] { "G", "R", "Y", "B" };
     public static string[] values = new string[] { "1", "2", "3", "4" };
 
@@ -78,6 +79,9 @@ public class Ciweilization : Photon.MonoBehaviour
     private List<string> chance0 = new List<string>();
     private List<string> chance1 = new List<string>();
     private List<string> chance2 = new List<string>();
+    public GameObject chanceDiscovery1;
+    public GameObject chanceDiscovery2;
+    public GameObject chanceDiscovery3;
 
     [HideInInspector] public int turn;
     [HideInInspector] public bool isSpring;
@@ -92,6 +96,7 @@ public class Ciweilization : Photon.MonoBehaviour
     private TextMeshProUGUI player1NameText;
     private TextMeshProUGUI player2NameText;
     private TextMeshProUGUI player3NameText;
+    private TextMeshProUGUI hideDiscoveryButtonText;
 
     private Locations locations;
 
@@ -120,13 +125,15 @@ public class Ciweilization : Photon.MonoBehaviour
     public GameObject sitButton;
     public GameObject startButton;
     public GameObject endTurnButton;
+    public GameObject hideDiscoveryButton;
+    public bool showingDiscoveryCards = false;
     [HideInInspector] public int screenWidth = 800;
-
     [HideInInspector] public bool isLastTurn = false;
     [HideInInspector] public bool win = false;
 
-    public string tempCardName;
+    #endregion
 
+    #region Unity Functions
     /* Start is called before the first frame update. */
     void Start()
     {
@@ -200,7 +207,9 @@ public class Ciweilization : Photon.MonoBehaviour
 
         CheckDisconnectInput();
     }
+    #endregion
 
+    #region Unity Functions Sub-functions
     /* Show active player bar according to current active player. */
     public void ShowActivePlayerBar()
     {
@@ -238,7 +247,9 @@ public class Ciweilization : Photon.MonoBehaviour
             disconnectPanelOn = true;
         }
     }
-    
+    #endregion
+
+    #region ESC Panel Functions
     /* Disconnect the client from the room, reduce player count by 1, 
      * and take the player back to the main menu.*/
     public void Disconnect()
@@ -266,7 +277,9 @@ public class Ciweilization : Photon.MonoBehaviour
             screenWidth = 800;
         }
     }
-    
+    #endregion
+
+    #region Generate Deck Functions
     /* Takes in a level and how many copies are there for each card; 
     Gives out a deck of buildings. */
     public static List<string> GenerateDeck(string v, int x) 
@@ -326,6 +339,82 @@ public class Ciweilization : Photon.MonoBehaviour
         CiweilizationSortChances();
     }
 
+    /* Takes in a deck, shuffles the deck in a rather naive way. */
+    void Shuffle<T>(List<T> list)
+    {
+        System.Random random = new System.Random();
+        int n = list.Count;
+        while (n > 1)
+        {
+            int k = random.Next(n);
+            n--;
+            T temp = list[k];
+            list[k] = list[n];
+            list[n] = temp;
+        }
+    }
+
+    /* Put cards in building decks into their corresponding boxs, so they are ready to be dealt out.*/
+    public void CiweilizationSort()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            level1s[i].Add(deck1.Last<string>());
+            deck1.RemoveAt(deck1.Count - 1);
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            level2s[i].Add(deck2.Last<string>());
+            deck2.RemoveAt(deck2.Count - 1);
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            level3s[i].Add(deck3.Last<string>());
+            deck3.RemoveAt(deck3.Count - 1);
+        }
+        for (int i = 0; i < 1; i++)
+        {
+            level4s[i].Add(deck4.Last<string>());
+            deck4.RemoveAt(deck4.Count - 1);
+        }
+    }
+
+    /* Generates hero cards (strings) and put them into their corresponding boxs, 
+     * so they are ready to be dealt out.*/
+    public void CiweilizationSortHeroes()
+    {
+        deckHeroes = GenerateHeroDeck();
+        Shuffle(deckHeroes);
+
+        for (int i = 0; i < 3; i++)
+        {
+            player1Heroes[i].Add(deckHeroes.Last<string>());
+            deckHeroes.RemoveAt(deckHeroes.Count - 1);
+
+            player2Heroes[i].Add(deckHeroes.Last<string>());
+            deckHeroes.RemoveAt(deckHeroes.Count - 1);
+
+            player3Heroes[i].Add(deckHeroes.Last<string>());
+            deckHeroes.RemoveAt(deckHeroes.Count - 1);
+        }
+    }
+
+    /* Generates chance cards (strings) and put them into their corresponding boxs, 
+     * so they are ready to be dealt out.*/
+    public void CiweilizationSortChances()
+    {
+        deckChances = GenerateChanceDeck();
+        Shuffle(deckChances);
+
+        for (int i = 0; i < 3; i++)
+        {
+            chances[i].Add(deckChances.Last<string>());
+            deckChances.RemoveAt(deckChances.Count - 1);
+        }
+    }
+    #endregion
+
+    #region Set Up Player Functions
     /* Takes in a player number;
      * Set up the corresponding player, including its building, hero, and energy locations
      * and its player number. */
@@ -418,26 +507,6 @@ public class Ciweilization : Photon.MonoBehaviour
     /* Start the game!
        Namely, start the theme music, and deal heroes to the first player.
        Only the client owning player1 can call this function.*/
-    public void StartGame()
-    {
-        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Theme");
-        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
-        photonView.RPC("ShowEndTurnButton", PhotonTargets.AllBuffered);
-        startButton.SetActive(false);
-        StartCoroutine(CiweilizationDealHeroes(1));
-    }
-
-    [PunRPC]
-    public void ShowEndTurnButton()
-    {
-        endTurnButton.SetActive(true);
-    }
-
-    [PunRPC]
-    public void PlayAudioForAll(string name)
-    {
-        audioManager.Play(name);
-    }
 
     [PunRPC]
     public void DisplayPlayerName(int playerNum, string name)
@@ -477,7 +546,7 @@ public class Ciweilization : Photon.MonoBehaviour
             player1.startEnergy = true;
 
             player1.playerNumber = 1;
-            player1.heroPos = heroPos[0];          
+            player1.heroPos = heroPos[0];
         }
         else if (num == 2)
         {
@@ -519,22 +588,32 @@ public class Ciweilization : Photon.MonoBehaviour
             playerCount += x;
         }
     }
+    #endregion
 
-    /* Takes in a deck, shuffles the deck in a rather naive way. */
-    void Shuffle<T>(List<T> list)
+    #region Start Game Functions
+    public void StartGame()
     {
-        System.Random random = new System.Random();
-        int n = list.Count;
-        while (n > 1)
-        {
-            int k = random.Next(n);
-            n--;
-            T temp = list[k];
-            list[k] = list[n];
-            list[n] = temp;
-        }
+        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Theme");
+        photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
+        photonView.RPC("ShowEndTurnButton", PhotonTargets.AllBuffered);
+        startButton.SetActive(false);
+        StartCoroutine(CiweilizationDealHeroes(1));
     }
 
+    [PunRPC]
+    public void ShowEndTurnButton()
+    {
+        endTurnButton.SetActive(true);
+    }
+
+    [PunRPC]
+    public void PlayAudioForAll(string name)
+    {
+        audioManager.Play(name);
+    }
+    #endregion
+
+    #region Deal Cards Functions
     /* Deals 4 level-1 buildings from the box */
     IEnumerator CiweilizationDeal1()
     {
@@ -659,6 +738,8 @@ public class Ciweilization : Photon.MonoBehaviour
             int id = newCard.GetPhotonView().viewID;
 
             photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
+            photonView.RPC("TrackChanceCard", PhotonTargets.AllBuffered, id, (i + 1));
+            photonView.RPC("ShowToggleDiscoveryButtonForAll", PhotonTargets.AllBuffered);
         }
 
         CiweilizationSortChances();
@@ -670,66 +751,73 @@ public class Ciweilization : Photon.MonoBehaviour
     {
         PhotonView.Find(id).gameObject.name = cardName;
     }
-
-    /* Put cards in building decks into their corresponding boxs, so they are ready to be dealt out.*/
-    public void CiweilizationSort()
+    
+    /* Track the chance discovery card by assigning it to a local variable according
+     * to the given number. */
+    [PunRPC]
+    public void TrackChanceCard(int id, int num)
     {
-        for (int i = 0; i < 4; i++)
+        if (num == 1)
         {
-            level1s[i].Add(deck1.Last<string>());
-            deck1.RemoveAt(deck1.Count - 1);
+            chanceDiscovery1 = PhotonView.Find(id).gameObject;
         }
-        for (int i = 0; i < 3; i++)
+        else if (num == 2)
         {
-            level2s[i].Add(deck2.Last<string>());
-            deck2.RemoveAt(deck2.Count - 1);
+            chanceDiscovery2 = PhotonView.Find(id).gameObject;
         }
-        for (int i = 0; i < 2; i++)
+        else if (num == 3)
         {
-            level3s[i].Add(deck3.Last<string>());
-            deck3.RemoveAt(deck3.Count - 1);
+            chanceDiscovery3 = PhotonView.Find(id).gameObject;
         }
-        for (int i = 0; i < 1; i++)
+        else
         {
-            level4s[i].Add(deck4.Last<string>());
-            deck4.RemoveAt(deck4.Count - 1);
+            Debug.Log("Error! Invalid chance discovery number!");
         }
     }
 
-    /* Generates hero cards (strings) and put them into their corresponding boxs, 
-     * so they are ready to be dealt out.*/
-    public void CiweilizationSortHeroes()
+    /* Show the toggle discovery button to all clients.*/
+    [PunRPC]
+    public void ShowToggleDiscoveryButtonForAll()
     {
-        deckHeroes = GenerateHeroDeck();
-        Shuffle(deckHeroes);
+        showingDiscoveryCards = true;
+        hideDiscoveryButton.SetActive(true);
+        hideDiscoveryButtonText = GameObject.Find("Canvas/Hide Discovery Button/Hide Discovery Text")
+                                            .GetComponent<TextMeshProUGUI>();
+        hideDiscoveryButtonText.text = "Show Board";
+    }
 
-        for (int i = 0; i < 3; i++)
+    /* Hide the toggle discovery button to all clients.*/
+    [PunRPC]
+    public void HideToggleDiscoveryButtonForAll()
+    {
+        showingDiscoveryCards = false;
+        hideDiscoveryButton.SetActive(false);
+    }
+
+    /* Toggle showing/hiding the discovery cards. */
+    public void ToggleDiscovery()
+    {
+        if (showingDiscoveryCards)
         {
-            player1Heroes[i].Add(deckHeroes.Last<string>());
-            deckHeroes.RemoveAt(deckHeroes.Count - 1);
-
-            player2Heroes[i].Add(deckHeroes.Last<string>());
-            deckHeroes.RemoveAt(deckHeroes.Count - 1);
-
-            player3Heroes[i].Add(deckHeroes.Last<string>());
-            deckHeroes.RemoveAt(deckHeroes.Count - 1);
+            chanceDiscovery1.SetActive(false);
+            chanceDiscovery2.SetActive(false);
+            chanceDiscovery3.SetActive(false);
+            showingDiscoveryCards = false;
+            hideDiscoveryButtonText.text = "Show Chances";
+        }
+        else if (showingDiscoveryCards == false)
+        {
+            chanceDiscovery1.SetActive(true);
+            chanceDiscovery2.SetActive(true);
+            chanceDiscovery3.SetActive(true);
+            showingDiscoveryCards = true;
+            hideDiscoveryButtonText.text = "Show Board";
         }
     }
 
-    /* Generates chance cards (strings) and put them into their corresponding boxs, 
-     * so they are ready to be dealt out.*/
-    public void CiweilizationSortChances()
-    {
-        deckChances = GenerateChanceDeck();
-        Shuffle(deckChances);
+    #endregion
 
-        for (int i = 0; i < 3; i++)
-        {
-            chances[i].Add(deckChances.Last<string>());
-            deckChances.RemoveAt(deckChances.Count - 1);
-        }
-    }
-
+    #region Fill Cards Functions
     /* Takes in the vector3 position of the missing level-1 card on the board,
      * and fill in the top card from the level-1 building deck.*/
     public void CiweilizationFill1(Vector3 position)
@@ -798,7 +886,9 @@ public class Ciweilization : Photon.MonoBehaviour
             photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
         }
     }
+    #endregion
 
+    #region Next Turn Functions
     /* Start next turn, give players moves, and changes season if needed.*/
     public void CiweilizationNextTurn()
     {
@@ -970,7 +1060,9 @@ public class Ciweilization : Photon.MonoBehaviour
             Debug.Log("Error! Invalid turn number.");
         }
     }
+    #endregion
 
+    #region Miscellaneous Functions
     /* Return 1 or 0 based on the given boolean. */
     public int BoolToInt(bool b)
     {
@@ -983,4 +1075,5 @@ public class Ciweilization : Photon.MonoBehaviour
             return 0;
         }
     }
+    #endregion
 }

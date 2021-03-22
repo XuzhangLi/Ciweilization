@@ -118,6 +118,7 @@ public class UserInput : Photon.MonoBehaviour
                     photonView.RPC("ChangeChanceCount", PhotonTargets.AllBuffered, 1);
                     DestroyAll("ChanceCard");
                     photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
+                    ciweilization.photonView.RPC("HideToggleDiscoveryButtonForAll", PhotonTargets.AllBuffered);
                 }
 
                 else if (hit.collider.CompareTag("Hero"))
@@ -222,12 +223,6 @@ public class UserInput : Photon.MonoBehaviour
         {
             player.PlayerBuild(testCardName);
         }
-    }
-
-    [PunRPC]
-    public void ChangeTempCardName(string cardName)
-    {
-        ciweilization.tempCardName = cardName;
     }
 
     [PunRPC]
