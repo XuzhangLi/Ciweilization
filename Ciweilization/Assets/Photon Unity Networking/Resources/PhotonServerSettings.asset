@@ -71,4 +71,5 @@ MonoBehaviour:
   - TrackChanceCard
   - ShowToggleDiscoveryButtonForAll
   - HideToggleDiscoveryButtonForAll
+  - UseChance
   DisableAutoOpenWizard: 1

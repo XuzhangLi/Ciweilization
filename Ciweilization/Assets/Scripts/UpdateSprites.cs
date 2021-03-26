@@ -8,7 +8,6 @@ public class UpdateSprites : MonoBehaviour
     public Sprite cardFace;
     public Sprite cardBack;
     private SpriteRenderer spriteRenderer;
-    private Selectable selectable;
     private Ciweilization ciweilization;
 
     // Start is called before the first frame update
@@ -90,19 +89,13 @@ public class UpdateSprites : MonoBehaviour
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        selectable = GetComponent<Selectable>();
+
+        spriteRenderer.sprite = cardFace;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (selectable.faceUp == true)
-        {
-            spriteRenderer.sprite = cardFace;
-        }
-        else
-        {
-            spriteRenderer.sprite = cardBack;
-        }
+
     }
 }

@@ -192,5 +192,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: Y2
-  wonderSprite: {fileID: 21300000, guid: f6ab40c22a6848a41855d3498eb82726, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 77454daa204e9ca4f903214e54049add, type: 3}
   spriteRenderer: {fileID: 0}

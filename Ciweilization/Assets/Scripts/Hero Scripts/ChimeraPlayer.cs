@@ -9,13 +9,13 @@ public class ChimeraPlayer : Player
     {
         PlayWonderAbilityAudio();
         PlayerBuildRandom(3);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(abilityTriggerInterval);
         PlayWonderAbilityAudio();
         PlayerBuildRandom(3);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(abilityTriggerInterval);
         PlayWonderAbilityAudio();
         PlayerBuildRandom(3);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(abilityTriggerInterval);
 
         yield return 0;
     }

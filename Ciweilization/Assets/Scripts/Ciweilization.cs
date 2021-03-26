@@ -47,6 +47,7 @@ public class Ciweilization : Photon.MonoBehaviour
 
     public List<string> heroNames;
     public List<string> currentHeroNames;
+    public List<string> currentChanceNames;
 
     [HideInInspector] public List<string> deck1;
     [HideInInspector] public List<string> deck2;
@@ -97,6 +98,7 @@ public class Ciweilization : Photon.MonoBehaviour
     private TextMeshProUGUI player2NameText;
     private TextMeshProUGUI player3NameText;
     private TextMeshProUGUI hideDiscoveryButtonText;
+    private TextMeshProUGUI endTurnText;
 
     private Locations locations;
 
@@ -128,6 +130,7 @@ public class Ciweilization : Photon.MonoBehaviour
     public GameObject hideDiscoveryButton;
     public bool showingDiscoveryCards = false;
     [HideInInspector] public int screenWidth = 800;
+    [HideInInspector] public bool gameStarted = false;
     [HideInInspector] public bool isLastTurn = false;
     [HideInInspector] public bool win = false;
 
@@ -206,12 +209,14 @@ public class Ciweilization : Photon.MonoBehaviour
         ShowActivePlayerBar();
 
         CheckDisconnectInput();
+
+        ChangeEndTurnText();
     }
     #endregion
 
     #region Unity Functions Sub-functions
     /* Show active player bar according to current active player. */
-    public void ShowActivePlayerBar()
+    private void ShowActivePlayerBar()
     {
         if (activePlayerNumber == 1)
         {
@@ -245,6 +250,53 @@ public class Ciweilization : Photon.MonoBehaviour
         {
             disconnectUI.SetActive(true);
             disconnectPanelOn = true;
+        }
+    }
+
+    /* ChangeS end turn button text automatically based on whether it's the client's player's turn. */
+    private void ChangeEndTurnText()
+    {
+        if (gameStarted == false)
+        {
+            return;
+        }
+
+        if (player1 && player1.photonView.isMine)
+        {
+            if (activePlayerNumber == 1)
+            {
+                endTurnText.text = "End Turn"; 
+            }
+            else
+            {
+                endTurnText.text = "Opponent's Turn";
+            }
+        }
+        else if (player2 && player2.photonView.isMine)
+        {
+            if (activePlayerNumber == 2)
+            {
+                endTurnText.text = "End Turn";
+            }
+            else
+            {
+                endTurnText.text = "Opponent's Turn";
+            }
+        }
+        else if (player3 && player3.photonView.isMine)
+        {
+            if (activePlayerNumber == 3)
+            {
+                endTurnText.text = "End Turn";
+            }
+            else
+            {
+                endTurnText.text = "Opponent's Turn";
+            }
+        }
+        else
+        {
+            Debug.Log("You don't control any player now.");
         }
     }
     #endregion
@@ -604,6 +656,8 @@ public class Ciweilization : Photon.MonoBehaviour
     public void ShowEndTurnButton()
     {
         endTurnButton.SetActive(true);
+        endTurnText = GameObject.Find("Canvas/End Turn Button/End Turn Text").GetComponent<TextMeshProUGUI>();
+        gameStarted = true;
     }
 
     [PunRPC]

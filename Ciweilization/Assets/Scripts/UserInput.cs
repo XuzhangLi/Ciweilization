@@ -11,6 +11,8 @@ public class UserInput : Photon.MonoBehaviour
 
     private AudioManager audioManager;
 
+    [HideInInspector] public SpriteRenderer chanceDisplaySpriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class UserInput : Photon.MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         player = GetComponent<Player>();
+
+        chanceDisplaySpriteRenderer = GameObject.Find("Card Zoom").GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -72,7 +76,6 @@ public class UserInput : Photon.MonoBehaviour
 
                 else if (hit.collider.CompareTag("Emote"))
                 {
-
                     Debug.Log("You just clicked on an emote.");
                     string emoteName = hit.collider.gameObject.GetComponent<Emote>().name;
                     photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, emoteName);
@@ -80,7 +83,6 @@ public class UserInput : Photon.MonoBehaviour
 
                 else if (hit.collider.CompareTag("HeroTrigger"))
                 {
-                    Debug.Log("You just clicked on a hero trigger.");
                     //write these into a function later
                     StartCoroutine(ciweilization.CiweilizationDealHeroes(player.playerNumber));
                     ciweilization.CiweilizationSortHeroes();
@@ -89,7 +91,6 @@ public class UserInput : Photon.MonoBehaviour
 
                 else if (hit.collider.CompareTag("HeroCard"))
                 {
-                    Debug.Log("You just clicked on a hero card.");
                     SelectHero(hit.collider.gameObject);
                     photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
                 }
@@ -114,16 +115,16 @@ public class UserInput : Photon.MonoBehaviour
                 else if (hit.collider.CompareTag("ChanceCard"))
                 {
                     player.clickChanceOnly = false;
-                    Debug.Log("You just clicked on a chance card.");
-                    photonView.RPC("ChangeChanceCount", PhotonTargets.AllBuffered, 1);
-                    DestroyAll("ChanceCard");
+                    //photonView.RPC("ChangeChanceCount", PhotonTargets.AllBuffered, 1);
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    photonView.RPC("UseChance", PhotonTargets.AllBuffered, objID);
+                    //DestroyAll("ChanceCard");
                     photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
                     ciweilization.photonView.RPC("HideToggleDiscoveryButtonForAll", PhotonTargets.AllBuffered);
                 }
 
                 else if (hit.collider.CompareTag("Hero"))
                 {
-                    Debug.Log("You just clicked on a hero. You get half extra move.");
                     photonView.RPC("ChangePlayerMoves", PhotonTargets.AllBuffered, 0.5f);
                     photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Discard");
                 }
@@ -166,12 +167,6 @@ public class UserInput : Photon.MonoBehaviour
                 }
             }
         }
-    }
-
-    [PunRPC]
-    public void ChangeChanceCount(int num)
-    {
-        player.chanceCount += num;
     }
 
     [PunRPC]
@@ -318,6 +313,24 @@ public class UserInput : Photon.MonoBehaviour
         ciweilization.CiweilizationSetUpHeroPlayer(player.playerNumber, 
                                                    ciweilization.currentHeroNames[heroNumber]);
         Destroy(this.gameObject);
+    }
+
+    [PunRPC]
+    public void UseChance(int objID)
+    {
+        player.chanceCount += 1;
+
+        GameObject obj = PhotonView.Find(objID).gameObject;
+        int chanceNumber = int.Parse(obj.name.Substring(1));
+
+        chanceDisplaySpriteRenderer.sprite = obj.GetComponent<SpriteRenderer>().sprite;
+
+        if (player.photonView.isMine)
+        {
+            DestroyAll("ChanceCard");
+        }
+
+        player.PlayerUseChance(ciweilization.currentChanceNames[chanceNumber]);
     }
 
     private void DestroyAll(string tag)

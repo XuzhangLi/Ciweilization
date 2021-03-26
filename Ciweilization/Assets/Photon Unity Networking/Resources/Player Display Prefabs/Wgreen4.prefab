@@ -192,5 +192,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: G4
-  wonderSprite: {fileID: 21300000, guid: ba4b0a067fdda9f44813543f00a3e76a, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 16172bde70ab0f341aea7460d267c67d, type: 3}
   spriteRenderer: {fileID: 0}

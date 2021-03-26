@@ -20,11 +20,9 @@ public class Player : Photon.MonoBehaviour
     public GameObject heroObj;
 
     public double moves = 0f;
-    [HideInInspector] public double defaultMoves = 1f;
+    public double defaultMoves = 1f;
     [HideInInspector] public double savedMoves = 0f;
     [HideInInspector] public double maxMoves = 6f;
-
-
 
     [HideInInspector] public float xOffset = 0.08f;
     [HideInInspector] public float yOffset = -0.08f;
@@ -53,6 +51,10 @@ public class Player : Photon.MonoBehaviour
     [HideInInspector] public int defaultChances = 1;
     [HideInInspector] public int chances = 1;
 
+    public float abilityTriggerInterval = 0.4f;
+
+    [HideInInspector] public bool negotiated = false;
+
     #endregion
 
     #region Unity Functions
@@ -75,6 +77,7 @@ public class Player : Photon.MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         ciweilization = FindObjectOfType<Ciweilization>();
+
     }
 
     // Update is called once per frame
@@ -306,6 +309,11 @@ public class Player : Photon.MonoBehaviour
                 {
                     EndGameWhenTurnEnds();
                 }
+                else if (negotiated == true && (G4 + R4 + Y4 + B4 >= 2))
+                {
+                    audioManager.Play("Wonder Ability");
+                    EndGameWhenTurnEnds();
+                }
                 else
                 {
                     Debug.Log("You only need another different level-4 to win!");
@@ -326,6 +334,11 @@ public class Player : Photon.MonoBehaviour
                 PlayerDisplay("R4", R4, false);
                 if ((G4 + Y4 + B4 > 0) || (Wonder_R4 == true))
                 {
+                    EndGameWhenTurnEnds();
+                }
+                else if (negotiated == true && (G4 + R4 + Y4 + B4 >= 2))
+                {
+                    audioManager.Play("Wonder Ability");
                     EndGameWhenTurnEnds();
                 }
                 else
@@ -350,6 +363,11 @@ public class Player : Photon.MonoBehaviour
                 {
                     EndGameWhenTurnEnds();
                 }
+                else if (negotiated == true && (G4 + R4 + Y4 + B4 >= 2))
+                {
+                    audioManager.Play("Wonder Ability");
+                    EndGameWhenTurnEnds();
+                }
                 else
                 {
                     Debug.Log("You only need another different level-4 to win!");
@@ -370,6 +388,11 @@ public class Player : Photon.MonoBehaviour
                 PlayerDisplay("B4", B4, false);
                 if ((G4 + R4 + Y4 > 0) || (Wonder_B4 == true))
                 {
+                    EndGameWhenTurnEnds();
+                }
+                else if (negotiated == true && (G4 + R4 + Y4 + B4 >= 2))
+                {
+                    audioManager.Play("Wonder Ability");
                     EndGameWhenTurnEnds();
                 }
                 else
@@ -1362,6 +1385,193 @@ public class Player : Photon.MonoBehaviour
     }
     #endregion
 
+    #region Chance Functions
+    /* Trigger the given chance for the player. */
+    public virtual void PlayerUseChance(string chanceName)
+    {
+        if (chanceName == "na")
+        {
+            Debug.Log("Selected chance not implemented yet. No effects.");
+            return;
+        }
+
+        if (chanceName == "Transform")
+        {
+            ChanceTransform();
+        }
+        else if (chanceName == "Sabotage")
+        {
+            ChanceSabotage();
+        }
+        else if (chanceName == "Gamble")
+        {
+            ChanceGamble();
+        }
+        else if (chanceName == "Negotiate")
+        {
+            ChanceNegotiate();
+        }
+        else if (chanceName == "Gather")
+        {
+            ChanceGather();
+        }
+        else if (chanceName == "Reconstruct")
+        {
+            ChanceReconstruct();
+        }
+        else if (chanceName == "Destruct")
+        {
+            ChanceDestruct();
+        }
+        else if (chanceName == "Reset")
+        {
+            ChanceReset();
+        }
+        else if (chanceName == "KeepCalm")
+        {
+            ChanceKeepCalm();
+        }
+        else if (chanceName == "Reclaim")
+        {
+            ChanceReclaim();
+        }
+        else if (chanceName == "Oops")
+        {
+            ChanceOops();
+        }
+        else if (chanceName == "Prepare")
+        {
+            ChancePrepare();
+        }
+    }
+
+    /* Triggers the chance Transform for the player.*/
+    public virtual void ChanceTransform()
+    {
+        //Transform is not planned to be implemented soon,
+        //as it changes the hero for the player and this is 
+        //far too advanced to spend time implementing now.*/
+        moves = 0;
+    }
+
+    /* Triggers the chance Sabotage for the player.*/
+    public virtual void ChanceSabotage()
+    {
+        //Not Implemented! (No need to implement this soon.)
+        moves = 0;
+    }
+
+    /* Triggers the chance Gamble for the player.*/
+    public virtual void ChanceGamble()
+    {
+        if (ciweilization.isSpring)
+        {
+            PlayerBuildRandom(1);
+        }
+        else if (ciweilization.isSummer)
+        {
+            PlayerBuildRandom(2);
+        }
+        else if (ciweilization.isFall)
+        {
+            PlayerBuildRandom(3);
+        }
+        else if (ciweilization.isWinter)
+        {
+            PlayerBuildRandom(4);
+        }
+        else
+        {
+            Debug.Log("Invalid era! Gamble does nothing.");
+        }
+
+        moves = 0;
+    }
+
+    /* Triggers the chance Negotiate for the player.*/
+    public virtual void ChanceNegotiate()
+    {
+        negotiated = true;
+        moves = 0;
+    }
+
+    /* Triggers the chance Gather for the player. */
+    public virtual void ChanceGather()
+    {
+        //Not Implemented! (No need to implement this soon.)
+        moves = 0;
+    }
+
+    /* Triggers the chance Reconstruct for the player.*/
+    public virtual void ChanceReconstruct()
+    {
+        //Not Implemented! (No need to implement this soon.)
+        moves = 0;
+    }
+
+    /* Triggers the chance Destruct for the player.*/
+    public virtual void ChanceDestruct()
+    {
+        //Not Implemented! (No need to implement this soon.)
+        moves = 0;
+    }
+
+    /* Triggers the chance Reset for the player.
+     * This need to be implemented! */
+    public virtual void ChanceReset()
+    {
+        //ciweilization.CiweilizationResetBoard();
+        moves = 0;
+    }
+
+    /* Triggers the chance KeepCalm for the player.*/
+    public virtual void ChanceKeepCalm()
+    {
+        //Not fully implemented! (No need to fully implement this soon.)
+        moves = 1f;
+    }
+
+    /* Triggers the chance Reclaim for the player.*/
+    public virtual void ChanceReclaim()
+    {
+        //Not fully implemented! (No need to fully implement this soon.)
+        if (ciweilization.isSpring)
+        {
+            moves = 0f;
+        }
+        else if (ciweilization.isSummer)
+        {
+            moves = 1f;
+        }
+        else if (ciweilization.isFall)
+        {
+            moves = 2f;
+        }
+        else if (ciweilization.isWinter)
+        {
+            moves = 3f;
+        }
+        else
+        {
+            Debug.Log("Invalid era! Gamble does nothing.");
+        }
+    }
+
+    /* Triggers the chance Oops for the player.*/
+    public virtual void ChanceOops()
+    {
+        //Oops does nothing.
+        moves = 0;
+    }
+
+    /* Triggers the chance Prepare for the player.*/
+    public virtual void ChancePrepare()
+    {
+        defaultMoves += 0.25f;
+        moves = 0;
+    }
+
+    #endregion
     #region Move Counting Functions
     /* Count the number of moves the player should get in the current season.*/
     public virtual double CountMoves()
@@ -1614,10 +1824,10 @@ public class Player : Photon.MonoBehaviour
         {
             PlayWonderAbilityAudio();
             PlayerBuildRandom(3);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
             PlayWonderAbilityAudio();
             PlayerBuildRandom(3);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
 
         yield return 0;
@@ -1655,25 +1865,25 @@ public class Player : Photon.MonoBehaviour
             {
                 PlayWonderAbilityAudio();
                 PlayerBuild("B2");
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(abilityTriggerInterval);
             }
             for (int i = 1; i <= Y1; i++)
             {
                 PlayWonderAbilityAudio();
                 PlayerBuild("Y2");
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(abilityTriggerInterval);
             }
             for (int i = 1; i <= R1; i++)
             {
                 PlayWonderAbilityAudio();
                 PlayerBuild("R2");
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(abilityTriggerInterval);
             }
             for (int i = 1; i <= G1; i++)
             {
                 PlayWonderAbilityAudio();
                 PlayerBuild("G2");
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(abilityTriggerInterval);
             }
         }
 
@@ -1686,22 +1896,22 @@ public class Player : Photon.MonoBehaviour
         for (int i = 1; i <= G1; i++)
         {
             PlayerDistinctBuildRandom(1);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
         for (int i = 1; i <= G2; i++)
         {
             PlayerDistinctBuildRandom(2);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
         for (int i = 1; i <= G3; i++)
         {
             PlayerDistinctBuildRandom(3);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
         for (int i = 1; i <= G4 - 1; i++)
         {
             PlayerDistinctBuildRandom(4);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
         yield return 0;
     }
@@ -1765,7 +1975,7 @@ public class Player : Photon.MonoBehaviour
             }
 
             PlayWonderAbilityAudio();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
 
         if (countR4 >= 1)
@@ -1788,7 +1998,7 @@ public class Player : Photon.MonoBehaviour
             }
 
             PlayWonderAbilityAudio();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
 
         if (countY4 >= 1)
@@ -1811,7 +2021,7 @@ public class Player : Photon.MonoBehaviour
             }
 
             PlayWonderAbilityAudio();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
 
         if (countB4 >= 1)
@@ -1834,7 +2044,7 @@ public class Player : Photon.MonoBehaviour
             }
 
             PlayWonderAbilityAudio();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(abilityTriggerInterval);
         }
     }
     #endregion
