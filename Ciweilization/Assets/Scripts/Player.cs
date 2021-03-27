@@ -1520,8 +1520,8 @@ public class Player : Photon.MonoBehaviour
      * This need to be implemented! */
     public virtual void ChanceReset()
     {
-        //ciweilization.CiweilizationResetBoard();
-        moves = 0;
+        StartCoroutine(ciweilization.CiweilizationResetBoard());
+        moves = 1;
     }
 
     /* Triggers the chance KeepCalm for the player.*/
@@ -1572,6 +1572,7 @@ public class Player : Photon.MonoBehaviour
     }
 
     #endregion
+
     #region Move Counting Functions
     /* Count the number of moves the player should get in the current season.*/
     public virtual double CountMoves()

@@ -940,6 +940,71 @@ public class Ciweilization : Photon.MonoBehaviour
             photonView.RPC("SetCardName", PhotonTargets.AllBuffered, id, card);
         }
     }
+
+    /* Discards all card on the board and fill in new cards. */
+    public virtual IEnumerator CiweilizationResetBoard()
+    {
+        //Does nothing if the client doesn't own player 1.
+        //(This function only works when called by the main client.)
+        if (player1.photonView.isMine == false)
+        {
+            yield break;
+        }
+            
+        if (isSpring || isSummer || isFall || isWinter)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(level1Pos[i].transform.position, Vector2.zero);
+                if (hit)
+                {
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    player1.photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+        }
+        if (isSummer || isFall || isWinter)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(level2Pos[i].transform.position, Vector2.zero);
+                if (hit)
+                {
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    player1.photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+        }
+        if (isFall || isWinter)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(level3Pos[i].transform.position, Vector2.zero);
+                if (hit)
+                {
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    player1.photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+        }
+        if (isWinter)
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(level4Pos[i].transform.position, Vector2.zero);
+                if (hit)
+                {
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    player1.photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+        }
+    }
+
     #endregion
 
     #region Next Turn Functions
