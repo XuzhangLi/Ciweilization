@@ -1516,8 +1516,7 @@ public class Player : Photon.MonoBehaviour
         moves = 0;
     }
 
-    /* Triggers the chance Reset for the player.
-     * This need to be implemented! */
+    /* Triggers the chance Reset for the player. */
     public virtual void ChanceReset()
     {
         StartCoroutine(ciweilization.CiweilizationResetBoard());
