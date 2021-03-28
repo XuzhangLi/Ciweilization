@@ -1791,7 +1791,7 @@ public class Player : Photon.MonoBehaviour
     }
     #endregion
 
-    #region Play Audios
+    #region Play Audio Functions
     /* Play the hero power audio for the player's client. */
     public void PlayHeroPowerAudio()
     {

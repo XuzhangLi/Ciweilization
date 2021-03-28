@@ -37,7 +37,7 @@ public class MenuController : MonoBehaviour
     private void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
-        connectionText.text = "Connected to server! \nYou may join/create rooms now.";
+        connectionText.text = "connected to server! \n you may join games now.";
         Debug.Log("Connected");
     }
 

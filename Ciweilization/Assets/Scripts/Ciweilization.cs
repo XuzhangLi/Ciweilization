@@ -128,7 +128,8 @@ public class Ciweilization : Photon.MonoBehaviour
     public GameObject startButton;
     public GameObject endTurnButton;
     public GameObject hideDiscoveryButton;
-    public bool showingDiscoveryCards = false;
+    public GameObject chanceTrigger;
+    [HideInInspector] public bool showingDiscoveryCards = false;
     [HideInInspector] public int screenWidth = 800;
     [HideInInspector] public bool gameStarted = false;
     [HideInInspector] public bool isLastTurn = false;
@@ -648,7 +649,6 @@ public class Ciweilization : Photon.MonoBehaviour
         photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Theme");
         photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Season Start");
         photonView.RPC("ShowEndTurnButton", PhotonTargets.AllBuffered);
-        startButton.SetActive(false);
         StartCoroutine(CiweilizationDealHeroes(1));
     }
 
@@ -657,6 +657,9 @@ public class Ciweilization : Photon.MonoBehaviour
     {
         endTurnButton.SetActive(true);
         endTurnText = GameObject.Find("Canvas/End Turn Button/End Turn Text").GetComponent<TextMeshProUGUI>();
+        chanceTrigger.SetActive(true);
+        startButton.SetActive(false);
+
         gameStarted = true;
     }
 
@@ -951,11 +954,12 @@ public class Ciweilization : Photon.MonoBehaviour
             yield break;
         }
             
-        if (isSpring || isSummer || isFall || isWinter)
+        //If it's Winter already
+        if (isWinter)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 1; i++)
             {
-                RaycastHit2D hit = Physics2D.Raycast(level1Pos[i].transform.position, Vector2.zero);
+                RaycastHit2D hit = Physics2D.Raycast(level4Pos[i].transform.position, Vector2.zero);
                 if (hit)
                 {
                     int objID = hit.collider.gameObject.GetPhotonView().viewID;
@@ -964,19 +968,8 @@ public class Ciweilization : Photon.MonoBehaviour
                 }
             }
         }
-        if (isSummer || isFall || isWinter)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                RaycastHit2D hit = Physics2D.Raycast(level2Pos[i].transform.position, Vector2.zero);
-                if (hit)
-                {
-                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
-                    player1.photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
-                    yield return new WaitForSeconds(0.2f);
-                }
-            }
-        }
+
+        //If its Fall of later
         if (isFall || isWinter)
         {
             for (int i = 0; i < 2; i++)
@@ -990,11 +983,28 @@ public class Ciweilization : Photon.MonoBehaviour
                 }
             }
         }
-        if (isWinter)
+
+        //If it's Summer or later
+        if (isSummer || isFall || isWinter)
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
-                RaycastHit2D hit = Physics2D.Raycast(level4Pos[i].transform.position, Vector2.zero);
+                RaycastHit2D hit = Physics2D.Raycast(level2Pos[i].transform.position, Vector2.zero);
+                if (hit)
+                {
+                    int objID = hit.collider.gameObject.GetPhotonView().viewID;
+                    player1.photonView.RPC("DiscardCard", PhotonTargets.AllBuffered, objID);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+        }
+
+        //If it's Spring or later
+        if (isSpring || isSummer || isFall || isWinter)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(level1Pos[i].transform.position, Vector2.zero);
                 if (hit)
                 {
                     int objID = hit.collider.gameObject.GetPhotonView().viewID;
