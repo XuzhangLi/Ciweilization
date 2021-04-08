@@ -194,8 +194,8 @@ public class UserInput : Photon.MonoBehaviour
                 return;
             }
         }
-        player.PlayerBuild(obj.name);
         player.moves -= 1;
+        player.PlayerBuild(obj.name);
     }
 
     [PunRPC]
@@ -330,7 +330,15 @@ public class UserInput : Photon.MonoBehaviour
             DestroyAll("ChanceCard");
         }
 
-        player.PlayerUseChance(ciweilization.currentChanceNames[chanceNumber]);
+        if (player.nextChanceFree == false)
+        {
+            player.PlayerUseChance(ciweilization.currentChanceNames[chanceNumber], "normal");
+        }
+        else if (player.nextChanceFree == true)
+        {
+            player.PlayerUseChance(ciweilization.currentChanceNames[chanceNumber], "free");
+            player.nextChanceFree = false;
+        }
     }
 
     private void DestroyAll(string tag)

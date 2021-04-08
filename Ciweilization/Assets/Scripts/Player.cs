@@ -50,6 +50,8 @@ public class Player : Photon.MonoBehaviour
     [HideInInspector] public bool freeChance = false;
     [HideInInspector] public int defaultChances = 1;
     [HideInInspector] public int chances = 1;
+    [HideInInspector] public bool nextChanceFree = false;
+
 
     public float abilityTriggerInterval = 0.4f;
 
@@ -437,7 +439,7 @@ public class Player : Photon.MonoBehaviour
             audioManager.Play("Wonder");
             //Ignore all passive negative effects applied to you;
             //Everytime one or more of your building is destroyed, gain 0.25 base move.
-            //Not implemented as destory abilities isn't implemented!
+            //Not implemented as destory abilities aren't implemented!
 
             if (R2 == 3)
             {
@@ -1387,7 +1389,7 @@ public class Player : Photon.MonoBehaviour
 
     #region Chance Functions
     /* Trigger the given chance for the player. */
-    public virtual void PlayerUseChance(string chanceName)
+    public virtual void PlayerUseChance(string chanceName, string mode)
     {
         if (chanceName == "na")
         {
@@ -1397,72 +1399,100 @@ public class Player : Photon.MonoBehaviour
 
         if (chanceName == "Transform")
         {
-            ChanceTransform();
+            ChanceTransform(mode);
         }
         else if (chanceName == "Sabotage")
         {
-            ChanceSabotage();
+            ChanceSabotage(mode);
         }
         else if (chanceName == "Gamble")
         {
-            ChanceGamble();
+            ChanceGamble(mode);
         }
         else if (chanceName == "Negotiate")
         {
-            ChanceNegotiate();
+            ChanceNegotiate(mode);
         }
         else if (chanceName == "Gather")
         {
-            ChanceGather();
+            ChanceGather(mode);
         }
         else if (chanceName == "Reconstruct")
         {
-            ChanceReconstruct();
+            ChanceReconstruct(mode);
         }
         else if (chanceName == "Destruct")
         {
-            ChanceDestruct();
+            ChanceDestruct(mode);
         }
         else if (chanceName == "Reset")
         {
-            ChanceReset();
+            ChanceReset(mode);
         }
         else if (chanceName == "KeepCalm")
         {
-            ChanceKeepCalm();
+            ChanceKeepCalm(mode);
         }
         else if (chanceName == "Reclaim")
         {
-            ChanceReclaim();
+            ChanceReclaim(mode);
         }
         else if (chanceName == "Oops")
         {
-            ChanceOops();
+            ChanceOops(mode);
         }
         else if (chanceName == "Prepare")
         {
-            ChancePrepare();
+            ChancePrepare(mode);
         }
     }
 
     /* Triggers the chance Transform for the player.*/
-    public virtual void ChanceTransform()
+    public virtual void ChanceTransform(string mode)
     {
         //Transform is not planned to be implemented soon,
         //as it changes the hero for the player and this is 
         //far too advanced to spend time implementing now.*/
-        moves = 0;
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Sabotage for the player.*/
-    public virtual void ChanceSabotage()
+    public virtual void ChanceSabotage(string mode)
     {
         //Not Implemented! (No need to implement this soon.)
-        moves = 0;
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Gamble for the player.*/
-    public virtual void ChanceGamble()
+    public virtual void ChanceGamble(string mode)
     {
         if (ciweilization.isSpring)
         {
@@ -1485,89 +1515,236 @@ public class Player : Photon.MonoBehaviour
             Debug.Log("Invalid era! Gamble does nothing.");
         }
 
-        moves = 0;
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Negotiate for the player.*/
-    public virtual void ChanceNegotiate()
+    public virtual void ChanceNegotiate(string mode)
     {
         negotiated = true;
-        moves = 0;
+
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Gather for the player. */
-    public virtual void ChanceGather()
+    public virtual void ChanceGather(string mode)
     {
         //Not Implemented! (No need to implement this soon.)
-        moves = 0;
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Reconstruct for the player.*/
-    public virtual void ChanceReconstruct()
+    public virtual void ChanceReconstruct(string mode)
     {
         //Not Implemented! (No need to implement this soon.)
-        moves = 0;
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Destruct for the player.*/
-    public virtual void ChanceDestruct()
+    public virtual void ChanceDestruct(string mode)
     {
         //Not Implemented! (No need to implement this soon.)
-        moves = 0;
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Reset for the player. */
-    public virtual void ChanceReset()
+    public virtual void ChanceReset(string mode)
     {
         StartCoroutine(ciweilization.CiweilizationResetBoard());
-        moves = 1;
+
+        if (mode == "free")
+        {
+            moves += 1f;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                //Gain a move for the reset but lose a move for discovering the chance,
+                //so nothing hanppens.
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance KeepCalm for the player.*/
-    public virtual void ChanceKeepCalm()
+    public virtual void ChanceKeepCalm(string mode)
     {
         //Not fully implemented! (No need to fully implement this soon.)
-        moves = 1f;
+        if (mode == "free")
+        {
+            moves += 1f;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                //Gain a move for the reset but lose a move for discovering the chance,
+                //so nothing hanppens.
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Reclaim for the player.*/
-    public virtual void ChanceReclaim()
+    public virtual void ChanceReclaim(string mode)
     {
+        if (mode == "free")
+        {
+            //move doesn't change
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1f;
+            }
+            else
+            {
+                moves = 0f;
+            }
+        }
+
         //Not fully implemented! (No need to fully implement this soon.)
         if (ciweilization.isSpring)
         {
-            moves = 0f;
+            moves += 0f;
         }
         else if (ciweilization.isSummer)
         {
-            moves = 1f;
+            moves += 1f;
         }
         else if (ciweilization.isFall)
         {
-            moves = 2f;
+            moves += 2f;
         }
         else if (ciweilization.isWinter)
         {
-            moves = 3f;
+            moves += 3f;
         }
         else
         {
-            Debug.Log("Invalid era! Gamble does nothing.");
+            Debug.Log("Invalid era! Reclaim does nothing.");
         }
     }
 
     /* Triggers the chance Oops for the player.*/
-    public virtual void ChanceOops()
+    public virtual void ChanceOops(string mode)
     {
         //Oops does nothing.
-        moves = 0;
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     /* Triggers the chance Prepare for the player.*/
-    public virtual void ChancePrepare()
+    public virtual void ChancePrepare(string mode)
     {
         defaultMoves += 0.25f;
-        moves = 0;
+
+        if (mode == "free")
+        {
+            return;
+        }
+        else if (mode == "normal")
+        {
+            if (Wonder_Y2)
+            {
+                moves -= 1;
+            }
+            else
+            {
+                moves = 0;
+            }
+        }
     }
 
     #endregion
@@ -1779,15 +1956,22 @@ public class Player : Photon.MonoBehaviour
 
     public virtual void PlayerAtTheStartOfTurn()
     {
-        // Dealing with the free chance given by Wonder Y4.
+        // Dealing with the free chance given by Wonder Y4 and some hero abilities.
         if (freeChance && photonView.isMine)
         {
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Wonder Ability");
             clickChanceOnly = true;
+            photonView.RPC("SetNextChanceFree", PhotonTargets.AllBuffered, true);
             StartCoroutine(ciweilization.CiweilizationDealChances());
             photonView.RPC("PlayAudioForAll", PhotonTargets.AllBuffered, "Coin");
         }
         freeChance = false; 
+    }
+
+    [PunRPC]
+    public void SetNextChanceFree(bool b)
+    {
+        nextChanceFree = b;
     }
     #endregion
 
