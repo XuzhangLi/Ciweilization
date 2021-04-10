@@ -47,6 +47,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -192,5 +193,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: R2
-  wonderSprite: {fileID: 21300000, guid: efcad0c6b19110d4399f1fe248e517a2, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 5b6b36335fa821d409f331307ead427b, type: 3}
   spriteRenderer: {fileID: 0}

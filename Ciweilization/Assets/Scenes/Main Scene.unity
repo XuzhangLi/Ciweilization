@@ -13063,7 +13063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: R4
-  wonderSprite: {fileID: 21300000, guid: 0ceb2dee84a1bd04bb5bbf1e5a3942d7, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 7790a0154ff1b7e4f8c9318965b655a6, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!50 &157945359402063359
 Rigidbody2D:
@@ -13531,7 +13531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: B3
-  wonderSprite: {fileID: 21300000, guid: a2a3e02338910ea4086e7abf174012c2, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 77cc3d60e2417ef4bbead1912a185984, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!212 &1162537942659202812
 SpriteRenderer:
@@ -13719,7 +13719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: Y3
-  wonderSprite: {fileID: 21300000, guid: 550e93239ee7f80488511cda971b5ee2, type: 3}
+  wonderSprite: {fileID: 21300000, guid: b56a25c17d8fd744981d51a677fe5e0f, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!114 &2257929420857374125
 MonoBehaviour:
@@ -13838,49 +13838,48 @@ MonoBehaviour:
   - {fileID: 6710663956633538786, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: -8153183902287412690, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   cardFacesHeroes:
-  - {fileID: 21300000, guid: 20d0c91d44d89b14e8752f8b66854e43, type: 3}
-  - {fileID: 21300000, guid: 655eaa2ecd4110743bbc318f350a5b73, type: 3}
-  - {fileID: 21300000, guid: 34bc965f4fb2efc4a9ecf514740ac2c3, type: 3}
-  - {fileID: 21300000, guid: b9618027801a6c0409c6a2fae76314a2, type: 3}
-  - {fileID: 21300000, guid: c7b78b8005919be43b5a6af5e4e6ec47, type: 3}
-  - {fileID: 21300000, guid: 57d39ffe3cba8624794839e751a7be43, type: 3}
-  - {fileID: 21300000, guid: 48aeb20558c485a48a3260b825d59e69, type: 3}
-  - {fileID: 21300000, guid: 01a83f2b7876e554ab9225865146fa60, type: 3}
-  - {fileID: 21300000, guid: f9ea4d5784f062341856e7d9cbb3c7d1, type: 3}
-  - {fileID: 21300000, guid: cc290eb64f73872498a8ecebc16eda83, type: 3}
-  - {fileID: 21300000, guid: e3aa3a04c35c1d44faf0ec7045916903, type: 3}
-  - {fileID: 21300000, guid: 07459c84e67055b46b5e050488e52293, type: 3}
-  - {fileID: 21300000, guid: 397dd0e1100b84e43af2bad95f5c5db9, type: 3}
-  - {fileID: 21300000, guid: f78b7469be1f5f648967af9f8fd40c49, type: 3}
-  - {fileID: 21300000, guid: 36b89d3234daa28439eee26cf2f3dc00, type: 3}
-  - {fileID: 21300000, guid: 9c2f3ebc233cc0b4c975b954183acb2f, type: 3}
-  - {fileID: 21300000, guid: 3c832eb36efacb04fac78659c8867cea, type: 3}
-  - {fileID: 21300000, guid: 2d4c8151a11c48643943beeedb1d9bfb, type: 3}
-  - {fileID: 21300000, guid: c024aef164fbdb1479a334901a4f777d, type: 3}
-  - {fileID: 21300000, guid: de7d7a2b8877fb64486297ffa4e9b534, type: 3}
-  - {fileID: 21300000, guid: 180c3147bbe6aae47acc5ea5bac5ac80, type: 3}
-  - {fileID: 21300000, guid: 3bfd538439b4d6d48b0764af4cbb3a70, type: 3}
-  - {fileID: 21300000, guid: 042fc4f00e845684d92cf0d846af19ad, type: 3}
-  - {fileID: 21300000, guid: 1f9d6f0a84d1b904ab33903d8266dd14, type: 3}
-  - {fileID: 21300000, guid: c1fc8680dbf5342459f6623e0b207f7c, type: 3}
-  - {fileID: 21300000, guid: 98869fcc2f965ce479b857062d5763c3, type: 3}
-  - {fileID: 21300000, guid: 88260edea8626934390e696be0f8ee9e, type: 3}
-  - {fileID: 21300000, guid: 58e97c5abb1a1064eb1c1d789a5492cc, type: 3}
-  - {fileID: 21300000, guid: ab0fdd9546d66354c9fa29d1d5e80d01, type: 3}
-  - {fileID: 21300000, guid: 3fb92ee4fe4a27c41a07519a0c33f5cd, type: 3}
+  - {fileID: 21300000, guid: 55d2ff1108f96504e898e80f8e3b67b6, type: 3}
+  - {fileID: 21300000, guid: d012c8b669404984eb377fc4706d28b1, type: 3}
+  - {fileID: 21300000, guid: 92c2c5ab6484e2344888e00a9999e1c3, type: 3}
+  - {fileID: 21300000, guid: 3a7ef2a18e49c504ebf27bafb7be0f7e, type: 3}
+  - {fileID: 21300000, guid: dee8e7223c9848b4fb306604b6288c18, type: 3}
+  - {fileID: 21300000, guid: c2cca0626a5ae754d8b8fdb0d61f7221, type: 3}
+  - {fileID: 21300000, guid: 13fe6761e75e1d542bb317da01a33438, type: 3}
+  - {fileID: 21300000, guid: 83cb38e61ab7ee04d89f5b5149dea92f, type: 3}
+  - {fileID: 21300000, guid: a1b5b76623e4dd84481b8b5b4611ec15, type: 3}
+  - {fileID: 21300000, guid: 99309cc8262556d48aecf874ce869ad0, type: 3}
+  - {fileID: 21300000, guid: b34f03f7ed0a7064187c44a91a1dc12a, type: 3}
+  - {fileID: 21300000, guid: f9776fdc848ea4e4fbc40313a72431db, type: 3}
+  - {fileID: 21300000, guid: 42c0d87a2fdb7d24dad02ddcb1ac31d3, type: 3}
+  - {fileID: 21300000, guid: caa8b8c9c7faf344284b4fb7682b6c37, type: 3}
+  - {fileID: 21300000, guid: 070c27162e8a5364f921c4622fe74772, type: 3}
+  - {fileID: 21300000, guid: aa11407c961d7fe42bee97d5f90de9f7, type: 3}
+  - {fileID: 21300000, guid: 963dc2b5fe8cf91499dd69c91926f600, type: 3}
+  - {fileID: 21300000, guid: 8920d26b9d203db4db0495dfe13b6d5b, type: 3}
+  - {fileID: 21300000, guid: 7c44fe8c4be8c104ea279c1f78df69fa, type: 3}
+  - {fileID: 21300000, guid: a9c45a0f106ac3245a415a302445d13a, type: 3}
+  - {fileID: 21300000, guid: 8671c928bf53aa74e980c8fee46b816e, type: 3}
+  - {fileID: 21300000, guid: 9e5708a8df6966e45be99ce52dd7edbf, type: 3}
+  - {fileID: 21300000, guid: befc115eaeec0154d82f5f837dc3e0fc, type: 3}
+  - {fileID: 21300000, guid: efa055070dab3304988fba74014936f7, type: 3}
+  - {fileID: 21300000, guid: d4370b236f5f3eb4d8ae957e6f2825a3, type: 3}
+  - {fileID: 21300000, guid: 3fff7172271f3e94e85a5ce65c31f65a, type: 3}
+  - {fileID: 21300000, guid: 700a0003a89a3f844b846fed829926fa, type: 3}
+  - {fileID: 21300000, guid: 2470eaade8c8b714eb1a932fff0b85b5, type: 3}
+  - {fileID: 21300000, guid: 5db1b4709cd01cf43b2c47c2d18bfc55, type: 3}
   cardFacesChances:
-  - {fileID: 21300000, guid: 4183fbd58e2703841ab65b7147e9648c, type: 3}
-  - {fileID: 21300000, guid: 1679715aaef53f14fbe5b7090739edef, type: 3}
-  - {fileID: 21300000, guid: f1ba7ee64e9bcd24c8435c77d88602c5, type: 3}
-  - {fileID: 21300000, guid: b6086764d66ac05478c89078a3246dd4, type: 3}
-  - {fileID: 21300000, guid: 30f3373dd4bc54c49983799cbc9204f9, type: 3}
-  - {fileID: 21300000, guid: a9c8f308d842977409d2112f3f526c74, type: 3}
-  - {fileID: 21300000, guid: ed7a6b8e7cafb1447a45044e7beda650, type: 3}
-  - {fileID: 21300000, guid: 130c6302f1cf7974399038acc03eeab8, type: 3}
-  - {fileID: 21300000, guid: b7a446a8c8d1d854197d4ab4dbfadb94, type: 3}
-  - {fileID: 21300000, guid: e1ead63e2adbe4d4188374ae97903998, type: 3}
-  - {fileID: 21300000, guid: 1a4129581744d5f45943f71574e1be6f, type: 3}
-  - {fileID: 21300000, guid: 82949f3c2366dc542821fde91ba2f87f, type: 3}
+  - {fileID: 21300000, guid: 3b57b64e96ce3f54dbb495520beed391, type: 3}
+  - {fileID: 21300000, guid: e9f9f5210a5f5c84c8eeca8b5c0beea4, type: 3}
+  - {fileID: 21300000, guid: 26f2ac972c4e35647aef05fcd9c87b8b, type: 3}
+  - {fileID: 21300000, guid: c5e5a3f44740e56469026fb4283fd39c, type: 3}
+  - {fileID: 21300000, guid: 6ecb56dc60758904781f36ea27c49e79, type: 3}
+  - {fileID: 21300000, guid: 680ff68f3f54ae64cba74bf06cca758e, type: 3}
+  - {fileID: 21300000, guid: fe53e7ff49a3e0b4ba150022bb979857, type: 3}
+  - {fileID: 21300000, guid: 8b6a7a1f6abf88c4cb8ef460d903e757, type: 3}
+  - {fileID: 21300000, guid: 8c788bf67ff932748acbfd7c4992103f, type: 3}
+  - {fileID: 21300000, guid: d1148bdb2309b3444b8764693101f06d, type: 3}
+  - {fileID: 21300000, guid: b5c13c7a0be70524f9522803c8f2320a, type: 3}
+  - {fileID: 21300000, guid: 8630922c61433f84f863aa94d6e55c44, type: 3}
   cardPrefab: {fileID: 6722234269616455992, guid: 29839c76fb36a394c803f7370787af8e,
     type: 3}
   heroCardPrefab: {fileID: 4145655154805566412, guid: 3ae89d7b1b8f0634d9c02816ba19ba8c,
@@ -13923,7 +13922,6 @@ MonoBehaviour:
   - DayDreamer
   - Chimera
   - Bandit
-  - ElfOfOrder
   - Banker
   - TimeTraveler
   - Dragon
@@ -13953,7 +13951,6 @@ MonoBehaviour:
   - na
   - na
   - Chimera
-  - na
   - na
   - Banker
   - na
@@ -14136,7 +14133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: R3
-  wonderSprite: {fileID: 21300000, guid: 6f06c19608f554047a87ce99b7ab3085, type: 3}
+  wonderSprite: {fileID: 21300000, guid: e5a561ef569a8e04baeab7954f1d1255, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!1 &2890742491104838121
 GameObject:
@@ -14890,7 +14887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: Y4
-  wonderSprite: {fileID: 21300000, guid: e04680849369a70489880c8c83c4ddb4, type: 3}
+  wonderSprite: {fileID: 21300000, guid: d8abf53aa47e6f1468cbb67ed7cda7e0, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!50 &4488003466725326607
 Rigidbody2D:
@@ -14947,7 +14944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: R2
-  wonderSprite: {fileID: 21300000, guid: efcad0c6b19110d4399f1fe248e517a2, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 5b6b36335fa821d409f331307ead427b, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!61 &4616712524135824734
 BoxCollider2D:
@@ -15064,7 +15061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: B4
-  wonderSprite: {fileID: 21300000, guid: dc356a3e35999a044b890913d6f9bdd0, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 68431c8db7d0d534db6643c282550fc0, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!61 &4792493443709326217
 BoxCollider2D:
@@ -15259,7 +15256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: Y2
-  wonderSprite: {fileID: 21300000, guid: 77454daa204e9ca4f903214e54049add, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 97b58c429bd7cc849aae867ba1a64b3f, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!4 &5092789343735777961
 Transform:
@@ -16283,7 +16280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: G4
-  wonderSprite: {fileID: 21300000, guid: 16172bde70ab0f341aea7460d267c67d, type: 3}
+  wonderSprite: {fileID: 21300000, guid: a9efa85b2171c4d4782b43fb21bcf359, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!212 &6310835172687429193
 SpriteRenderer:
@@ -17031,7 +17028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: B2
-  wonderSprite: {fileID: 21300000, guid: 0daa95e9274dfd14ab8c999477d550d3, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 0ab5786a9f02cad4b993e8e7b95146bd, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!61 &7956971021524330480
 BoxCollider2D:
@@ -17406,7 +17403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: G2
-  wonderSprite: {fileID: 21300000, guid: 4e358711da0e8b44198b4b65ca0752ca, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 1a938b295f1bb27439a1b2b6eec3baa1, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!61 &8586003512151767668
 BoxCollider2D:
@@ -17476,7 +17473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testName: G3
-  wonderSprite: {fileID: 21300000, guid: a7bbe9170abecbf48af46bbaa84217bb, type: 3}
+  wonderSprite: {fileID: 21300000, guid: 75589529670f85c458618e431cea925f, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!212 &8820158875634619385
 SpriteRenderer:
