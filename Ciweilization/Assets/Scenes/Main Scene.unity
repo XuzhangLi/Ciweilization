@@ -13838,10 +13838,10 @@ MonoBehaviour:
   - {fileID: 6710663956633538786, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   - {fileID: -8153183902287412690, guid: a9e02a644e4f464419d9389933c0f8c9, type: 3}
   cardFacesHeroes:
+  - {fileID: 21300000, guid: 3a7ef2a18e49c504ebf27bafb7be0f7e, type: 3}
   - {fileID: 21300000, guid: 55d2ff1108f96504e898e80f8e3b67b6, type: 3}
   - {fileID: 21300000, guid: d012c8b669404984eb377fc4706d28b1, type: 3}
   - {fileID: 21300000, guid: 92c2c5ab6484e2344888e00a9999e1c3, type: 3}
-  - {fileID: 21300000, guid: 3a7ef2a18e49c504ebf27bafb7be0f7e, type: 3}
   - {fileID: 21300000, guid: dee8e7223c9848b4fb306604b6288c18, type: 3}
   - {fileID: 21300000, guid: c2cca0626a5ae754d8b8fdb0d61f7221, type: 3}
   - {fileID: 21300000, guid: 13fe6761e75e1d542bb317da01a33438, type: 3}
@@ -13867,6 +13867,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 700a0003a89a3f844b846fed829926fa, type: 3}
   - {fileID: 21300000, guid: 2470eaade8c8b714eb1a932fff0b85b5, type: 3}
   - {fileID: 21300000, guid: 5db1b4709cd01cf43b2c47c2d18bfc55, type: 3}
+  - {fileID: 21300000, guid: a4bec820123b26a498033d17e32b0de9, type: 3}
   cardFacesChances:
   - {fileID: 21300000, guid: 3b57b64e96ce3f54dbb495520beed391, type: 3}
   - {fileID: 21300000, guid: e9f9f5210a5f5c84c8eeca8b5c0beea4, type: 3}
@@ -13938,6 +13939,7 @@ MonoBehaviour:
   - DarkLord
   - Rat
   - PatientKitty
+  - ElfOfOrder
   currentHeroNames:
   - Barbarian
   - na
@@ -13968,6 +13970,7 @@ MonoBehaviour:
   - na
   - Rat
   - PatientKitty
+  - na
   currentChanceNames:
   - Transform
   - Sabotage
